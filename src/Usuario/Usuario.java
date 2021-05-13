@@ -1,4 +1,4 @@
-package model;
+package Usuario;
 
 public abstract class Usuario {
     private int identificador;

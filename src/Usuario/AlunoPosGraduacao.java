@@ -1,4 +1,4 @@
-package model;
+package Usuario;
 
 public class AlunoPosGraduacao extends Usuario {
 
