@@ -1,2 +1,4 @@
-package Usuario;public interface IProfessor {
+package Usuario;
+
+public interface IProfessor {
 }

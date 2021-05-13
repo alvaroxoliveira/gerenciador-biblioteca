@@ -1,2 +1,4 @@
-package Usuario;public interface IAlunoGraduacao {
+package Usuario;
+
+public interface IAlunoGraduacao {
 }
