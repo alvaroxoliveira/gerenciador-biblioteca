@@ -1,5 +1,9 @@
 package Livro;
 
+import Estado.EstadoLivro;
+
+import java.util.ArrayList;
+
 public class Livro {
     private int id;
     private String titulo;
@@ -7,6 +11,17 @@ public class Livro {
     private String autores;
     private String edicao;
     private int anoDePublicacao;
+    private EstadoLivro estadoLivro;
+
+    private static ArrayList<Livro> todosOsLivros = new ArrayList<Livro>();
+
+    public static ArrayList<Livro> getTodosOsLivros() {
+        return todosOsLivros;
+    }
+
+    public static void setTodosOsLivros(ArrayList<Livro> todosOsLivros) {
+        Livro.todosOsLivros = todosOsLivros;
+    }
 
     public int getId() {
         return id;
