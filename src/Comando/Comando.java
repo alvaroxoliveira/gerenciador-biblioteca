@@ -1,2 +1,5 @@
-package Comando;public class Comando {
+package Comando;
+
+public interface Comando {
+
 }

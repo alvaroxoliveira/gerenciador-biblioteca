@@ -1,2 +1,4 @@
-package Comando;public class Consulta {
+package Comando;
+
+public class Consulta implements Comando {
 }

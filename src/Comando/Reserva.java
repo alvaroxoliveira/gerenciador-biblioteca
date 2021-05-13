@@ -1,2 +1,4 @@
-package Comando;public class Reserva {
+package Comando;
+
+public class Reserva implements Comando {
 }

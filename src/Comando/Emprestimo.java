@@ -1,2 +1,4 @@
-package Comando;public class Emprestimo {
+package Comando;
+
+public class Emprestimo implements Comando {
 }

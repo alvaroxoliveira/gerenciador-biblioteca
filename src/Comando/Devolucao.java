@@ -1,2 +1,4 @@
-package Comando;public class Devolucao {
+package Comando;
+
+public class Devolucao implements Comando {
 }
