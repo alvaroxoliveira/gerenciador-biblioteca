@@ -1,6 +1,7 @@
 package Livro;
 
 import Estado.EstadoLivro;
+import Estado.SingletonDisponivel;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,11 @@ public class Livro {
     private EstadoLivro estadoLivro;
 
     private static ArrayList<Livro> todosOsLivros = new ArrayList<Livro>();
+
+    // Mudança de estado como manda  o padrão state implementado na aplicação
+    public void mudarEstado(EstadoLivro estadoLivro) {
+        this.estadoLivro = estadoLivro;
+    }
 
     public static ArrayList<Livro> getTodosOsLivros() {
         return todosOsLivros;
