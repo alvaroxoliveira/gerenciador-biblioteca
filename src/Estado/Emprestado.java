@@ -1,18 +1,21 @@
 package Estado;
 
+import Livro.Livro;
+
 public class Emprestado implements EstadoLivro{
+
     @Override
-    public void emprestarLivro() {
+    public void emprestarLivro(Livro livro) {
 
     }
 
     @Override
-    public void devolverLivro() {
+    public void devolverLivro(Livro livro) {
 
     }
 
     @Override
-    public void reservarLivro() {
+    public void reservarLivro(Livro livro) {
 
     }
 }
