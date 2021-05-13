@@ -14,6 +14,16 @@ public class Livro {
     private int anoDePublicacao;
     private EstadoLivro estadoLivro;
 
+    public Livro(int id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
+        this.id = id;
+        this.titulo = titulo;
+        this.editora = editora;
+        this.autores = autores;
+        this.edicao = edicao;
+        this.anoDePublicacao = anoDePublicacao;
+        this.estadoLivro = SingletonDisponivel.getInstance();
+    }
+
     private static ArrayList<Livro> todosOsLivros = new ArrayList<Livro>();
 
     // Mudança de estado como manda  o padrão state implementado na aplicação
