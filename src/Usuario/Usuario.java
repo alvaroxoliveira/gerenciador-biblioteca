@@ -1,8 +1,14 @@
 package Usuario;
 
+import Livro.Livro;
+
+import java.util.ArrayList;
+
 public abstract class Usuario {
     private int identificador;
     private String nome;
+    private static ArrayList<Livro> livrosReservados = new ArrayList<Livro>();
+    private static ArrayList<Livro> livrosEmprestados = new ArrayList<Livro>();
 
     public Usuario(int identificador, String nome) {
         this.identificador = identificador;

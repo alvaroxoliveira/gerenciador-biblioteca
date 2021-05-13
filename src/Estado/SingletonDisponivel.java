@@ -5,9 +5,9 @@ import Livro.Livro;
 public class SingletonDisponivel implements EstadoLivro{
     private SingletonDisponivel() {}
 
-    public static SingletonDisponivel instance;
+    public static SingletonDisponivel instance; //cada livro só vai ter uma instancia de cada estado
 
-    public static SingletonDisponivel getInstance() {
+    public static SingletonDisponivel getInstance() { //se não existir instancia, cria uma
         if(instance == null) {
             synchronized(SingletonDisponivel.class) {
                 if(instance == null) {
@@ -20,7 +20,7 @@ public class SingletonDisponivel implements EstadoLivro{
     @Override
     public void devolverLivro(Livro livro) {
         System.out.println("Desconectando...");
-        livro.mudarEstado(SingletonDisponivel.getInstance());
+        //livro.mudarEstado(SingletonDisponivel.getInstance());
     }
     @Override
     public void emprestarLivro(Livro livro) {

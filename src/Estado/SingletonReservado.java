@@ -24,7 +24,7 @@ public class SingletonReservado implements EstadoLivro {
 
     @Override
     public void reservarLivro(Livro livro) {
-        livro.mudarEstado(SingletonReservado.getInstance());
+        //livro.mudarEstado(SingletonReservado.getInstance()); //livro pode ser reservado por mais de 1 pessoa?
         System.out.println("Reserva concluída com sucesso.");
     }
 
