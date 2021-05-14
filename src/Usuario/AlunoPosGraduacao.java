@@ -6,6 +6,9 @@ public class AlunoPosGraduacao extends Usuario implements IUsuario{
         super(identificador, nome);
     }
 
+    private static final int tempoMaximoDeEmprestimoEmDias = 4;
+    private static final int quantidadeMaximaDeEmprestimosAlunosPosGraduacao = 4;
+
     @Override
     public void emprestimo() {
 
