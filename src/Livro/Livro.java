@@ -1,6 +1,6 @@
 package Livro;
 
-import Estado.EstadoLivro;
+import Estado.EstadoLivro; //pra importar de outro pacote
 import Estado.SingletonDisponivel;
 
 import java.util.ArrayList;
@@ -12,7 +12,23 @@ public class Livro {
     private String autores;
     private String edicao;
     private int anoDePublicacao;
-    private EstadoLivro estadoLivro;
+    private EstadoLivro estadoLivro; //estado do livro usado no singleton
+
+    public Livro(EstadoLivro estadoInicial) {
+        this.estadoLivro = estadoInicial;
+    }
+
+    public void emprestarLivro(){
+        estadoLivro.emprestarLivro(this);
+    }
+
+    public void devolverLivro(){
+        estadoLivro.devolverLivro(this);
+    }
+
+    public void reservarLivro(){
+        estadoLivro.reservarLivro(this);
+    }
 
     public Livro(int id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
         this.id = id;

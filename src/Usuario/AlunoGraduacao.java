@@ -1,13 +1,13 @@
 package Usuario;
 
 public class AlunoGraduacao extends Usuario implements IUsuario, IAlunos{
+    private static final int tempoMaximoDeEmprestimoEmDias = 4;
+
+    private static final int quantidadeMaximaDeEmprestimosAlunoGraduacao = 3;
 
     public AlunoGraduacao(int identificador, String nome) {
         super(identificador, nome);
     }
-
-    private static final int tempoMaximoDeEmprestimoEmDias = 4;
-    private static final int quantidadeMaximaDeEmprestimosAlunoGraduacao = 3;
 
     @Override
     public void emprestimo() {

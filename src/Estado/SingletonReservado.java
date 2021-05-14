@@ -20,12 +20,12 @@ public class SingletonReservado implements EstadoLivro {
 
     @Override
     public void emprestarLivro(Livro livro) {
-        System.out.println("Não é possível devolver um livro disponível.");
+        System.out.println("Não é possível devolver um livro reservado. Pegue-o Emprestado primeiro");
     }
 
     @Override
     public void reservarLivro(Livro livro) {
-        livro.mudarEstado(SingletonReservado.getInstance());
+        //livro.mudarEstado(SingletonReservado.getInstance()); //livro pode ser reservado por mais de 1 pessoa?
         System.out.println("Reserva concluída com sucesso.");
     }
 

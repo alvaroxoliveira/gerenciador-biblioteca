@@ -5,6 +5,7 @@ public class Professor extends Usuario implements IUsuario {
         super(identificador, nome);
     }
     private static final int tempoMaximoDeEmprestimoEmDias = 7;
+
     @Override
     public void emprestimo() {
 
