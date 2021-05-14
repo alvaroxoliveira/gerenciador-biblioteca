@@ -17,6 +17,7 @@ public class SingletonReservado implements EstadoLivro {
         }
         return instance;
     }
+
     @Override
     public void emprestarLivro(Livro livro) {
         System.out.println("Não é possível devolver um livro disponível.");
@@ -28,6 +29,7 @@ public class SingletonReservado implements EstadoLivro {
         System.out.println("Reserva concluída com sucesso.");
     }
 
+    // Verificar se a devolução no caso de reserva faz sentido
     @Override
     public void devolverLivro(Livro livro) {
         livro.mudarEstado(SingletonDisponivel.getInstance());

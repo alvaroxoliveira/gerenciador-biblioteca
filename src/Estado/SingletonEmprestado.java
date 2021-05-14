@@ -17,15 +17,18 @@ public class SingletonEmprestado implements EstadoLivro {
         }
         return instance;
     }
+
     @Override
     public void devolverLivro(Livro livro) {
         livro.mudarEstado(SingletonDisponivel.getInstance());
-        System.out.println("Devolução concluída com sucesso");
+        System.out.println("Devolução concluída com sucesso.");
     }
+
     @Override
     public void emprestarLivro(Livro livro) {
         System.out.println("Não é possível fazer empréstimo de um livro emprestado.");
     }
+
     @Override
     public void reservarLivro(Livro livro) {
         System.out.println("Não é possível fazer reserva de um livro emprestado.");
