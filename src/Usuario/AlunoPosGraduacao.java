@@ -1,6 +1,6 @@
 package Usuario;
 
-public class AlunoPosGraduacao extends Usuario implements IUsuario{
+public class AlunoPosGraduacao extends Usuario implements IUsuario, IAlunos{
 
     public AlunoPosGraduacao(int identificador, String nome) {
         super(identificador, nome);
@@ -22,5 +22,12 @@ public class AlunoPosGraduacao extends Usuario implements IUsuario{
     @Override
     public void reserva() {
 
+    }
+
+    // Retorna a quantidade de livros que o aluno pegou emprestado
+    @Override
+    public int getQuantidadeDeLivrosEmprestadosDoUsuario() {
+        Usuario usuarioAlunoPosGraduacao = (Usuario) this;
+        return usuarioAlunoPosGraduacao.getListaDeLivros().size();
     }
 }
