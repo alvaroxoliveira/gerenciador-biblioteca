@@ -4,19 +4,27 @@ import Livro.Livro;
 
 import java.util.ArrayList;
 
-public abstract class Usuario {
+public abstract class User {
     private int identificador;
     private String nome;
+    
+    // Lista de livros que o usuário está no momento
+    private ArrayList<Livro> listaDeLivrosEmprestados;
 
-    private ArrayList<Livro> listaDeLivros;
-
-    private static ArrayList<Livro> livrosReservados = new ArrayList<Livro>();
-    private static ArrayList<Livro> livrosEmprestados = new ArrayList<Livro>();
-
-    public Usuario(int identificador, String nome) {
+    public User(int identificador, String nome) {
         this.identificador = identificador;
         this.nome = nome;
-        this.listaDeLivros = new ArrayList<Livro>();
+        this.listaDeLivrosEmprestados = new ArrayList<Livro>();
+    }
+
+    // Adiciona um livro na lista de emprestimos
+    public void pegaEmprestado(Livro livro) {
+        this.listaDeLivrosEmprestados.add(livro);
+    }
+
+    // Remove o objeto livro da lista de livros emprestados
+    public void devolveLivro(int i) {
+        this.listaDeLivrosEmprestados.remove(i);
     }
 
     public int getIdentificador() {
@@ -30,16 +38,15 @@ public abstract class Usuario {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public ArrayList<Livro> getListaDeLivros() {
-        return listaDeLivros;
+    public ArrayList<Livro> getListaDeLivrosEmprestados() {
+        return listaDeLivrosEmprestados;
     }
 
-    public void setListaDeLivros(ArrayList<Livro> listaDeLivros) {
-        this.listaDeLivros = listaDeLivros;
+    public void setListaDeLivrosEmprestados(ArrayList<Livro> listaDeLivrosEmprestados) {
+        this.listaDeLivrosEmprestados = listaDeLivrosEmprestados;
     }
 }
