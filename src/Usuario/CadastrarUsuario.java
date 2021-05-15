@@ -4,16 +4,16 @@ package Usuario;
 
 import java.util.ArrayList;
 
-public class UsuariosDoSistema {
+public class CadastrarUsuario {
     private static ArrayList<User> usuariosDoSistema = new ArrayList<User>();
 
     // Cadastrar um usuário
     public static void cadastrarUsuarioNoSistema(User usuario) {
-        UsuariosDoSistema.usuariosDoSistema.add(usuario);
+        CadastrarUsuario.usuariosDoSistema.add(usuario);
     }
 
     // Descadastrar um usuário
     public static void descadastrarUsuarioNoSistema(int i) {
-        UsuariosDoSistema.usuariosDoSistema.remove(i);
+        CadastrarUsuario.usuariosDoSistema.remove(i);
     }
 }
