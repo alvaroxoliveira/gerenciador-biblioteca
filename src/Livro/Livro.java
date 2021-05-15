@@ -3,8 +3,6 @@ package Livro;
 import Estado.EstadoLivro; //pra importar de outro pacote
 import Estado.SingletonDisponivel;
 
-import java.util.ArrayList;
-
 public class Livro {
     private int id;
     private String titulo;
@@ -16,6 +14,16 @@ public class Livro {
 
     public Livro(EstadoLivro estadoInicial) {
         this.estadoLivro = estadoInicial;
+    }
+
+    public Livro(int id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
+        this.id = id;
+        this.titulo = titulo;
+        this.editora = editora;
+        this.autores = autores;
+        this.edicao = edicao;
+        this.anoDePublicacao = anoDePublicacao;
+        this.estadoLivro = SingletonDisponivel.getInstance();
     }
 
     public void emprestarLivro(){
@@ -30,29 +38,9 @@ public class Livro {
         estadoLivro.reservarLivro(this);
     }
 
-    public Livro(int id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
-        this.id = id;
-        this.titulo = titulo;
-        this.editora = editora;
-        this.autores = autores;
-        this.edicao = edicao;
-        this.anoDePublicacao = anoDePublicacao;
-        this.estadoLivro = SingletonDisponivel.getInstance();
-    }
-
-    private static ArrayList<Livro> todosOsLivros = new ArrayList<Livro>();
-
     // Mudança de estado como manda  o padrão state implementado na aplicação
     public void mudarEstado(EstadoLivro estadoLivro) {
         this.estadoLivro = estadoLivro;
-    }
-
-    public static ArrayList<Livro> getTodosOsLivros() {
-        return todosOsLivros;
-    }
-
-    public static void setTodosOsLivros(ArrayList<Livro> todosOsLivros) {
-        Livro.todosOsLivros = todosOsLivros;
     }
 
     public int getId() {
