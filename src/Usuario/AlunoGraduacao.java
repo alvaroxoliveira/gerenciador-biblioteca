@@ -1,8 +1,7 @@
 package Usuario;
 
-public class AlunoGraduacao extends Usuario implements IUsuario, IAlunos{
+public class AlunoGraduacao extends User implements IUsuario, IAlunos{
     private static final int tempoMaximoDeEmprestimoEmDias = 4;
-
     private static final int quantidadeMaximaDeEmprestimosAlunoGraduacao = 3;
 
     public AlunoGraduacao(int identificador, String nome) {
@@ -27,7 +26,7 @@ public class AlunoGraduacao extends Usuario implements IUsuario, IAlunos{
     // Retorna a quantidade de livros que o aluno pegou emprestado
     @Override
     public int getQuantidadeDeLivrosEmprestadosDoUsuario() {
-        Usuario usuarioAlunoGraduacao = (Usuario) this;
-        return usuarioAlunoGraduacao.getListaDeLivros().size();
+        User userAlunoGraduacao = (User) this;
+        return userAlunoGraduacao.getListaDeLivrosEmprestados().size();
     }
 }
