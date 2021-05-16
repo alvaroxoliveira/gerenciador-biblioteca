@@ -18,24 +18,4 @@ public class Professor implements IEstadoUsuario {
         }
         return instance;
     }
-
-    @Override
-    public void pegarLivroEmprestado(int codigoDoLivro) {
-
-    }
-
-    @Override
-    public void devolverLivroEmprestado(int codigoDoLivro) {
-
-    }
-
-    @Override
-    public void reservarLivro(int codigoDoLivro) {
-
-    }
-
-    @Override
-    public void consultarLivro(int codigoDoLivro) {
-
-    }
 }
