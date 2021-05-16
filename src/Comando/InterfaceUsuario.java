@@ -3,6 +3,7 @@ package Comando;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InterfaceUsuario {
@@ -18,8 +19,16 @@ public class InterfaceUsuario {
 
     //Faz uma chamada polimórfica para executar o comando específico passado pela interação com o usuário
     private void executarComando(String tipoDeComando[]) {
+        ArrayList<String> parametroParaExecutar = new ArrayList<String>();
+        if(tipoDeComando[2] != null) {
+            parametroParaExecutar.add(tipoDeComando[1]);
+            parametroParaExecutar.add(tipoDeComando[2]);
+        } else {
+            parametroParaExecutar.add(tipoDeComando[1]);
+        }
+
         Comando comando = comandos.get(tipoDeComando[0]);
-        comando.executar(tipoDeComando[1], tipoDeComando[2]);
+        comando.executar(parametroParaExecutar);
     }
 
     public void fazerLoopEntrada() throws IOException {
@@ -27,10 +36,6 @@ public class InterfaceUsuario {
 
         String stringComando = obterComandoConsoie();
         String divisaoComando[] = stringComando.split(" ");
-
-        System.out.println(divisaoComando[0]);
-        System.out.println(divisaoComando[1]);
-        System.out.println(divisaoComando[2]);
 
         while (!stringComando.equals("sai")) {
             executarComando(divisaoComando);

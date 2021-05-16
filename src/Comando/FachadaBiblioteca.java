@@ -1,5 +1,7 @@
 package Comando;
 
+import java.util.ArrayList;
+
 public class FachadaBiblioteca {
 
     public static FachadaBiblioteca instance; //cada livro só vai ter uma instancia de cada estado
@@ -17,23 +19,23 @@ public class FachadaBiblioteca {
         return instance;
     }
 
-    public void realizarEmprestimo(String parametro1, String parametro2) {
+    public void realizarEmprestimo(ArrayList<String> parametroParaExecutar) {
         System.out.println("Realizando Emprestimo");
     }
 
-    public void realizarDevolucao(String parametro1, String parametro2) {
+    public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
         System.out.println("Realizando Devolução");
     }
 
-    public void realizarReserva(String parametro1, String parametro2) {
+    public void realizarReserva(ArrayList<String> parametroParaExecutar) {
         System.out.println("Realizando reserva");
     }
 
-    public void realizarConsultaLivro(String parametro1, String parametro2) {
+    public void realizarConsultaLivro(ArrayList<String> parametroParaExecutar) {
         System.out.println("Consultando dados do livro: ");
     }
 
-    public void realizarObservacao(String parametro1, String parametro2) {
+    public void realizarObservacao(ArrayList<String> parametroParaExecutar) {
         System.out.println("Observando dados do livro: ");
     }
 }

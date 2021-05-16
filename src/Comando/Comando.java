@@ -1,5 +1,7 @@
 package Comando;
 
+import java.util.ArrayList;
+
 public interface Comando {
-    public void executar(String parametro1, String parametro2);
+    public void executar(ArrayList<String> parametros);
 }

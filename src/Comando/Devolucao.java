@@ -1,8 +1,10 @@
 package Comando;
 
+import java.util.ArrayList;
+
 public class Devolucao implements Comando {
     @Override
-    public void executar(String parametro1, String parametro2) {
-        FachadaBiblioteca.getInstance().realizarDevolucao(parametro1, parametro2);
+    public void executar(ArrayList<String> parametroParaExecutar) {
+        FachadaBiblioteca.getInstance().realizarDevolucao(parametroParaExecutar);
     }
 }
