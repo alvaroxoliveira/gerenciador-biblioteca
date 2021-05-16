@@ -1,8 +1,8 @@
-package Estado;
+package Livro.Estado;
 
 import Livro.Livro;
 
-public class SingletonEmprestado implements EstadoLivro {
+public class SingletonEmprestado implements IEstadoLivro {
     private SingletonEmprestado() {}
 
     public static SingletonEmprestado instance;

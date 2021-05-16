@@ -1,7 +1,7 @@
 package Livro;
 
-import Estado.EstadoLivro; //pra importar de outro pacote
-import Estado.SingletonDisponivel;
+import Livro.Estado.IEstadoLivro; //pra importar de outro pacote
+import Livro.Estado.SingletonDisponivel;
 
 public class Livro {
     private int id;
@@ -10,9 +10,9 @@ public class Livro {
     private String autores;
     private String edicao;
     private int anoDePublicacao;
-    private EstadoLivro estadoLivro; //estado do livro usado no singleton
+    private IEstadoLivro estadoLivro; //estado do livro usado no singleton
 
-    public Livro(EstadoLivro estadoInicial) {
+    public Livro(IEstadoLivro estadoInicial) {
         this.estadoLivro = estadoInicial;
     }
 
@@ -39,7 +39,7 @@ public class Livro {
     }
 
     // Mudança de estado como manda  o padrão state implementado na aplicação
-    public void mudarEstado(EstadoLivro estadoLivro) {
+    public void mudarEstado(IEstadoLivro estadoLivro) {
         this.estadoLivro = estadoLivro;
     }
 
@@ -89,5 +89,13 @@ public class Livro {
 
     public void setAnoDePublicacao(int anoDePublicacao) {
         this.anoDePublicacao = anoDePublicacao;
+    }
+
+    public IEstadoLivro getEstadoLivro() {
+        return estadoLivro;
+    }
+
+    public void setEstadoLivro(IEstadoLivro estadoLivro) {
+        this.estadoLivro = estadoLivro;
     }
 }

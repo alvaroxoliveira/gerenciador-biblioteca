@@ -1,4 +1,7 @@
-package Usuario;
+package Usuario.Estado;
+
+import Usuario.IUsuario;
+import Usuario.User;
 
 public class Professor extends User implements IUsuario {
     public Professor(int identificador, String nome) {

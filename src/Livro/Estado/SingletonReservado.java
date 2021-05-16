@@ -1,8 +1,8 @@
-package Estado;
+package Livro.Estado;
 
 import Livro.Livro;
 
-public class SingletonReservado implements EstadoLivro {
+public class SingletonReservado implements IEstadoLivro {
     private SingletonReservado() {}
 
     public static SingletonReservado instance;

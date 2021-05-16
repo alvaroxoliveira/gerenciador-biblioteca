@@ -1,8 +1,8 @@
-package Estado;
+package Livro.Estado;
 
 import Livro.Livro;
 
-public class SingletonDisponivel implements EstadoLivro{
+public class SingletonDisponivel implements IEstadoLivro {
     private SingletonDisponivel() {}
 
     public static SingletonDisponivel instance; //cada livro só vai ter uma instancia de cada estado
