@@ -3,7 +3,7 @@ package Comando;
 public class Emprestimo implements Comando {
 
     @Override
-    public void executar() {
+    public void executar(String parametro1, String parametro2) {
         FachadaBiblioteca.getInstance().realizarEmprestimo();
     }
 }

@@ -17,18 +17,23 @@ public class InterfaceUsuario {
     }
 
     //Faz uma chamada polimórfica para executar o comando específico passado pela interação com o usuário
-    private void executarComando(String tipoDeComando) {
-        Comando comando = comandos.get(tipoDeComando);
-        comando.executar();
+    private void executarComando(String tipoDeComando[]) {
+        Comando comando = comandos.get(tipoDeComando[0]);
+        comando.executar(tipoDeComando[1], tipoDeComando[2]);
     }
 
     public void fazerLoopEntrada() throws IOException {
         comandos = InicializadorComandos.inicializarComandos();
 
         String stringComando = obterComandoConsoie();
+        String divisaoComando[] = stringComando.split(" ");
+
+        System.out.println(divisaoComando[0]);
+        System.out.println(divisaoComando[1]);
+        System.out.println(divisaoComando[2]);
 
         while (!stringComando.equals("sai")) {
-            executarComando(stringComando);
+            executarComando(divisaoComando);
             stringComando = obterComandoConsoie();
         }
     }

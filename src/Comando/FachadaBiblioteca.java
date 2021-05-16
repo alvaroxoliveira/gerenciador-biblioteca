@@ -20,10 +20,12 @@ public class FachadaBiblioteca {
     public void realizarEmprestimo() {
         System.out.println("Realizando Emprestimo");
 
+
     }
 
     public void realizarDevolucao() {
         System.out.println("Realizando Devolução");
+
     }
 
     public void realizarReserva() {
