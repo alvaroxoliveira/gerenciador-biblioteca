@@ -20,6 +20,7 @@ public class User implements IUsuario{
         this.listaDeLivrosEmprestados = new ArrayList<Livro>();
     }
 
+    // Método de definição de tipo de usuário
     public void setTipoDeUsuario(IEstadoUsuario estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
     }

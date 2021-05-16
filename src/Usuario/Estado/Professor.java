@@ -3,7 +3,7 @@ package Usuario.Estado;
 import Livro.Estado.IEstadoLivro;
 import Livro.Livro;
 
-public class Professor implements IEstadoLivro {
+public class Professor implements IEstadoUsuario {
     private Professor() {}
 
     public static Professor instance; //cada livro só vai ter uma instancia de cada estado
@@ -20,17 +20,22 @@ public class Professor implements IEstadoLivro {
     }
 
     @Override
-    public void emprestarLivro(Livro livro) {
+    public void pegarLivroEmprestado(int codigoDoLivro) {
 
     }
 
     @Override
-    public void devolverLivro(Livro livro) {
+    public void devolverLivroEmprestado(int codigoDoLivro) {
 
     }
 
     @Override
-    public void reservarLivro(Livro livro) {
+    public void reservarLivro(int codigoDoLivro) {
+
+    }
+
+    @Override
+    public void consultarLivro(int codigoDoLivro) {
 
     }
 }

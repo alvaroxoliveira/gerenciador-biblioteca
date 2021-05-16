@@ -6,7 +6,7 @@ import Livro.Estado.SingletonEmprestado;
 import Livro.Estado.SingletonReservado;
 import Livro.Livro;
 
-public class AlunoGraduacao implements IEstadoLivro {
+public class AlunoGraduacao implements IEstadoUsuario {
     private AlunoGraduacao() {}
 
     public static AlunoGraduacao instance; //cada livro só vai ter uma instancia de cada estado
@@ -22,18 +22,24 @@ public class AlunoGraduacao implements IEstadoLivro {
         return instance;
     }
 
+
     @Override
-    public void emprestarLivro(Livro livro) {
+    public void pegarLivroEmprestado(int codigoDoLivro) {
 
     }
 
     @Override
-    public void devolverLivro(Livro livro) {
+    public void devolverLivroEmprestado(int codigoDoLivro) {
 
     }
 
     @Override
-    public void reservarLivro(Livro livro) {
+    public void reservarLivro(int codigoDoLivro) {
+
+    }
+
+    @Override
+    public void consultarLivro(int codigoDoLivro) {
 
     }
 }
