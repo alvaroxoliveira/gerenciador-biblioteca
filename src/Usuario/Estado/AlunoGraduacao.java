@@ -1,11 +1,5 @@
 package Usuario.Estado;
 
-import Livro.Estado.IEstadoLivro;
-import Livro.Estado.SingletonDisponivel;
-import Livro.Estado.SingletonEmprestado;
-import Livro.Estado.SingletonReservado;
-import Livro.Livro;
-
 public class AlunoGraduacao implements IEstadoUsuario {
     private AlunoGraduacao() {}
 

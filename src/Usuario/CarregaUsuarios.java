@@ -12,16 +12,16 @@ public class CarregaUsuarios {
     private static ArrayList<User> usuariosDoSistema = new ArrayList<User>();
 
     private void inicializaUsuarios() {
-        User u1 = new User(123, "João da Silva");
+        User u1 = new User("123", "João da Silva");
         u1.setTipoDeUsuario(AlunoGraduacao.getInstance());
 
-        User u2 = new User(456, "Luiz Fernando Rodrigues");
+        User u2 = new User("456", "Luiz Fernando Rodrigues");
         u2.setTipoDeUsuario(AlunoPosGraduacao.getInstance());
 
-        User u3 = new User(789, "Pedro Paulo");
+        User u3 = new User("789", "Pedro Paulo");
         u3.setTipoDeUsuario(AlunoGraduacao.getInstance());
 
-        User u4 = new User(100, "Carlos Lucena");
+        User u4 = new User("100", "Carlos Lucena");
         u4.setTipoDeUsuario(Professor.getInstance());
 
         carregarUsuariosNoSistema(u1);

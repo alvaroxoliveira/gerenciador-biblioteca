@@ -9,8 +9,8 @@ public interface IUsuario {
     public void setTipoDeUsuario(IEstadoUsuario estadoUsuario);
     public void adionaNaListaDeEmprestados(Livro livro);
     public void removeDaListaDeEmprestados(Livro livro);
-    public int getIdentificador();
-    public void setIdentificador(int identificador);
+    public String getIdentificador();
+    public void setIdentificador(String identificador);
     public String getNome();
     public void setNome(String nome);
     public ArrayList<Livro> getListaDeLivrosEmprestados();

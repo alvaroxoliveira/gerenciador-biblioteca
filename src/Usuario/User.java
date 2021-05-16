@@ -7,14 +7,14 @@ import Usuario.Estado.IEstadoUsuario;
 import java.util.ArrayList;
 
 public class User implements IUsuario{
-    private int identificador;
+    private String identificador;
     private String nome;
     private IEstadoUsuario estadoUsuario;
     
     // Lista de livros que o usuário está no momento
     private ArrayList<Livro> listaDeLivrosEmprestados;
 
-    public User(int identificador, String nome) {
+    public User(String identificador, String nome) {
         this.identificador = identificador;
         this.nome = nome;
         this.listaDeLivrosEmprestados = new ArrayList<Livro>();
@@ -35,11 +35,11 @@ public class User implements IUsuario{
         this.listaDeLivrosEmprestados.remove(livro);
     }
 
-    public int getIdentificador() {
+    public String getIdentificador() {
         return identificador;
     }
 
-    public void setIdentificador(int identificador) {
+    public void setIdentificador(String identificador) {
         this.identificador = identificador;
     }
 
