@@ -17,26 +17,23 @@ public class FachadaBiblioteca {
         return instance;
     }
 
-    public void realizarEmprestimo() {
+    public void realizarEmprestimo(String parametro1, String parametro2) {
         System.out.println("Realizando Emprestimo");
-
-
     }
 
-    public void realizarDevolucao() {
+    public void realizarDevolucao(String parametro1, String parametro2) {
         System.out.println("Realizando Devolução");
-
     }
 
-    public void realizarReserva() {
-        System.out.println("Realizando reservao");
+    public void realizarReserva(String parametro1, String parametro2) {
+        System.out.println("Realizando reserva");
     }
 
-    public void realizarConsultaLivro() {
+    public void realizarConsultaLivro(String parametro1, String parametro2) {
         System.out.println("Consultando dados do livro: ");
     }
 
-    public void realizarObservacao() {
+    public void realizarObservacao(String parametro1, String parametro2) {
         System.out.println("Observando dados do livro: ");
     }
 }
