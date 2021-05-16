@@ -1,32 +1,36 @@
-package Usuario;
+package Usuario.Estado;
 
-public class AlunoPosGraduacao extends User implements IUsuario, IAlunos{
-    private static final int tempoMaximoDeEmprestimoEmDias = 4;
-    private static final int quantidadeMaximaDeEmprestimosAlunosPosGraduacao = 4;
+import Livro.Estado.IEstadoLivro;
+import Livro.Livro;
 
-    public AlunoPosGraduacao(int identificador, String nome) {
-        super(identificador, nome);
+public class AlunoPosGraduacao implements IEstadoLivro {
+    private AlunoPosGraduacao() {}
+
+    public static AlunoPosGraduacao instance; //cada livro só vai ter uma instancia de cada estado
+
+    public static AlunoPosGraduacao getInstance() { //se não existir instancia, cria uma
+        if(instance == null) {
+            synchronized(AlunoPosGraduacao.class) {
+                if(instance == null) {
+                    instance = new AlunoPosGraduacao();
+                }
+            }
+        }
+        return instance;
     }
 
     @Override
-    public void emprestimo() {
+    public void emprestarLivro(Livro livro) {
 
     }
 
     @Override
-    public void devolucao() {
+    public void devolverLivro(Livro livro) {
 
     }
 
     @Override
-    public void reserva() {
+    public void reservarLivro(Livro livro) {
 
-    }
-
-    //Retorna a quantidade de livros que o aluno pegou emprestado
-    @Override
-    public int getQuantidadeDeLivrosEmprestadosDoUsuario() {
-        User userAlunoPosGraduacao = (User) this;
-        return userAlunoPosGraduacao.getListaDeLivrosEmprestados().size();
     }
 }

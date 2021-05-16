@@ -1,27 +1,36 @@
 package Usuario.Estado;
 
-import Usuario.IUsuario;
-import Usuario.User;
+import Livro.Estado.IEstadoLivro;
+import Livro.Livro;
 
-public class Professor extends User implements IUsuario {
-    public Professor(int identificador, String nome) {
-        super(identificador, nome);
+public class Professor implements IEstadoLivro {
+    private Professor() {}
+
+    public static Professor instance; //cada livro só vai ter uma instancia de cada estado
+
+    public static Professor getInstance() { //se não existir instancia, cria uma
+        if(instance == null) {
+            synchronized(Professor.class) {
+                if(instance == null) {
+                    instance = new Professor();
+                }
+            }
+        }
+        return instance;
     }
-    private static final int tempoMaximoDeEmprestimoEmDias = 7;
 
     @Override
-    public void emprestimo() {
+    public void emprestarLivro(Livro livro) {
 
     }
 
     @Override
-    public void devolucao() {
+    public void devolverLivro(Livro livro) {
 
     }
 
     @Override
-    public void reserva() {
+    public void reservarLivro(Livro livro) {
 
     }
-
 }

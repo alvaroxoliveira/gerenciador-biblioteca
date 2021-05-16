@@ -1,12 +1,15 @@
 package Usuario;
 
+import Livro.Estado.IEstadoLivro;
 import Livro.Livro;
+import Usuario.Estado.IEstadoUsuario;
 
 import java.util.ArrayList;
 
-public abstract class User {
+public class User implements IUsuario{
     private int identificador;
     private String nome;
+    private IEstadoUsuario estadoUsuario;
     
     // Lista de livros que o usuário está no momento
     private ArrayList<Livro> listaDeLivrosEmprestados;
@@ -17,14 +20,18 @@ public abstract class User {
         this.listaDeLivrosEmprestados = new ArrayList<Livro>();
     }
 
+    public void setTipoDeUsuario(IEstadoUsuario estadoUsuario) {
+        this.estadoUsuario = estadoUsuario;
+    }
+
     // Adiciona um livro na lista de emprestimos
-    public void pegaEmprestado(Livro livro) {
+    public void adionaNaListaDeEmprestados(Livro livro) {
         this.listaDeLivrosEmprestados.add(livro);
     }
 
     // Remove o objeto livro da lista de livros emprestados
-    public void devolveLivro(int i) {
-        this.listaDeLivrosEmprestados.remove(i);
+    public void removeDaListaDeEmprestados(Livro livro) {
+        this.listaDeLivrosEmprestados.remove(livro);
     }
 
     public int getIdentificador() {
