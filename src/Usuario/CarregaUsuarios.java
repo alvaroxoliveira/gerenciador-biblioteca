@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class CarregaUsuarios {
     private static ArrayList<User> usuariosDoSistema = new ArrayList<User>();
 
-    private void inicializaUsuarios() {
+    public static void inicializaUsuarios() {
         User u1 = new User("123", "João da Silva");
         u1.setTipoDeUsuario(AlunoGraduacao.getInstance());
 
@@ -31,12 +31,12 @@ public class CarregaUsuarios {
     }
 
     // Cadastrar um usuário
-    private void carregarUsuariosNoSistema(User usuario) {
+    private static void carregarUsuariosNoSistema(User usuario) {
         CarregaUsuarios.usuariosDoSistema.add(usuario);
     }
 
     // Descadastrar um usuário
-    private void removerUsuariosDoSistema(int i) {
+    private static void removerUsuariosDoSistema(int i) {
         CarregaUsuarios.usuariosDoSistema.remove(i);
     }
 
