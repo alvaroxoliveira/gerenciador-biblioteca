@@ -31,17 +31,8 @@ public class FachadaBiblioteca {
         }
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
-        System.out.println("Realizando Emprestimo");
+        System.out.println("Realizando Emprestimo.");
 
-        if(Buscas.usuarioExiste(identificadorUsuario)) {
-            if(Buscas.livroExiste(identificadorLivro)) {
-                System.out.println("Esse livro existe");
-            } else {
-                System.out.println("O livro não existe no acervo");
-            }
-        } else {
-            System.out.println("Erro ao realizar operação: Usuário não está cadastrado no sistema.");
-        }
     }
 
     public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
