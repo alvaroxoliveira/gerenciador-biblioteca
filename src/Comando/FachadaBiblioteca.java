@@ -24,32 +24,21 @@ public class FachadaBiblioteca {
         return instance;
     }
 
-    private boolean usuarioExiste(String identificacaoUsuario) {
-        boolean existe = false;
-        for(User user: CarregaUsuarios.getUsuariosDoSistema()) {
-            if(identificacaoUsuario.equals(user.getIdentificador())) {
-                existe = true;
-            }
-        }
-        return existe;
-    }
-
-    private boolean livroExiste(String identificacaoLivro) {
-        boolean existe = false;
-        for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
-            if(identificacaoLivro.equals(livro.getId())) {
-                existe = true;
-            }
-        }
-        return existe;
-    }
-
     public void realizarEmprestimo(ArrayList<String> parametroParaExecutar) {
+        if(parametroParaExecutar.size() != 2) {
+            System.out.println("Erro na quantidade de parametros");
+            return;
+        }
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
         System.out.println("Realizando Emprestimo");
-        if(usuarioExiste(identificadorUsuario)) {
 
+        if(Buscas.usuarioExiste(identificadorUsuario)) {
+            if(Buscas.livroExiste(identificadorLivro)) {
+                System.out.println("Esse livro existe");
+            } else {
+                System.out.println("O livro não existe no acervo");
+            }
         } else {
             System.out.println("Erro ao realizar operação: Usuário não está cadastrado no sistema.");
         }
