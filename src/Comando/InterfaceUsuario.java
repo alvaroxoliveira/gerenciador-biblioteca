@@ -20,11 +20,15 @@ public class InterfaceUsuario {
     //Faz uma chamada polimórfica para executar o comando específico passado pela interação com o usuário
     private void executarComando(String tipoDeComando[]) {
         ArrayList<String> parametroParaExecutar = new ArrayList<String>();
-        if(tipoDeComando[2] != null) {
+
+        if(tipoDeComando.length > 2) {
             parametroParaExecutar.add(tipoDeComando[1]);
             parametroParaExecutar.add(tipoDeComando[2]);
-        } else {
+        } else if(tipoDeComando.length == 1) {
             parametroParaExecutar.add(tipoDeComando[1]);
+        } else {
+            System.out.println("Erro na quantidade de parametros");
+            return;
         }
 
         Comando comando = comandos.get(tipoDeComando[0]);
