@@ -4,7 +4,7 @@ import Livro.Estado.IEstadoLivro; //pra importar de outro pacote
 import Livro.Estado.SingletonDisponivel;
 
 public class Livro {
-    private int id;
+    private String id;
     private String titulo;
     private String editora;
     private String autores;
@@ -16,7 +16,7 @@ public class Livro {
         this.estadoLivro = estadoInicial;
     }
 
-    public Livro(int id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
+    public Livro(String id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
         this.id = id;
         this.titulo = titulo;
         this.editora = editora;
@@ -43,11 +43,11 @@ public class Livro {
         this.estadoLivro = estadoLivro;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
