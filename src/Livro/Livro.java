@@ -15,7 +15,7 @@ public class Livro implements Subject {
     private String edicao;
     private int anoDePublicacao;
     private IEstadoLivro estadoLivro; //estado do livro usado no singleton
-    private ArrayList<Observer> observadores = new ArrayList<Observer>();
+    private final ArrayList<Observer> observadores = new ArrayList<Observer>();
 
     public Livro(IEstadoLivro estadoInicial) {
         this.estadoLivro = estadoInicial;

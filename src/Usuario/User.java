@@ -1,6 +1,5 @@
 package Usuario;
 
-import Livro.Estado.IEstadoLivro;
 import Livro.Livro;
 import Observer.Observer;
 import Usuario.Estado.IEstadoUsuario;
@@ -11,7 +10,9 @@ public class User implements IUsuario, Observer {
     private String identificador;
     private String nome;
     private IEstadoUsuario estadoUsuario;
-    
+    private int quantidadeDeNotificacoesDuplaReserva = 0;
+
+
     // Lista de livros que o usuário está no momento
     private ArrayList<Livro> listaDeLivrosEmprestados;
 
@@ -21,10 +22,10 @@ public class User implements IUsuario, Observer {
         this.listaDeLivrosEmprestados = new ArrayList<Livro>();
     }
 
-    // Método do padrão observer
     @Override
     public void avisarReservasSimultaneas() {
         System.out.println("Dupla reserva simultânea!");
+        this.quantidadeDeNotificacoesDuplaReserva++;
     }
 
     // Método de definição de tipo de usuário
