@@ -2,8 +2,12 @@ package Livro;
 
 import Livro.Estado.IEstadoLivro; //pra importar de outro pacote
 import Livro.Estado.SingletonDisponivel;
+import Observer.Observer;
+import Observer.Subject;
 
-public class Livro {
+import java.util.ArrayList;
+
+public class Livro implements Subject {
     private String id;
     private String titulo;
     private String editora;
@@ -11,6 +15,7 @@ public class Livro {
     private String edicao;
     private int anoDePublicacao;
     private IEstadoLivro estadoLivro; //estado do livro usado no singleton
+    private ArrayList<Observer> observadores = new ArrayList<Observer>();
 
     public Livro(IEstadoLivro estadoInicial) {
         this.estadoLivro = estadoInicial;
@@ -41,6 +46,18 @@ public class Livro {
     // Mudança de estado como manda  o padrão state implementado na aplicação
     public void mudarEstado(IEstadoLivro estadoLivro) {
         this.estadoLivro = estadoLivro;
+    }
+
+    @Override
+    public void adicionarObserver(Observer observer) {
+        this.observadores.add(observer);
+    }
+
+    @Override
+    public void notificarObserver() {
+        for(Observer observer: this.observadores) {
+            observer.avisarReservasSimultaneas();
+        }
     }
 
     public String getId() {

@@ -2,11 +2,12 @@ package Usuario;
 
 import Livro.Estado.IEstadoLivro;
 import Livro.Livro;
+import Observer.Observer;
 import Usuario.Estado.IEstadoUsuario;
 
 import java.util.ArrayList;
 
-public class User implements IUsuario{
+public class User implements IUsuario, Observer {
     private String identificador;
     private String nome;
     private IEstadoUsuario estadoUsuario;
@@ -18,6 +19,12 @@ public class User implements IUsuario{
         this.identificador = identificador;
         this.nome = nome;
         this.listaDeLivrosEmprestados = new ArrayList<Livro>();
+    }
+
+    // Método do padrão observer
+    @Override
+    public void avisarReservasSimultaneas() {
+        System.out.println("Dupla reserva simultânea!");
     }
 
     // Método de definição de tipo de usuário
