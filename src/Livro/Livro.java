@@ -21,6 +21,7 @@ public class Livro implements Subject {
         this.estadoLivro = estadoInicial;
     }
 
+    
     public Livro(String id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
         this.id = id;
         this.titulo = titulo;
