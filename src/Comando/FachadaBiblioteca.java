@@ -7,6 +7,8 @@ import Usuario.User;
 
 import java.util.ArrayList;
 
+//Classe fachada que é um Singleton (motivo da instancia) e possui os métodos para realizar as ações
+//Precisa implementar o que cada ação faz!
 public class FachadaBiblioteca {
 
     public static FachadaBiblioteca instance; //cada livro só vai ter uma instancia de cada estado
@@ -36,7 +38,7 @@ public class FachadaBiblioteca {
     }
 
     public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
-        System.out.println("Realizando Devolução");
+        System.out.println("Realizando devolução");
     }
 
     public void realizarReserva(ArrayList<String> parametroParaExecutar) {
@@ -49,5 +51,13 @@ public class FachadaBiblioteca {
 
     public void realizarObservacao(ArrayList<String> parametroParaExecutar) {
         System.out.println("Observando dados do livro: ");
+    }
+
+    public void realizarConsultaUsuario(ArrayList<String> parametroParaExecutar){
+        System.out.println("Consultando a lista de empréstimo do usuário: ");
+    }
+
+    public void realizarConsultaProfessor(ArrayList<String> parametroParaExecutar){
+        System.out.println("Quantidade de vezes que o professor foi notificado: ");
     }
 }

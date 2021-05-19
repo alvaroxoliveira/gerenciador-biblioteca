@@ -34,7 +34,7 @@ public class User implements IUsuario, Observer {
     }
 
     // Adiciona um livro na lista de emprestimos
-    public void adionaNaListaDeEmprestados(Livro livro) {
+    public void adicionaNaListaDeEmprestados(Livro livro) {
         this.listaDeLivrosEmprestados.add(livro);
     }
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface IUsuario {
     void setTipoDeUsuario(IEstadoUsuario estadoUsuario);
-    void adionaNaListaDeEmprestados(Livro livro);
+    void adicionaNaListaDeEmprestados(Livro livro);
     void removeDaListaDeEmprestados(Livro livro);
     String getIdentificador();
     void setIdentificador(String identificador);

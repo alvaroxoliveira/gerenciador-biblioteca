@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class InicializadorComandos {
 
+    //Método para inicializar os comandos existentes no sistema
     public static HashMap<String, Comando> inicializarComandos() {
         HashMap<String, Comando> comandos = new HashMap<String, Comando>();
         comandos.put("emp", new Emprestimo());
@@ -11,6 +12,8 @@ public class InicializadorComandos {
         comandos.put("dev", new Devolucao());
         comandos.put("obs", new Observacao());
         comandos.put("liv", new RealizarConsultaLivro());
+        comandos.put("usu", new ConsultaUsuario());
+        comandos.put("ntf", new ConsultaProfessor());
         return comandos;
     }
 }

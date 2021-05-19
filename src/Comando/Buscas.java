@@ -6,6 +6,7 @@ import Usuario.CarregaUsuarios;
 import Usuario.User;
 
 public class Buscas {
+    //Busca pelo id do usuário na lista de usuários e compara com o id passado
     public static int buscaIndexDoUsuario(String identificacaoUsuario) {
         int index = 0;
         for(User user: CarregaUsuarios.getUsuariosDoSistema()) {
@@ -17,6 +18,7 @@ public class Buscas {
         return -1;
     }
 
+    //Busca pelo id do livro na lista de livroe e compara com o id passado
     public static int buscaIndexDoLivro(String identificacaoLivro) {
         int index = 0;
         for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
@@ -28,6 +30,7 @@ public class Buscas {
         return -1;
     }
 
+    //Retorna o objeto usuário (caso exista) compativel com o id passado
     public static User getUsuario(String identificacaoUsuario) {
         int indexDoUsuario = buscaIndexDoUsuario(identificacaoUsuario);
         if(indexDoUsuario != -1) {
@@ -38,6 +41,7 @@ public class Buscas {
         return null;
     }
 
+    //Retorna o objeto livro (caso exista) compativel com o id passado
     public static Livro getLivro(String identificacaoLivro) {
         int indexDoLivro = buscaIndexDoLivro(identificacaoLivro);
         if(indexDoLivro != -1) {
