@@ -1,7 +1,7 @@
 package Livro;
 
-import Livro.Estado.IEstadoLivro; //pra importar de outro pacote
-import Livro.Estado.SingletonDisponivel;
+//import Livro.Estado.IEstadoLivro; //pra importar de outro pacote
+//import Livro.Estado.SingletonDisponivel;
 import Observer.Observer;
 import Observer.Subject;
 
@@ -14,14 +14,14 @@ public class Livro implements Subject {
     private String autores;
     private String edicao;
     private int anoDePublicacao;
-    private IEstadoLivro estadoLivro; //estado do livro usado no singleton
+    //    private IEstadoLivro estadoLivro; //estado do livro usado no singleton
+    private ArrayList<Exemplar> exemplares = new ArrayList<Exemplar>();
     private final ArrayList<Observer> observadores = new ArrayList<Observer>();
 
-    public Livro(IEstadoLivro estadoInicial) {
-        this.estadoLivro = estadoInicial;
-    }
+//    public Livro(IEstadoLivro estadoInicial) {
+//        this.estadoLivro = estadoInicial;
+//    }
 
-    
     public Livro(String id, String titulo, String editora, String autores, String edicao, int anoDePublicacao) {
         this.id = id;
         this.titulo = titulo;
@@ -29,24 +29,17 @@ public class Livro implements Subject {
         this.autores = autores;
         this.edicao = edicao;
         this.anoDePublicacao = anoDePublicacao;
-        this.estadoLivro = SingletonDisponivel.getInstance();
-    }
-
-    public void emprestarLivro(){
-        estadoLivro.emprestarLivro(this);
-    }
-
-    public void devolverLivro(){
-        estadoLivro.devolverLivro(this);
-    }
-
-    public void reservarLivro(){
-        estadoLivro.reservarLivro(this);
+//        this.estadoLivro = SingletonDisponivel.getInstance();
     }
 
     // Mudança de estado como manda  o padrão state implementado na aplicação
-    public void mudarEstado(IEstadoLivro estadoLivro) {
-        this.estadoLivro = estadoLivro;
+    // A mudança de estado tem que ser no exemplar
+//    public void mudarEstado(IEstadoLivro estadoLivro) {
+//        this.estadoLivro = estadoLivro;
+//    }
+
+    public void adicionaExemplar(Exemplar exemplar) {
+        this.exemplares.add(exemplar);
     }
 
     @Override
@@ -109,11 +102,11 @@ public class Livro implements Subject {
         this.anoDePublicacao = anoDePublicacao;
     }
 
-    public IEstadoLivro getEstadoLivro() {
-        return estadoLivro;
-    }
-
-    public void setEstadoLivro(IEstadoLivro estadoLivro) {
-        this.estadoLivro = estadoLivro;
-    }
+//    public IEstadoLivro getEstadoLivro() {
+//        return estadoLivro;
+//    }
+//
+//    public void setEstadoLivro(IEstadoLivro estadoLivro) {
+//        this.estadoLivro = estadoLivro;
+//    }
 }

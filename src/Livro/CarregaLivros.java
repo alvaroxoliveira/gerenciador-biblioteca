@@ -1,5 +1,7 @@
 package Livro;
 
+import Livro.Estado.SingletonDisponivel;
+
 import java.util.ArrayList;
 
 public class CarregaLivros {
@@ -32,6 +34,18 @@ public class CarregaLivros {
         Livro l8 = new Livro("401", "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
                 "Addison-Wesley Professional", "Martin Fowler", "3ª", 2003);
 
+        //Adicionando exemplares no sistema
+        l1.adicionaExemplar(new Exemplar("01", SingletonDisponivel.getInstance()));
+        l1.adicionaExemplar(new Exemplar("02", SingletonDisponivel.getInstance()));
+        l2.adicionaExemplar(new Exemplar("03", SingletonDisponivel.getInstance()));
+        l3.adicionaExemplar(new Exemplar("04", SingletonDisponivel.getInstance()));
+        l4.adicionaExemplar(new Exemplar("05", SingletonDisponivel.getInstance()));
+        l5.adicionaExemplar(new Exemplar("06", SingletonDisponivel.getInstance()));
+        l5.adicionaExemplar(new Exemplar("07", SingletonDisponivel.getInstance()));
+        l7.adicionaExemplar(new Exemplar("08", SingletonDisponivel.getInstance()));
+        l7.adicionaExemplar(new Exemplar("09", SingletonDisponivel.getInstance()));
+
+        // Adiciona os livros carregados no sistema
         adicionaLivroNoSistema(l1);
         adicionaLivroNoSistema(l2);
         adicionaLivroNoSistema(l3);
