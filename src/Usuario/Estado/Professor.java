@@ -1,5 +1,6 @@
 package Usuario.Estado;
 
+import Comando.BuscaLivro;
 import Usuario.User;
 
 public class Professor implements IEstadoUsuario {
@@ -17,7 +18,7 @@ public class Professor implements IEstadoUsuario {
     }
 
     @Override
-    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
-
+    public void pegarLivroEmprestado(String codigoDoLivro, User thisUser) {
+        BuscaLivro.getLivro(codigoDoLivro).pegarExemplarEmprestado(thisUser);
     }
 }

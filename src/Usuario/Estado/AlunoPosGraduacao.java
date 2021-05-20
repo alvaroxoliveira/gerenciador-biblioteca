@@ -1,5 +1,6 @@
 package Usuario.Estado;
 
+import Comando.BuscaLivro;
 import Livro.Estado.IEstadoLivro;
 import Livro.Livro;
 import Usuario.User;
@@ -7,7 +8,7 @@ import Usuario.User;
 public class AlunoPosGraduacao implements IEstadoUsuario {
     private AlunoPosGraduacao() {}
 
-    public static AlunoPosGraduacao instance; //cada livro só vai ter uma instancia de cada estado
+    public static AlunoPosGraduacao instance; //cada aluno só vai ter uma instancia de cada estado
 
     public static AlunoPosGraduacao getInstance() { //se não existir instancia, cria uma
         if(instance == null) {
@@ -21,7 +22,12 @@ public class AlunoPosGraduacao implements IEstadoUsuario {
     }
 
     @Override
-    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
-
+    public void pegarLivroEmprestado(String codigoDoLivro, User thisUser) {
+        if(thisUser.getListaDeLivrosEmprestados().size() < 4) {
+            BuscaLivro.getLivro(codigoDoLivro).pegarExemplarEmprestado(thisUser);
+        } else {
+            System.out.println("Usuário ja tem a quantidade máxima de livros emprestados");
+            return;
+        }
     }
 }
