@@ -27,7 +27,7 @@ public class InterfaceUsuario {
         if(tipoDeComando.length > 2) {
             parametroParaExecutar.add(tipoDeComando[1]);
             parametroParaExecutar.add(tipoDeComando[2]);
-        } else if(tipoDeComando.length == 1) {
+        } else if(tipoDeComando.length == 2) {
             parametroParaExecutar.add(tipoDeComando[1]);
         } else {
             System.out.println("Erro na quantidade de parametros");

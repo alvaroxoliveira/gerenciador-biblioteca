@@ -1,5 +1,9 @@
 package Comando;
 
+import Livro.CarregaLivros;
+import Livro.Exemplar;
+import Livro.Livro;
+
 import java.util.ArrayList;
 
 //Classe fachada que é um Singleton (motivo da instancia) e possui os métodos para realizar as ações
@@ -23,6 +27,15 @@ public class FachadaBiblioteca {
 
     private boolean verificarQuantidadeDeParametros(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 2) {
+            System.out.println(parametroParaExecutar.size());
+            System.out.println("Erro na quantidade de parametros");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verificarQuantidadeDeParametrosConsulta(ArrayList<String> parametroParaExecutar) {
+        if(parametroParaExecutar.size() != 1) {
             System.out.println(parametroParaExecutar.size());
             System.out.println("Erro na quantidade de parametros");
             return false;
@@ -67,8 +80,21 @@ public class FachadaBiblioteca {
         BuscaUsuario.getUsuario(identificadorUsuario).realizaReserva(identificadorLivro);
     }
 
-    public void realizarConsultaLivro(ArrayList<String> parametroParaExecutar) {
+    public void realizarConsultaLivro(ArrayList<String> parametroParaExecutar) { //caio
+        if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
+            return;
+        }
         System.out.println("Consultando dados do livro: ");
+
+        String identificadorLivro = parametroParaExecutar.get(0);
+
+        //Considerar se deve refatorar - Procurar o livro correspondente
+        for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
+            if(livro.getId().equals(identificadorLivro)){
+                livro.consultarLivro();
+                return;
+            }
+        }
     }
 
     public void realizarObservacao(ArrayList<String> parametroParaExecutar) {

@@ -100,6 +100,11 @@ public class Livro implements Subject {
         }
         System.out.println("Não existe exemplar Disponível");
     }
+    
+    public void consultarLivro(){
+        System.out.println("Título: " + this.titulo);
+        
+    }
 
     @Override
     public void notificarObserver() {
