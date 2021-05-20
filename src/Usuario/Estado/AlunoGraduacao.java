@@ -35,10 +35,12 @@ public class AlunoGraduacao implements IEstadoUsuario {
         BuscaLivro.getLivro(codigoDoLivro).devolverLivroEmprestado(user);
     }
 
+    //faz a reserva de um livro passando o código e o usuário que vai a fazer
     @Override
     public void reservarLivro(String codigoDoLivro, User user) { //Caio
-
+        //testa se o usuário tem menos de 3 livros reservados
         if(user.getListaDeReservados().size() < 3) {
+            //caso possa, chama o método de reservar exemplar na classe do livro
             BuscaLivro.getLivro(codigoDoLivro).reservarExemplar(user);
         } else {
             System.out.println("Usuário ja tem a quantidade máxima de livros reservados");

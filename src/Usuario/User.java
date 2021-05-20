@@ -36,6 +36,7 @@ public class User implements IUsuario, Observer {
         return false;
     }
 
+    //verifica se há uma reserva do mesmo livro pelo usuárip
     private boolean verificaSeJaTemOLivroReservado(String codigoDoLivro){ //caio
         for(Exemplar exemplar: this.listaDeReservados) {
             if(exemplar.getCodigoDoLivro().equals(codigoDoLivro)) {
@@ -67,14 +68,16 @@ public class User implements IUsuario, Observer {
         }
     }
 
+    //faz a reserva de um exemplar
     public void realizaReserva(String codigoDoLivro) { //caio
+        //chama o método para verificar se o usuário já reservou o mesmo livro
         if(verificaSeJaTemOLivroReservado(codigoDoLivro)) {
             System.out.println("Usuário ja tem um exemplar desse livro reservado.");
             return;
-        } else if(this.isDevedor == true) {
+        } else if(this.isDevedor == true) { //verifica se o usuário é devedor
             System.out.println("O usuário é devedor na Biblioteca");
             return;
-        } else {
+        } else { //caso possa chama o método de reservar livro no estado do usuário (tipo de usu)
             this.estadoUsuario.reservarLivro(codigoDoLivro, this);
             return;
         }

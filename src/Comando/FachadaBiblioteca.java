@@ -34,6 +34,7 @@ public class FachadaBiblioteca {
         return true;
     }
 
+    //verifica se foi passado apenas 1 parametro (codigo da consulta)
     private boolean verificarQuantidadeDeParametrosConsulta(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 1) {
             System.out.println(parametroParaExecutar.size());
@@ -68,7 +69,9 @@ public class FachadaBiblioteca {
 
     }
 
+    //realiza reserva de um exemplar
     public void realizarReserva(ArrayList<String> parametroParaExecutar) { //caio
+        //verifica se foi passado a quantidade certa de parametros
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
@@ -77,6 +80,7 @@ public class FachadaBiblioteca {
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
 
+        //chama o método de realizar reserva no usuário passando o id do livro
         BuscaUsuario.getUsuario(identificadorUsuario).realizaReserva(identificadorLivro);
     }
 

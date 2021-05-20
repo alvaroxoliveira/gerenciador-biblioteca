@@ -80,10 +80,12 @@ public class Livro implements Subject {
         }
     }
 
+    //faz a reserva de um exemplar recebendo o usuário que a vai fazer
     public void reservarExemplar(User user) { //Caio
         // Vai verificar se existe um exemplar do livro reservado
         for(Exemplar exemplarDoLivro: this.exemplares) {
             for (Exemplar reservados: user.getListaDeReservados()) {
+                //caso o usuário tenha um exemplar reservado ele não reserva outro
                 if(exemplarDoLivro.getCodigoExemplar().equals(reservados.getCodigoExemplar())) {
                     System.out.println("Já existe um exemplar reservado.");
                     return;
@@ -93,6 +95,7 @@ public class Livro implements Subject {
 
         //Caso não tenha exemplar reservado, ele tenta reservar um
         for(Exemplar exemplar: this.exemplares) {
+            //se houver um exemplar, ele tenta reservar chamando o método da classe do estado do livro
             if(exemplar.getEstadoExemplar().reservarLivro(exemplar, user)) {
                 System.out.println("Exemplar adicionado na lista de reservas do usuário.");
                 return;
@@ -103,7 +106,14 @@ public class Livro implements Subject {
     
     public void consultarLivro(){
         System.out.println("Título: " + this.titulo);
-        
+
+        //reservas
+
+        System.out.println("Exemplares: ");
+        for(Exemplar exemplar: this.exemplares){
+            System.out.println("Código: " + exemplar.getCodigoExemplar());
+            System.out.println("Estado: " + exemplar.getEstadoExemplar()); //mudar para string
+        }
     }
 
     @Override

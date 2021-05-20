@@ -34,9 +34,12 @@ public class SingletonDisponivel implements IEstadoLivro {
         return false;
     }
 
+    //faz a reserva de um exemplar, recebendo o exemplar e o usuário
     @Override
     public boolean reservarLivro(Exemplar exemplar, User user) {
+        //adiciona o exemplar na lista de reservados do usuário
         user.adicionaNaListaDeReservados(exemplar);
+        //muda o estado do livro para reservado
         exemplar.mudaEstado(SingletonReservado.getInstance());
         System.out.println("Livro Adicionado na Lista de Reservados do usuário.");
         return true;
