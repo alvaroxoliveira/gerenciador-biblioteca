@@ -55,11 +55,16 @@ public class FachadaBiblioteca {
 
     }
 
-    public void realizarReserva(ArrayList<String> parametroParaExecutar) {
-        if(verificarQuantidadeDeParametros(parametroParaExecutar)) {
+    public void realizarReserva(ArrayList<String> parametroParaExecutar) { //caio
+        if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-        System.out.println("Realizando reserva");
+        System.out.println("Operação de Reserva.");
+
+        String identificadorUsuario = parametroParaExecutar.get(0);
+        String identificadorLivro = parametroParaExecutar.get(1);
+
+        BuscaUsuario.getUsuario(identificadorUsuario).realizaReserva(identificadorLivro);
     }
 
     public void realizarConsultaLivro(ArrayList<String> parametroParaExecutar) {

@@ -78,6 +78,27 @@ public class Livro implements Subject {
         }
     }
 
+    public void reservarExemplar(User user) { //Caio
+        // Vai verificar se existe um exemplar do livro reservado
+        for(Exemplar exemplarDoLivro: this.exemplares) {
+            for (Exemplar reservados: user.getListaDeReservados()) {
+                if(exemplarDoLivro.getCodigoExemplar().equals(reservados.getCodigoExemplar())) {
+                    System.out.println("Já existe um exemplar reservado.");
+                    return;
+                }
+            }
+        }
+
+        //Caso não tenha exemplar reservado, ele tenta reservar um
+        for(Exemplar exemplar: this.exemplares) {
+            if(exemplar.getEstadoExemplar().reservarLivro(exemplar, user)) {
+                System.out.println("Exemplar adicionado na lista de reservas do usuário.");
+                return;
+            }
+        }
+        System.out.println("Não existe exemplar Disponível");
+    }
+
     @Override
     public void notificarObserver() {
         for(Observer observer: this.observadores) {

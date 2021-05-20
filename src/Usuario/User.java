@@ -36,6 +36,15 @@ public class User implements IUsuario, Observer {
         return false;
     }
 
+    private boolean verificaSeJaTemOLivroReservado(String codigoDoLivro){ //caio
+        for(Exemplar exemplar: this.listaDeReservados) {
+            if(exemplar.getCodigoDoLivro().equals(codigoDoLivro)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void realizaEmprestimo(String codigoDoLivro) {
         if(verificaSeJaTemOLivroEmprestado(codigoDoLivro)) {
             System.out.println("Usuário ja tem um exemplar desse livro emprestado.");
@@ -55,6 +64,19 @@ public class User implements IUsuario, Observer {
             this.estadoUsuario.devolverLivroEmprestado(codigoDoLivro, this);
         } else {
             System.out.println("Usuário não têm livros para devolver.");
+        }
+    }
+
+    public void realizaReserva(String codigoDoLivro) { //caio
+        if(verificaSeJaTemOLivroReservado(codigoDoLivro)) {
+            System.out.println("Usuário ja tem um exemplar desse livro reservado.");
+            return;
+        } else if(this.isDevedor == true) {
+            System.out.println("O usuário é devedor na Biblioteca");
+            return;
+        } else {
+            this.estadoUsuario.reservarLivro(codigoDoLivro, this);
+            return;
         }
     }
 

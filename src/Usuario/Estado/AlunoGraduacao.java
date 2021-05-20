@@ -35,4 +35,15 @@ public class AlunoGraduacao implements IEstadoUsuario {
         BuscaLivro.getLivro(codigoDoLivro).devolverLivroEmprestado(user);
     }
 
+    @Override
+    public void reservarLivro(String codigoDoLivro, User user) { //Caio
+
+        if(user.getListaDeReservados().size() < 3) {
+            BuscaLivro.getLivro(codigoDoLivro).reservarExemplar(user);
+        } else {
+            System.out.println("Usuário ja tem a quantidade máxima de livros reservados");
+            return;
+        }
+    }
+
 }
