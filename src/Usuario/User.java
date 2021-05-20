@@ -23,6 +23,7 @@ public class User implements IUsuario, Observer {
         this.identificador = identificador;
         this.nome = nome;
         this.listaDeLivrosEmprestados = new ArrayList<Exemplar>();
+        this.listaDeReservados = new ArrayList<Exemplar>();
         this.isDevedor = false;
     }
 
