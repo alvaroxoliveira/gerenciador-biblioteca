@@ -36,7 +36,6 @@ public class SingletonEmprestado implements IEstadoLivro {
 
     @Override
     public boolean reservarLivro(Exemplar exemplar, User user) {
-        System.out.println("Não há como reservar um livro que já está emprestado.");
         return false;
     }
 }

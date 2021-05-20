@@ -22,16 +22,19 @@ public class SingletonReservado implements IEstadoLivro {
 
     @Override
     public boolean emprestarLivro(Exemplar exemplar, User user) {
+        exemplar.mudaEstado(SingletonEmprestado.getInstance());
         return false;
     }
 
     @Override
     public boolean devolverLivro(Exemplar exemplar, User user) {
+        System.out.println("Não há como devolver um livro reservado.");
         return false;
     }
 
     @Override
     public boolean reservarLivro(Exemplar exemplar, User user) {
+        System.out.println("Não da pra reservar um livro que já está reservado.");
         return false;
     }
 }
