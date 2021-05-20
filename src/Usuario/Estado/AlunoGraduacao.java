@@ -21,12 +21,18 @@ public class AlunoGraduacao implements IEstadoUsuario {
     }
 
     @Override
-    public void pegarLivroEmprestado(String codigoDoLivro, User thisUser) {
-        if(thisUser.getListaDeLivrosEmprestados().size() < 3) {
-            BuscaLivro.getLivro(codigoDoLivro).pegarExemplarEmprestado(thisUser);
+    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
+        if(user.getListaDeLivrosEmprestados().size() < 3) {
+            BuscaLivro.getLivro(codigoDoLivro).pegarExemplarEmprestado(user);
         } else {
             System.out.println("Usuário ja tem a quantidade máxima de livros emprestados");
             return;
         }
     }
+
+    @Override
+    public void devolverLivroEmprestado(String codigoDoLivro, User user) {
+        BuscaLivro.getLivro(codigoDoLivro).devolverLivroEmprestado(user);
+    }
+
 }

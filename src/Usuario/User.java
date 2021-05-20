@@ -49,6 +49,15 @@ public class User implements IUsuario, Observer {
         }
     }
 
+    // Realiza
+    public void realizaDevolucao(String codigoDoLivro) {
+        if(this.listaDeLivrosEmprestados.size() > 0) {
+            this.estadoUsuario.devolverLivroEmprestado(codigoDoLivro, this);
+        } else {
+            System.out.println("Usuário não têm livros para devolver.");
+        }
+    }
+
     @Override
     public void avisarReservasSimultaneas() {
         System.out.println("Dupla reserva simultânea!");

@@ -21,4 +21,9 @@ public class Professor implements IEstadoUsuario {
     public void pegarLivroEmprestado(String codigoDoLivro, User thisUser) {
         BuscaLivro.getLivro(codigoDoLivro).pegarExemplarEmprestado(thisUser);
     }
+
+    @Override
+    public void devolverLivroEmprestado(String codigoDoLivro, User user) {
+
+    }
 }

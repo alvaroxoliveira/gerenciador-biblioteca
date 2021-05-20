@@ -30,4 +30,9 @@ public class AlunoPosGraduacao implements IEstadoUsuario {
             return;
         }
     }
+
+    @Override
+    public void devolverLivroEmprestado(String codigoDoLivro, User user) {
+
+    }
 }

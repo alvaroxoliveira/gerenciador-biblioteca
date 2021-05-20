@@ -47,6 +47,12 @@ public class FachadaBiblioteca {
             return;
         }
         System.out.println("Realizando devolução");
+
+        String identificadorUsuario = parametroParaExecutar.get(0);
+        String identificadorLivro = parametroParaExecutar.get(1);
+
+        BuscaUsuario.getUsuario(identificadorUsuario).realizaDevolucao(identificadorLivro);
+
     }
 
     public void realizarReserva(ArrayList<String> parametroParaExecutar) {

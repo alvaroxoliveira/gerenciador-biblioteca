@@ -67,6 +67,17 @@ public class Livro implements Subject {
         System.out.println("Não existe exemplar Disponível");
     }
 
+    public void devolverLivroEmprestado(User user) {
+        for(Exemplar exemplarDoLivro: this.exemplares) {
+            for (Exemplar exemplarEmprestado: user.getListaDeLivrosEmprestados()) {
+                if(exemplarDoLivro.getCodigoExemplar().equals(exemplarEmprestado.getCodigoExemplar())) {
+                    exemplarDoLivro.getEstadoExemplar().devolverLivro(exemplarDoLivro, user);
+                    return;
+                }
+            }
+        }
+    }
+
     @Override
     public void notificarObserver() {
         for(Observer observer: this.observadores) {

@@ -27,7 +27,10 @@ public class SingletonEmprestado implements IEstadoLivro {
 
     @Override
     public boolean devolverLivro(Exemplar exemplar, User user) {
-        return false;
+        user.removeDaListaDeEmprestados(exemplar);
+        exemplar.mudaEstado(SingletonDisponivel.getInstance());
+        System.out.println("Devolução feita com sucesso");
+        return true;
     }
 
     @Override
