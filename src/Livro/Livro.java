@@ -49,9 +49,11 @@ public class Livro implements Subject {
     public void pegarExemplarEmprestado(User user) {
         // Vai verificar se existe um exemplar do livro reservado
         for(Exemplar exemplarDoLivro: this.exemplares) {
-            for (Exemplar reservados: user.getListaDeReservados()) {
-                if(exemplarDoLivro.getCodigoExemplar().equals(reservados.getCodigoExemplar())) {
+            for (Exemplar reservado: user.getListaDeReservados()) {
+                if(exemplarDoLivro.getCodigoExemplar().equals(reservado.getCodigoExemplar())) {
                     exemplarDoLivro.getEstadoExemplar().emprestarLivro(exemplarDoLivro, user);
+                    user.removeDaListaDeReservados(reservado);
+                    System.out.println("Exemplar reservado adicionado na lista de empréstimo do usuário.");
                     return;
                 }
             }
