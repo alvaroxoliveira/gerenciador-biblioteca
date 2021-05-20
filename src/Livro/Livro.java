@@ -36,7 +36,7 @@ public class Livro implements Subject {
         this.observadores.add(observer);
     }
 
-    // Retorna a quantidade de exemplares disponíveis
+    // Retorna o exemplar da lista de exemplares do livro que estiver disponível
     public Exemplar obterExemplarDisponivel() {
         for(Exemplar exemplar: this.exemplares) {
             if(exemplar.getEstadoExemplar() == SingletonDisponivel.getInstance()) {
@@ -47,6 +47,17 @@ public class Livro implements Subject {
     }
 
     public void pegarExemplarEmprestado(User user) {
+        // Vai verificar se existe um exemplar do livro reservado
+        for(Exemplar exemplarDoLivro: this.exemplares) {
+            for (Exemplar reservados: user.getListaDeReservados()) {
+                if(exemplarDoLivro.getCodigoExemplar().equals(reservados.getCodigoExemplar())) {
+                    exemplarDoLivro.getEstadoExemplar().emprestarLivro(exemplarDoLivro, user);
+                    return;
+                }
+            }
+        }
+
+        // Esse trecho acontece se o usuário não ja estiver com o livro reservado
         for(Exemplar exemplar: this.exemplares) {
             if(exemplar.getEstadoExemplar().emprestarLivro(exemplar, user)) {
                 System.out.println("Exemplar adicionado na lista de empréstimo do usuário.");

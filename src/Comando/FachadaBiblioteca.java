@@ -34,7 +34,7 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-        System.out.println("Realizando Emprestimo.");
+        System.out.println("Operação de Empréstimo.");
 
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);

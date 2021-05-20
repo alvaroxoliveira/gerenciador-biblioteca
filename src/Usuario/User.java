@@ -40,7 +40,7 @@ public class User implements IUsuario, Observer {
             System.out.println("Usuário ja tem um exemplar desse livro emprestado.");
             return;
         } else if(this.isDevedor == true) {
-            System.out.println("O usuário está devedor na Biblioteca");
+            System.out.println("O usuário é devedor na Biblioteca");
             return;
         } else {
             this.estadoUsuario.pegarLivroEmprestado(codigoDoLivro, this);
@@ -67,6 +67,14 @@ public class User implements IUsuario, Observer {
     // Remove o objeto exemplar da lista de exemplares emprestados
     public void removeDaListaDeEmprestados(Exemplar exemplar) {
         this.listaDeLivrosEmprestados.remove(exemplar);
+    }
+
+    public void adicionaNaListaDeReservados(Exemplar exemplar) {
+        this.listaDeReservados.add(exemplar);
+    }
+    
+    public void removeDaListaDeReservados(Exemplar exemplar) {
+        this.listaDeReservados.add(exemplar);
     }
 
     @Override
