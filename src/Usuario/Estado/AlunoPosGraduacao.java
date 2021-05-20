@@ -2,6 +2,7 @@ package Usuario.Estado;
 
 import Livro.Estado.IEstadoLivro;
 import Livro.Livro;
+import Usuario.User;
 
 public class AlunoPosGraduacao implements IEstadoUsuario {
     private AlunoPosGraduacao() {}
@@ -17,5 +18,10 @@ public class AlunoPosGraduacao implements IEstadoUsuario {
             }
         }
         return instance;
+    }
+
+    @Override
+    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
+
     }
 }

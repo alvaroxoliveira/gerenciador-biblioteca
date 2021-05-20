@@ -1,6 +1,8 @@
 package Livro.Estado;
 
 import Livro.Livro;
+import Livro.Exemplar;
+import Usuario.User;
 
 public class SingletonDisponivel implements IEstadoLivro {
     private SingletonDisponivel() {}
@@ -19,19 +21,24 @@ public class SingletonDisponivel implements IEstadoLivro {
     }
 
     @Override
-    public void devolverLivro(Livro livro) {
-        System.out.println("Não há como devolver um livro que já está disponível.");
+    public boolean emprestarLivro(Exemplar exemplar, User user) {
+        user.adicionaNaListaDeEmprestados(exemplar);
+        exemplar.mudaEstado(SingletonEmprestado.getInstance());
+        System.out.println("Livro Emprestado com sucesso");
+        return true;
     }
 
     @Override
-    public void emprestarLivro(Livro livro) {
-        livro.mudarEstado(SingletonEmprestado.getInstance());
-        System.out.println("Empréstimo concluído com sucesso.");
+    public boolean devolverLivro(Exemplar exemplar, User user) {
+        System.out.println("Você não pode devolver um exemplar que está disponível.");
+        return false;
     }
 
     @Override
-    public void reservarLivro(Livro livro) {
-        livro.mudarEstado(SingletonReservado.getInstance());
-        System.out.println("Reserva concluída com sucesso.");
+    public boolean reservarLivro(Exemplar exemplar, User user) {
+        user.adicionaNaListaDeEmprestados(exemplar);
+        exemplar.mudaEstado(SingletonReservado.getInstance());
+        System.out.println("Livro Adicionado na Lista de Reservados do usuário.");
+        return true;
     }
 }

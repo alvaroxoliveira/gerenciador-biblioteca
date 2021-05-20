@@ -2,17 +2,17 @@ package Usuario;
 
 import Livro.Livro;
 import Usuario.Estado.IEstadoUsuario;
-
+import Livro.Exemplar;
 import java.util.ArrayList;
 
 public interface IUsuario {
     void setTipoDeUsuario(IEstadoUsuario estadoUsuario);
-    void adicionaNaListaDeEmprestados(Livro livro);
-    void removeDaListaDeEmprestados(Livro livro);
+    void adicionaNaListaDeEmprestados(Exemplar exemplar);
+    void removeDaListaDeEmprestados(Exemplar exemplar);
     String getIdentificador();
     void setIdentificador(String identificador);
     String getNome();
     void setNome(String nome);
-    ArrayList<Livro> getListaDeLivrosEmprestados();
-    void setListaDeLivrosEmprestados(ArrayList<Livro> listaDeLivrosEmprestimo);
+    ArrayList<Exemplar> getListaDeLivrosEmprestados();
+    void setListaDeLivrosEmprestados(ArrayList<Exemplar> listaDeLivrosEmprestimo);
 }

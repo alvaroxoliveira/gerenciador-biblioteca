@@ -1,10 +1,5 @@
 package Comando;
 
-import Livro.Livro;
-import Usuario.CarregaUsuarios;
-import Livro.CarregaLivros;
-import Usuario.User;
-
 import java.util.ArrayList;
 
 //Classe fachada que é um Singleton (motivo da instancia) e possui os métodos para realizar as ações
@@ -26,7 +21,7 @@ public class FachadaBiblioteca {
         return instance;
     }
 
-    private boolean verificarQuantidadeDeParametro(ArrayList<String> parametroParaExecutar) {
+    private boolean verificarQuantidadeDeParametros(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 2) {
             System.out.println(parametroParaExecutar.size());
             System.out.println("Erro na quantidade de parametros");
@@ -36,24 +31,26 @@ public class FachadaBiblioteca {
     }
 
     public void realizarEmprestimo(ArrayList<String> parametroParaExecutar) {
-        if(!verificarQuantidadeDeParametro(parametroParaExecutar)) {
+        if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-        String identificadorUsuario = parametroParaExecutar.get(0);
-        String identificadorLivro = parametroParaExecutar.get(1);
         System.out.println("Realizando Emprestimo.");
 
+        String identificadorUsuario = parametroParaExecutar.get(0);
+        String identificadorLivro = parametroParaExecutar.get(1);
+        // FAZER O USUÁRIO PEGAR EMPRESTADO ELE MESMO
+        BuscaUsuario.getUsuario(identificadorUsuario).realizaEmprestimo(identificadorLivro);
     }
 
     public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
-        if(!verificarQuantidadeDeParametro(parametroParaExecutar)) {
+        if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
         System.out.println("Realizando devolução");
     }
 
     public void realizarReserva(ArrayList<String> parametroParaExecutar) {
-        if(verificarQuantidadeDeParametro(parametroParaExecutar)) {
+        if(verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
         System.out.println("Realizando reserva");

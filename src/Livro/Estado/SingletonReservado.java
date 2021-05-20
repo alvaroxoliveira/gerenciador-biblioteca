@@ -1,6 +1,8 @@
 package Livro.Estado;
 
 import Livro.Livro;
+import Livro.Exemplar;
+import Usuario.User;
 
 public class SingletonReservado implements IEstadoLivro {
     private SingletonReservado() {}
@@ -19,20 +21,17 @@ public class SingletonReservado implements IEstadoLivro {
     }
 
     @Override
-    public void emprestarLivro(Livro livro) {
-        System.out.println("Não é possível devolver um livro reservado. Pegue-o Emprestado primeiro");
+    public boolean emprestarLivro(Exemplar exemplar, User user) {
+        return false;
     }
 
     @Override
-    public void reservarLivro(Livro livro) {
-        //livro.mudarEstado(SingletonReservado.getInstance()); //livro pode ser reservado por mais de 1 pessoa?
-        System.out.println("Reserva concluída com sucesso.");
+    public boolean devolverLivro(Exemplar exemplar, User user) {
+        return false;
     }
 
-    // Verificar se a devolução no caso de reserva faz sentido
     @Override
-    public void devolverLivro(Livro livro) {
-        livro.mudarEstado(SingletonDisponivel.getInstance());
-        System.out.println("Empréstimo concluído com sucesso.");
+    public boolean reservarLivro(Exemplar exemplar, User user) {
+        return false;
     }
 }

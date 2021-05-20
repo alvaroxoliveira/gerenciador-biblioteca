@@ -1,5 +1,7 @@
 package Usuario.Estado;
 
+import Usuario.User;
+
 public class Professor implements IEstadoUsuario {
     private Professor() {}
     public static Professor instance; //cada livro só vai ter uma instancia de cada estado
@@ -12,5 +14,10 @@ public class Professor implements IEstadoUsuario {
             }
         }
         return instance;
+    }
+
+    @Override
+    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
+
     }
 }
