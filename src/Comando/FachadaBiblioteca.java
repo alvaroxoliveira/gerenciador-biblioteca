@@ -26,9 +26,17 @@ public class FachadaBiblioteca {
         return instance;
     }
 
-    public void realizarEmprestimo(ArrayList<String> parametroParaExecutar) {
+    private boolean verificarQuantidadeDeParametro(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 2) {
+            System.out.println(parametroParaExecutar.size());
             System.out.println("Erro na quantidade de parametros");
+            return false;
+        }
+        return true;
+    }
+
+    public void realizarEmprestimo(ArrayList<String> parametroParaExecutar) {
+        if(!verificarQuantidadeDeParametro(parametroParaExecutar)) {
             return;
         }
         String identificadorUsuario = parametroParaExecutar.get(0);
@@ -38,10 +46,16 @@ public class FachadaBiblioteca {
     }
 
     public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
+        if(!verificarQuantidadeDeParametro(parametroParaExecutar)) {
+            return;
+        }
         System.out.println("Realizando devolução");
     }
 
     public void realizarReserva(ArrayList<String> parametroParaExecutar) {
+        if(verificarQuantidadeDeParametro(parametroParaExecutar)) {
+            return;
+        }
         System.out.println("Realizando reserva");
     }
 

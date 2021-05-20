@@ -38,17 +38,23 @@ public class InterfaceUsuario {
         comando.executar(parametroParaExecutar); //Chamada polimórfica para executar esse comando
     }
 
+    //Fazer split da string dada pela entrada obtida no console
+    private String[] obterEntradaDividida() throws IOException {
+        String stringComando = obterComandoConsoie(); //lê e retorna a string
+        String divisaoComando[] = stringComando.split(" ");
+        return divisaoComando;
+    }
+
     //Loop para o usuário ficar digitando os comandos
     public void fazerLoopEntrada() throws IOException {
         comandos = InicializadorComandos.inicializarComandos();
 
-        String stringComando = obterComandoConsoie(); //lê e retorna a string
-        String divisaoComando[] = stringComando.split(" ");
+        String divisaoComando[] = obterEntradaDividida();
 
         //Enquanto o comando de sair não for executado, o console continua
-        while (!stringComando.equals("sai")) {
+        while (!divisaoComando[0].equals("sai")) {
             executarComando(divisaoComando);
-            stringComando = obterComandoConsoie();
+            divisaoComando = obterEntradaDividida();
         }
     }
 }
