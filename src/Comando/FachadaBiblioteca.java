@@ -46,6 +46,24 @@ public class FachadaBiblioteca {
         return true;
     }
 
+    private boolean testeUsuario(String identificadorUsuario){
+        for(User usuario: CarregaUsuarios.getUsuariosDoSistema()){
+            if(usuario.getIdentificador().equals(identificadorUsuario)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean testeLivro(String identificadorLivro){
+        for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
+            if (livro.getId().equals(identificadorLivro)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void realizarEmprestimo(ArrayList<String> parametroParaExecutar) {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
@@ -54,32 +72,37 @@ public class FachadaBiblioteca {
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
 
-        for(User usuario: CarregaUsuarios.getUsuariosDoSistema()){
-            if(usuario.getIdentificador().equals(identificadorUsuario)){
-                for(Livro livro: CarregaLivros.getLivrosDoSistema()){
-                    if(livro.getId().equals(identificadorLivro)){
-                        System.out.println("Operação de Empréstimo.");
-                        BuscaUsuario.getUsuario(identificadorUsuario).realizaEmprestimo(identificadorLivro);
-                    }
-                }
-                System.out.println("Livro não encontrado.");
+
+        if(testeLivro(identificadorLivro)){
+            if(testeUsuario(identificadorUsuario)){
+                System.out.println("Operação de Empréstimo.");
+                BuscaUsuario.getUsuario(identificadorUsuario).realizaEmprestimo(identificadorLivro);
                 return;
             }
+            System.out.println("Usuario não encontrado.");
+            return;
         }
-        System.out.println("Usuario não encontrado.");
+        System.out.println("Livro não encontrado.");
     }
 
     public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-        System.out.println("Realizando devolução");
 
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
 
-        BuscaUsuario.getUsuario(identificadorUsuario).realizaDevolucao(identificadorLivro);
-
+        if(testeLivro(identificadorLivro)){
+            if(testeUsuario(identificadorUsuario)){
+                System.out.println("Realizando devolução");
+                BuscaUsuario.getUsuario(identificadorUsuario).realizaDevolucao(identificadorLivro);
+                return;
+            }
+            System.out.println("Usuario não encontrado.");
+            return;
+        }
+        System.out.println("Livro não encontrado.");
     }
 
     //realiza reserva de um exemplar
