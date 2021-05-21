@@ -113,8 +113,7 @@ public class FachadaBiblioteca {
 
         String identificadorLivro = parametroParaExecutar.get(0);
 
-        //Considerar se deve refatorar - Procurar o livro correspondente
-
+        //Testa se existe o livro no sistema, se tiver faz a consulta
         if(BuscaLivro.testeLivro(identificadorLivro)){
             System.out.println("Consultando dados do livro: ");
             BuscaLivro.getLivro(identificadorLivro).consultarLivro();
@@ -130,14 +129,14 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
             return;
         }
-        System.out.println("Consultando a lista de empréstimo do usuário: ");
 
         String identificadorUsuario = parametroParaExecutar.get(0);
 
-        for(User usuario: CarregaUsuarios.getUsuariosDoSistema()){
-            if(usuario.getIdentificador().equals(identificadorUsuario)){
-
-            }
+        //Testa se existe o livro no sistema, se tiver faz a consulta
+        if(BuscaUsuario.testeUsuario(identificadorUsuario)){
+            System.out.println("Consultando dados do usuário: ");
+            BuscaUsuario.getUsuario(identificadorUsuario).consultarUsuario();
+            return;
         }
     }
 

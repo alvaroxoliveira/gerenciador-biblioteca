@@ -4,10 +4,9 @@ import Livro.Estado.SingletonDisponivel;
 import Observer.Observer;
 import Observer.Subject;
 import Usuario.User;
+import Transacoes.Transacao;
 
-import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Livro implements Subject {
     private String id;

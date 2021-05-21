@@ -1,11 +1,8 @@
 package Livro.Estado;
 
-import Livro.Transacao;
-import Livro.Livro;
+import Transacoes.Transacao;
 import Livro.Exemplar;
 import Usuario.User;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public class SingletonDisponivel implements IEstadoLivro {
     private SingletonDisponivel() {}

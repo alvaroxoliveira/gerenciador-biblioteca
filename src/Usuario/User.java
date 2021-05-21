@@ -1,7 +1,7 @@
 package Usuario;
 
-import Livro.Livro;
 import Livro.Exemplar;
+import Transacoes.Transacao;
 import Observer.Observer;
 import Usuario.Estado.IEstadoUsuario;
 
@@ -80,6 +80,46 @@ public class User implements IUsuario, Observer {
         } else { //caso possa chama o método de reservar livro no estado do usuário (tipo de usu)
             this.estadoUsuario.reservarLivro(codigoDoLivro, this);
             return;
+        }
+    }
+
+    //método para consultar o usuário
+    public void consultarUsuario(){
+        boolean interacao = false; //variavel de controle para caso não hava nenhuma transacao
+        System.out.println("Nome: " + this.getNome());
+
+        //imprimir os emprestimos ativos
+        if(this.listaDeLivrosEmprestados.size() > 0){
+            for(Exemplar exemplar: this.listaDeLivrosEmprestados){
+                for(Transacao transacao: Transacao.getEmprestimosAtuais()){
+                    if(exemplar.equals(transacao.getExemplar())){ //caso tenha algum exemplar emprestado
+                        System.out.println("Titulo: " + transacao.getExemplar().getTitulo());
+                        System.out.println("Data do empréstimo: " + transacao.getData());
+                        System.out.println("Estado: Em curso");
+                        System.out.println("Data da devolução: " + transacao.getData().plusDays(this.getEstadoUsuario().diasParaEntrega()));
+                        interacao = true;
+                    }
+                }
+            }
+        }
+        //imprimir os emprestimos finalizados
+        if(Transacao.quantidadeEmprestimosFinalizados(this) > 0){ //testa se ja teve finalizado
+            Transacao.imprimirEmprestimosFinalizados(this);
+            interacao = true;
+        }
+        //imprimir as reservas
+        if(this.listaDeReservados.size() > 0){ //caso haja alguma reserva
+            for(Exemplar exemplar: this.listaDeReservados){
+                for(Transacao transacao: Transacao.getReservas()){
+                    if(exemplar.equals(transacao.getExemplar())){ //para encontrar o exemplar
+                        System.out.println("Titulo: " + transacao.getExemplar().getTitulo());
+                        System.out.println("Data da reserva: " + transacao.getData()); }
+                }
+            }
+            interacao = true;
+        }
+        if(!interacao){
+            System.out.println("Não há empréstimos ativos, empréstimos finalizados ou reservas.");
         }
     }
 

@@ -1,11 +1,10 @@
-package Livro;
+package Transacoes;
 
+import Livro.Livro;
 import Usuario.User;
 import Livro.Exemplar;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.time.LocalDate;
 
 public class Transacao {
@@ -66,6 +65,28 @@ public class Transacao {
         }
     }
 
+    public static int quantidadeEmprestimosFinalizados(User usuario){
+        int qtd = 0;
+        for(Transacao transacao: Transacao.emprestimosFinalizados){
+            if(transacao.getUsuario().equals(usuario)){
+                qtd++;
+            }
+        }
+        return qtd;
+    }
+
+    //metodo para imprimir os emprestimos finalizados do usuario passado
+    public static void imprimirEmprestimosFinalizados(User usuario){
+        for(Transacao transacao: Transacao.emprestimosFinalizados){
+            if(transacao.getUsuario().equals(usuario)){
+                System.out.println("Titulo: " + transacao.getExemplar().getTitulo());
+                System.out.println("Data do empréstimo: " + transacao.getData());
+                System.out.println("Estado: Finalizado");
+                System.out.println("Data do devolução: " + transacao.getData().plusDays(transacao.getUsuario().getEstadoUsuario().diasParaEntrega()));
+            }
+        }
+    }
+
     private static Transacao encontrarTransacaoEmprestimoAtuais(Exemplar exemplar){
         for(Transacao transacao: Transacao.emprestimosAtuais) {
             if(transacao.exemplar.equals(exemplar)){
@@ -106,6 +127,10 @@ public class Transacao {
 
     public static ArrayList<Transacao> getReservas() {
         return reservas;
+    }
+
+    public static ArrayList<Transacao> getEmprestimosFinalizados() {
+        return emprestimosFinalizados;
     }
 
     public LocalDate getData() {

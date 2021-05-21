@@ -1,5 +1,6 @@
 package Livro;
 
+import Comando.BuscaLivro;
 import Livro.Estado.IEstadoLivro;
 
 public class Exemplar {
@@ -11,6 +12,11 @@ public class Exemplar {
         this.codigoDoLivro = codigoDoLivro;
         this.codigoExemplar = codigoExemplar;
         this.estadoExemplar = estadoInicial;
+    }
+
+    //método que usa a classe busca livro para retornar o titulo do livro desse exemplar
+    public String getTitulo(){
+        return BuscaLivro.getLivro(codigoDoLivro).getTitulo();
     }
 
     // Muda estado do exemplar
