@@ -5,7 +5,8 @@ import Livro.Exemplar;
 import Usuario.User;
 
 public interface IEstadoLivro {
-    boolean emprestarLivro(Exemplar exemplar, User user);
-    boolean devolverLivro(Exemplar exemplar, User user);
-    boolean reservarLivro(Exemplar exemplar, User user);
+    void emprestarLivro(Exemplar exemplar, User user);
+    void devolverLivro(Exemplar exemplar, User user);
+    void reservarLivro(Exemplar exemplar, User user);
+    String imprimirEstado(); //conferir se deve ficar aqui - método para imprimir o estado na consulta
 }

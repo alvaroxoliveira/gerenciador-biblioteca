@@ -36,4 +36,10 @@ public class Professor implements IEstadoUsuario {
             return;
         }
     }
+
+    //metodo polimorfico para saber a qtd de dia de cada tipo de usuario
+    @Override
+    public int diasParaEntrega() {
+        return 7;
+    }
 }

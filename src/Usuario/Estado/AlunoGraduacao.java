@@ -48,4 +48,10 @@ public class AlunoGraduacao implements IEstadoUsuario {
         }
     }
 
+    //metodo polimorfico para saber a qtd de dia de cada tipo de usuario
+    @Override
+    public int diasParaEntrega() {
+        return 3;
+    }
+
 }

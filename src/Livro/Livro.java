@@ -5,7 +5,9 @@ import Observer.Observer;
 import Observer.Subject;
 import Usuario.User;
 
+import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Livro implements Subject {
     private String id;
@@ -61,10 +63,8 @@ public class Livro implements Subject {
 
         // Esse trecho acontece se o usuário não ja estiver com o livro reservado
         for(Exemplar exemplar: this.exemplares) {
-            if(exemplar.getEstadoExemplar().emprestarLivro(exemplar, user)) {
-                System.out.println("Exemplar adicionado na lista de empréstimo do usuário.");
-                return;
-            }
+            exemplar.getEstadoExemplar().emprestarLivro(exemplar, user);
+            return;
         }
         System.out.println("Não existe exemplar Disponível");
     }
@@ -93,26 +93,54 @@ public class Livro implements Subject {
             }
         }
 
-        //Caso não tenha exemplar reservado, ele tenta reservar um
-        for(Exemplar exemplar: this.exemplares) {
-            //se houver um exemplar, ele tenta reservar chamando o método da classe do estado do livro
-            if(exemplar.getEstadoExemplar().reservarLivro(exemplar, user)) {
-                System.out.println("Exemplar adicionado na lista de reservas do usuário.");
+        //Procura um exemplar que não tenha sido reservado (que não esteja na lista de reserva) e chama o método
+        //de reserver livro do estado do exemplar
+        if(Transacao.getReservas().size() > 0){ //caso haja reserva, testa se o exemplar foi reservado
+            for(Exemplar exemplar: this.exemplares) {
+                for(Transacao reserva: Transacao.getReservas()){
+                    if(!reserva.getExemplar().equals(exemplar)){
+                        exemplar.getEstadoExemplar().reservarLivro(exemplar, user);
+                        return;
+                    }
+                }
+            }
+        }
+        else{ //caso não haja reserva
+            for(Exemplar exemplar: this.exemplares) {
+                exemplar.getEstadoExemplar().reservarLivro(exemplar, user);
                 return;
             }
         }
+
         System.out.println("Não existe exemplar Disponível");
     }
-    
+
     public void consultarLivro(){
         System.out.println("Título: " + this.titulo);
 
-        //reservas
+        //passa o próprio livro e usa o vetor de reservaos para saber quantos exemplares estão reservados
+        System.out.println("Quantidade de reservas: " + Transacao.quantidadeReserva(this));
+        if(Transacao.quantidadeReserva(this) > 0){
+            //chama o método para imprimir os usuários e os exemplares reservados por esses
+            Transacao.imprimirUsuariosReserva(this);
+        }
 
+        //imprime cada exemplar e caso esteja emprestado imprime outras informações
         System.out.println("Exemplares: ");
         for(Exemplar exemplar: this.exemplares){
             System.out.println("Código: " + exemplar.getCodigoExemplar());
-            System.out.println("Estado: " + exemplar.getEstadoExemplar()); //mudar para string
+            //usa o método polimorfico para impimir o estado do livro
+            System.out.println("Estado: " + exemplar.getEstadoExemplar().imprimirEstado());
+            //commpara o exemplar atual com os exemplares na lista de emprestimos ativos
+            for(Transacao transacao: Transacao.getEmprestimosAtuais()){
+                //caso o exemplar esteja emprestado, imprime as informações
+                if(exemplar.getCodigoExemplar().equals(transacao.getExemplar().getCodigoExemplar())){
+                    System.out.println("Usuario: " + transacao.getUsuario().getNome());
+                    System.out.println("Data de emprestimo: " + transacao.getData());
+                    //soma a data do emprestimo com a quantidade de dias expresso no metodo polimorfico correspondente a cada usuario
+                    System.out.println("Data de entrega: " + transacao.getData().plusDays(transacao.getUsuario().getEstadoUsuario().diasParaEntrega()));
+                }
+            }
         }
     }
 

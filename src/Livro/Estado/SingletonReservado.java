@@ -1,8 +1,11 @@
 package Livro.Estado;
 
+import Livro.Transacao;
 import Livro.Livro;
 import Livro.Exemplar;
 import Usuario.User;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SingletonReservado implements IEstadoLivro {
     private SingletonReservado() {}
@@ -21,20 +24,29 @@ public class SingletonReservado implements IEstadoLivro {
     }
 
     @Override
-    public boolean emprestarLivro(Exemplar exemplar, User user) {
+    public void emprestarLivro(Exemplar exemplar, User user) {
+        user.adicionaNaListaDeEmprestados(exemplar);
         exemplar.mudaEstado(SingletonEmprestado.getInstance());
-        return false;
+
+        Transacao.adicionarEmprestimoAtual(exemplar, user);
+        Transacao.FinalizarReserva(exemplar);
+
+        System.out.println("Livro Emprestado com sucesso");
     }
 
     @Override
-    public boolean devolverLivro(Exemplar exemplar, User user) {
+    public void devolverLivro(Exemplar exemplar, User user) {
         System.out.println("Não há como devolver um livro reservado.");
-        return false;
     }
 
     @Override
-    public boolean reservarLivro(Exemplar exemplar, User user) {
+    public void reservarLivro(Exemplar exemplar, User user) {
         System.out.println("Não da pra reservar um livro que já está reservado.");
-        return false;
+    }
+
+    //método para imprimir o estado na consulta
+    @Override
+    public String imprimirEstado() {
+        return "Disponivel"; //como os estados são impressos como emprestado ou disponivel, aqui fica assim
     }
 }
