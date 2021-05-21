@@ -3,6 +3,8 @@ package Comando;
 import Livro.CarregaLivros;
 import Livro.Exemplar;
 import Livro.Livro;
+import Usuario.CarregaUsuarios;
+import Usuario.User;
 
 import java.util.ArrayList;
 
@@ -48,12 +50,23 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-        System.out.println("Operação de Empréstimo.");
 
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
-        // FAZER O USUÁRIO PEGAR EMPRESTADO ELE MESMO
-        BuscaUsuario.getUsuario(identificadorUsuario).realizaEmprestimo(identificadorLivro);
+
+        for(User usuario: CarregaUsuarios.getUsuariosDoSistema()){
+            if(usuario.getIdentificador().equals(identificadorUsuario)){
+                for(Livro livro: CarregaLivros.getLivrosDoSistema()){
+                    if(livro.getId().equals(identificadorLivro)){
+                        System.out.println("Operação de Empréstimo.");
+                        BuscaUsuario.getUsuario(identificadorUsuario).realizaEmprestimo(identificadorLivro);
+                    }
+                }
+                System.out.println("Livro não encontrado.");
+                return;
+            }
+        }
+        System.out.println("Usuario não encontrado.");
     }
 
     public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
@@ -88,17 +101,18 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
             return;
         }
-        System.out.println("Consultando dados do livro: ");
 
         String identificadorLivro = parametroParaExecutar.get(0);
 
         //Considerar se deve refatorar - Procurar o livro correspondente
         for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
             if(livro.getId().equals(identificadorLivro)){
+                System.out.println("Consultando dados do livro: ");
                 livro.consultarLivro();
                 return;
             }
         }
+        System.out.println("Livro não encontrado.");
     }
 
     public void realizarObservacao(ArrayList<String> parametroParaExecutar) {
@@ -106,7 +120,18 @@ public class FachadaBiblioteca {
     }
 
     public void realizarConsultaUsuario(ArrayList<String> parametroParaExecutar){
+        if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
+            return;
+        }
         System.out.println("Consultando a lista de empréstimo do usuário: ");
+
+        String identificadorUsuario = parametroParaExecutar.get(0);
+
+        for(User usuario: CarregaUsuarios.getUsuariosDoSistema()){
+            if(usuario.getIdentificador().equals(identificadorUsuario)){
+
+            }
+        }
     }
 
     public void realizarConsultaProfessor(ArrayList<String> parametroParaExecutar){
