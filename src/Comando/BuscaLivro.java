@@ -26,4 +26,14 @@ public class BuscaLivro {
         }
         return null;
     }
+
+    //resta se o id do livro passado esta na lista de livros
+    public static boolean testeLivro(String identificadorLivro){
+        for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
+            if (livro.getId().equals(identificadorLivro)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

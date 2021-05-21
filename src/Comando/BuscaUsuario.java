@@ -27,5 +27,13 @@ public class BuscaUsuario {
         return null;
     }
 
-
+    //Testa se o id do usuário passado está na lista de usuários
+    public static boolean testeUsuario(String identificadorUsuario){
+        for(User usuario: CarregaUsuarios.getUsuariosDoSistema()){
+            if(usuario.getIdentificador().equals(identificadorUsuario)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

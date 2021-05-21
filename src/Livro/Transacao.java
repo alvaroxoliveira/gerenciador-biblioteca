@@ -23,6 +23,8 @@ public class Transacao {
         this.data = LocalDate.now();
     }
 
+    public Transacao(){};
+
     //cria uma nova transação e adiciona as reservas
     public static void adicionarReserva(Exemplar exemplar, User usuario) {
         Transacao.reservas.add(new Transacao(exemplar, usuario));
@@ -35,21 +37,13 @@ public class Transacao {
 
     //metodo para finalizar uma reserva
     public static void FinalizarReserva(Exemplar exemplar){
-        for(Transacao transacao: Transacao.reservas) {
-            if(transacao.exemplar.equals(exemplar)){
-                Transacao.reservas.remove(transacao);
-            }
-        }
+        Transacao.reservas.remove(encontrarTransacaoReservas(exemplar));
     }
 
     //metodo para finalizar emprestimo (retira da lista de ativos e adiciona nos finalizados)
     public static void FinalizarEmprestimo(Exemplar exemplar) {
-        for(Transacao transacao: Transacao.emprestimosAtuais) {
-            if(transacao.exemplar.equals(exemplar)){
-                Transacao.emprestimosAtuais.remove(transacao);
-                Transacao.emprestimosFinalizados.add(transacao);
-            }
-        }
+        Transacao.emprestimosFinalizados.add(encontrarTransacaoEmprestimoAtuais(exemplar));
+        Transacao.emprestimosAtuais.remove(encontrarTransacaoEmprestimoAtuais(exemplar));
     }
 
     //calcula quantos livros tem reservaos utilizando o codigo do livro nos exemplares
@@ -70,6 +64,24 @@ public class Transacao {
                 System.out.println("Reserva do exemplar " + transacao.getExemplar().getCodigoExemplar() + " feita por " + transacao.getUsuario().getNome() + ".");
             }
         }
+    }
+
+    private static Transacao encontrarTransacaoEmprestimoAtuais(Exemplar exemplar){
+        for(Transacao transacao: Transacao.emprestimosAtuais) {
+            if(transacao.exemplar.equals(exemplar)){
+                return transacao;
+            }
+        }
+        return null;
+    }
+
+    private static Transacao encontrarTransacaoReservas(Exemplar exemplar){
+        for(Transacao transacao: Transacao.reservas) {
+            if(transacao.exemplar.equals(exemplar)){
+                return transacao;
+            }
+        }
+        return null;
     }
 
     public Exemplar getExemplar() {
