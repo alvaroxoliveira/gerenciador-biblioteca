@@ -46,7 +46,7 @@ public class Transacao {
     public static void FinalizarEmprestimo(Exemplar exemplar) {
         for(Transacao transacao: Transacao.emprestimosAtuais) {
             if(transacao.exemplar.equals(exemplar)){
-                Transacao.reservas.remove(transacao);
+                Transacao.emprestimosAtuais.remove(transacao);
                 Transacao.emprestimosFinalizados.add(transacao);
             }
         }
