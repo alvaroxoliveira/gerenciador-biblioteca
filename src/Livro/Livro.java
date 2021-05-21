@@ -95,7 +95,7 @@ public class Livro implements Subject {
 
         //Procura um exemplar que não tenha sido reservado (que não esteja na lista de reserva) e chama o método
         //de reserver livro do estado do exemplar
-        if(Transacao.getReservas().size() > 0){ //caso haja reserva, testa se o exemplar foi reservado
+        if(Transacao.quantidadeReserva(this) > 0){ //caso haja reserva, testa se o exemplar foi reservado
             for(Exemplar exemplar: this.exemplares) {
                 for(Transacao reserva: Transacao.getReservas()){
                     if(!reserva.getExemplar().equals(exemplar)){
@@ -118,7 +118,7 @@ public class Livro implements Subject {
     public void consultarLivro(){
         System.out.println("Título: " + this.titulo);
 
-        //passa o próprio livro e usa o vetor de reservaos para saber quantos exemplares estão reservados
+        //passa o próprio livro e usa o vetor de reservad os para saber quantos exemplares estão reservados
         System.out.println("Quantidade de reservas: " + Transacao.quantidadeReserva(this));
         if(Transacao.quantidadeReserva(this) > 0){
             //chama o método para imprimir os usuários e os exemplares reservados por esses
