@@ -21,19 +21,21 @@ public class BuscaLivro {
         int indexDoLivro = buscaIndexDoLivro(identificacaoLivro);
         if(indexDoLivro != -1) {
             return CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
-        } else {
-            System.out.println("Livro não existe.");
         }
+        /*else {
+            System.out.println("Livro não existe.");
+        }*/
         return null;
     }
 
-    //resta se o id do livro passado esta na lista de livros
+    //Testa se o id do livro passado esta na lista de livros
     public static boolean testeLivro(String identificadorLivro){
         for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
             if (livro.getId().equals(identificadorLivro)) {
                 return true;
             }
         }
+        System.out.println("Livro não encontrado.");
         return false;
     }
 }

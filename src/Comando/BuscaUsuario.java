@@ -21,9 +21,10 @@ public class BuscaUsuario {
         int indexDoUsuario = buscaIndexDoUsuario(identificacaoUsuario);
         if(indexDoUsuario != -1) {
             return CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
-        } else {
-            System.out.println("Usuario não existe.");
         }
+        /*else {
+            System.out.println("Usuario não existe.");
+        }*/
         return null;
     }
 
@@ -34,6 +35,7 @@ public class BuscaUsuario {
                 return true;
             }
         }
+        System.out.println("Usuario não encontrado.");
         return false;
     }
 }
