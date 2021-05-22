@@ -25,7 +25,7 @@ public class Professor implements IEstadoUsuario, Observer {
 
     @Override
     public void devolverLivroEmprestado(String codigoDoLivro, User user) {
-
+        BuscaLivro.getLivro(codigoDoLivro).devolverLivroEmprestado(user);
     }
 
     @Override

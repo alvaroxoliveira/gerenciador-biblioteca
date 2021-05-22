@@ -97,13 +97,23 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-        System.out.println("Operação de Reserva.");
 
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
 
-        //chama o método de realizar reserva no usuário passando o id do livro
-        BuscaUsuario.getUsuario(identificadorUsuario).realizaReserva(identificadorLivro);
+        //testa se o id é compativel com o de algum livro no sistema
+        if(BuscaLivro.testeLivro(identificadorLivro)){
+            //testa se o id é compativel com o de algum usuario no sistema
+            if(BuscaUsuario.testeUsuario(identificadorUsuario)){
+                System.out.println("Realizando Reserva.");
+                //chama o método de realizar reserva no usuário passando o id do livro
+                BuscaUsuario.getUsuario(identificadorUsuario).realizaReserva(identificadorLivro);
+                return;
+            }
+            //System.out.println("Usuario não encontrado.");
+            return;
+        }
+        //System.out.println("Livro não encontrado.");
     }
 
     public void realizarConsultaLivro(ArrayList<String> parametroParaExecutar) { //caio
@@ -137,7 +147,7 @@ public class FachadaBiblioteca {
 
         String identificadorUsuario = parametroParaExecutar.get(0);
 
-        //Testa se existe o livro no sistema, se tiver faz a consulta
+        //Testa se existe o usuario no sistema, se tiver faz a consulta
         if(BuscaUsuario.testeUsuario(identificadorUsuario)){
             System.out.println("Consultando dados do usuário: ");
             BuscaUsuario.getUsuario(identificadorUsuario).consultarUsuario();

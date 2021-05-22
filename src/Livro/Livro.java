@@ -55,6 +55,12 @@ public class Livro implements Subject {
             }
         }
 
+        //Teste se a quantidade de exemplares reservados é a mesma da quantidade de exemplares
+        if(Transacao.quantidadeReserva(this) == this.exemplares.size()){
+            System.out.println("Todos os exemplares estão reservados.");
+            return;
+        }
+
         // Esse trecho acontece se o usuário não ja estiver com o livro reservado
         for(Exemplar exemplar: this.exemplares) {
             exemplar.getEstadoExemplar().emprestarLivro(exemplar, user);
@@ -76,7 +82,7 @@ public class Livro implements Subject {
 
     //faz a reserva de um exemplar recebendo o usuário que a vai fazer
     public void reservarExemplar(User user) { //Caio
-        // Vai verificar se existe um exemplar do livro reservado
+        // Vai verificar se existe um exemplar do livro reservado pelo usuário
         for(Exemplar exemplarDoLivro: this.exemplares) {
             for (Exemplar reservados: user.getListaDeReservados()) {
                 //caso o usuário tenha um exemplar reservado ele não reserva outro
@@ -89,18 +95,20 @@ public class Livro implements Subject {
 
         //Procura um exemplar que não tenha sido reservado (que não esteja na lista de reserva) e chama o método
         //de reserver livro do estado do exemplar
-        if(Transacao.quantidadeReserva(this) > 0){ //caso haja reserva, testa se o exemplar foi reservado
+        if(Transacao.quantidadeReserva(this) > 0){ //caso o livro tenha sido reservado testa se o algum exemplar não foi reservado
             for(Exemplar exemplar: this.exemplares) {
                 for(Transacao reserva: Transacao.getReservas()){
                     //se existir algum exemplar do livro que não foi reservado
-                    if(reserva.getExemplar().getCodigoDoLivro().equals(exemplar.getCodigoDoLivro()) && !reserva.getExemplar().equals(exemplar)){
+                    if(exemplar.getCodigoDoLivro().equals(reserva.getExemplar().getCodigoDoLivro()) && !exemplar.equals(reserva.getExemplar())){
                         exemplar.getEstadoExemplar().reservarLivro(exemplar, user);
                         return;
                     }
                 }
             }
         }
-        else{ //caso não haja reserva
+
+        //caso não haja reserva do livro
+        else{
             for(Exemplar exemplar: this.exemplares) {
                 exemplar.getEstadoExemplar().reservarLivro(exemplar, user);
                 return;
