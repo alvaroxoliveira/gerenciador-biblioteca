@@ -97,7 +97,8 @@ public class Livro implements Subject {
         if(Transacao.quantidadeReserva(this) > 0){ //caso haja reserva, testa se o exemplar foi reservado
             for(Exemplar exemplar: this.exemplares) {
                 for(Transacao reserva: Transacao.getReservas()){
-                    if(!reserva.getExemplar().equals(exemplar)){
+                    //se existir algum exemplar do livro que não foi reservado
+                    if(reserva.getExemplar().getCodigoDoLivro().equals(exemplar.getCodigoDoLivro()) && !reserva.getExemplar().equals(exemplar)){
                         exemplar.getEstadoExemplar().reservarLivro(exemplar, user);
                         return;
                     }
