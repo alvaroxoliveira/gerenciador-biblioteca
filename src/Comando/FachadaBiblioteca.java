@@ -121,8 +121,13 @@ public class FachadaBiblioteca {
         }
     }
 
+    // Adiciona um Usuário (que é um observer) numa lista de observadores de um determinado livro
     public void realizarObservacao(ArrayList<String> parametroParaExecutar) {
-        System.out.println("Observando dados do livro: ");
+        System.out.println("Cadastrando professor como observador do livro: ");
+        String identificadorUsuario = parametroParaExecutar.get(0);
+        String identificadorLivro = parametroParaExecutar.get(1);
+
+        BuscaLivro.getLivro(identificadorLivro).adicionarObserver(BuscaUsuario.getUsuario(identificadorUsuario));
     }
 
     public void realizarConsultaUsuario(ArrayList<String> parametroParaExecutar){

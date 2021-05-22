@@ -32,11 +32,6 @@ public class Livro implements Subject {
         this.exemplares.add(exemplar);
     }
 
-    @Override
-    public void adicionarObserver(Observer observer) {
-        this.observadores.add(observer);
-    }
-
     // Retorna o exemplar da lista de exemplares do livro que estiver disponível
     public Exemplar obterExemplarDisponivel() {
         for(Exemplar exemplar: this.exemplares) {
@@ -115,7 +110,7 @@ public class Livro implements Subject {
         System.out.println("Não existe exemplar Disponível");
     }
 
-    public void consultarLivro(){
+    public void consultarLivro() {
         System.out.println("Título: " + this.titulo);
 
         //passa o próprio livro e usa o vetor de reservad os para saber quantos exemplares estão reservados
@@ -144,6 +139,13 @@ public class Livro implements Subject {
         }
     }
 
+    // Adiciona um observer a uma lista de observadores que no caso são os usuários com status de Professores
+    @Override
+    public void adicionarObserver(Observer observer) {
+        this.observadores.add(observer);
+    }
+
+    // Notifica uma lista de observadores
     @Override
     public void notificarObserver() {
         for(Observer observer: this.observadores) {

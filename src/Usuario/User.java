@@ -4,7 +4,6 @@ import Livro.Exemplar;
 import Transacoes.Transacao;
 import Observer.Observer;
 import Usuario.Estado.IEstadoUsuario;
-
 import java.util.ArrayList;
 
 public class User implements IUsuario, Observer {
@@ -12,8 +11,7 @@ public class User implements IUsuario, Observer {
     private String nome;
     private boolean isDevedor;
     private IEstadoUsuario estadoUsuario;
-    private int quantidadeDeNotificacoesDuplaReserva = 0;
-
+    private int quantidadeDeNotificacoes;
 
     // Lista de livros que o usuário está no momento
     private ArrayList<Exemplar> listaDeLivrosEmprestados;
@@ -22,6 +20,7 @@ public class User implements IUsuario, Observer {
     public User(String identificador, String nome) {
         this.identificador = identificador;
         this.nome = nome;
+        this.quantidadeDeNotificacoes = 0;
         this.listaDeLivrosEmprestados = new ArrayList<Exemplar>();
         this.listaDeReservados = new ArrayList<Exemplar>();
         this.isDevedor = false;
@@ -59,7 +58,7 @@ public class User implements IUsuario, Observer {
         }
     }
 
-    // Realiza
+    // Realiza Devoluçao
     public void realizaDevolucao(String codigoDoLivro) {
         if(this.listaDeLivrosEmprestados.size() > 0) {
             this.estadoUsuario.devolverLivroEmprestado(codigoDoLivro, this);
@@ -123,10 +122,11 @@ public class User implements IUsuario, Observer {
         }
     }
 
+    // Avisa ao usuario quando mais de duas reservas simultaneas foram feitas
     @Override
     public void avisarReservasSimultaneas() {
-        System.out.println("Dupla reserva simultânea!");
-        this.quantidadeDeNotificacoesDuplaReserva++;
+        System.out.println("Usuario: " + this.getNome() + "Foram feitas mais de duas reservas simultâneas");
+        this.quantidadeDeNotificacoes++;
     }
 
     // Método de definição de tipo de usuário
@@ -189,11 +189,11 @@ public class User implements IUsuario, Observer {
     }
 
     public int getQuantidadeDeNotificacoesDuplaReserva() {
-        return quantidadeDeNotificacoesDuplaReserva;
+        return quantidadeDeNotificacoes;
     }
 
-    public void setQuantidadeDeNotificacoesDuplaReserva(int quantidadeDeNotificacoesDuplaReserva) {
-        this.quantidadeDeNotificacoesDuplaReserva = quantidadeDeNotificacoesDuplaReserva;
+    public void setQuantidadeDeNotificacoesDuplaReserva(int quantidadeDeNotificacoes) {
+        this.quantidadeDeNotificacoes = quantidadeDeNotificacoes;
     }
 
     @Override

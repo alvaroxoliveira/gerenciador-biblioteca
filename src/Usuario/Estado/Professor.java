@@ -1,9 +1,10 @@
 package Usuario.Estado;
 
 import Comando.BuscaLivro;
+import Observer.Observer;
 import Usuario.User;
 
-public class Professor implements IEstadoUsuario {
+public class Professor implements IEstadoUsuario, Observer {
     private Professor() {}
     public static Professor instance; //cada livro só vai ter uma instancia de cada estado
     public static Professor getInstance() { //se não existir instancia, cria uma
@@ -41,5 +42,14 @@ public class Professor implements IEstadoUsuario {
     @Override
     public int diasParaEntrega() {
         return 7;
+    }
+
+    private void notificarReservasSimultaneas() {
+        System.out.println("Está havendo 2(duas) reservas simultâneas do livro: " ); // Passar nome do livro para completar a string
+    }
+
+    @Override
+    public void avisarReservasSimultaneas() {
+        this.notificarReservasSimultaneas();
     }
 }
