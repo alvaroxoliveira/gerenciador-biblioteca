@@ -122,10 +122,15 @@ public class User implements IUsuario, Observer {
         }
     }
 
+    //Método para consultar professor
+    public void consultarProfessor(){
+        System.out.println("O professor " + this.nome + " foi notificado " + this.quantidadeDeNotificacoes + " vezes.");
+    }
+
     // Avisa ao usuario quando mais de duas reservas simultaneas foram feitas
     @Override
     public void avisarReservasSimultaneas() {
-        System.out.println("Usuario: " + this.getNome() + "Foram feitas mais de duas reservas simultâneas");
+        //System.out.println("Usuario: " + this.getNome() + ". Foram feitas mais de duas reservas simultâneas.");
         this.quantidadeDeNotificacoes++;
     }
 

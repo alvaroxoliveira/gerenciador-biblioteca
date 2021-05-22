@@ -133,11 +133,25 @@ public class FachadaBiblioteca {
 
     // Adiciona um Usuário (que é um observer) numa lista de observadores de um determinado livro
     public void realizarObservacao(ArrayList<String> parametroParaExecutar) {
-        System.out.println("Cadastrando professor como observador do livro: ");
+        if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
+            return;
+        }
+
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
 
-        BuscaLivro.getLivro(identificadorLivro).adicionarObserver(BuscaUsuario.getUsuario(identificadorUsuario));
+        //testa se o id é compativel com o de algum livro no sistema
+        if(BuscaLivro.testeLivro(identificadorLivro)){
+            //testa se o id é compativel com o de algum usuario no sistema
+            if(BuscaUsuario.testeUsuario(identificadorUsuario)){
+                System.out.println("Cadastrando professor como observador do livro.");
+                BuscaLivro.getLivro(identificadorLivro).adicionarObserver(BuscaUsuario.getUsuario(identificadorUsuario));
+                return;
+            }
+            //System.out.println("Usuario não encontrado.");
+            return;
+        }
+        //System.out.println("Livro não encontrado.");
     }
 
     public void realizarConsultaUsuario(ArrayList<String> parametroParaExecutar){
@@ -156,6 +170,17 @@ public class FachadaBiblioteca {
     }
 
     public void realizarConsultaProfessor(ArrayList<String> parametroParaExecutar){
-        System.out.println("Quantidade de vezes que o professor foi notificado: ");
+        if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
+            return;
+        }
+
+        String identificadorUsuario = parametroParaExecutar.get(0);
+
+        //Testa se existe o usuario no sistema, se tiver faz a consulta
+        if(BuscaUsuario.testeUsuario(identificadorUsuario)){
+            System.out.println("Consultando o profesor: ");
+            BuscaUsuario.getUsuario(identificadorUsuario).consultarProfessor();
+            return;
+        }
     }
 }
