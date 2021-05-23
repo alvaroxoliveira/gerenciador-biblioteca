@@ -38,7 +38,14 @@ public class SingletonReservado implements IEstadoLivro {
 
     @Override
     public void reservarLivro(Exemplar exemplar, User user) {
-        System.out.println("Não da pra reservar um livro que já está reservado.");
+        //adiciona o exemplar na lista de reservados do usuário
+        user.adicionaNaListaDeReservados(exemplar);
+        //coloca no vetor de reservas
+        Transacao.adicionarReserva(exemplar, user);
+
+        System.out.println("Livro Adicionado na Lista de Reservados do usuário.");
+
+        //System.out.println("Não da pra reservar um livro que já está reservado.");
     }
 
     //método para imprimir o estado na consulta

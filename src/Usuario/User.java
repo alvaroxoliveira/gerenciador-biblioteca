@@ -84,7 +84,7 @@ public class User implements IUsuario, Observer {
 
     //método para consultar o usuário
     public void consultarUsuario(){
-        boolean interacao = false; //variavel de controle para caso não hava nenhuma transacao
+        boolean interacao = false; //variavel de controle para caso não haja nenhuma transacao
         System.out.println("Nome: " + this.getNome());
 
         //imprimir os emprestimos ativos
