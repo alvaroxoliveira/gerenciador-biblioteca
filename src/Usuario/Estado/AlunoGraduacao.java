@@ -1,8 +1,13 @@
 package Usuario.Estado;
 import Comando.BuscaLivro;
+import Comando.BuscaUsuario;
 import Livro.Livro;
+import Transacoes.TransacaoEmprestimo;
+import Transacoes.TransacaoReserva;
 import Usuario.User;
 import Livro.Exemplar;
+
+import javax.swing.plaf.basic.BasicButtonUI;
 
 public class AlunoGraduacao implements IEstadoUsuario {
     private AlunoGraduacao() {}
@@ -22,11 +27,12 @@ public class AlunoGraduacao implements IEstadoUsuario {
 
     @Override
     public void pegarLivroEmprestado(String codigoDoLivro, User user) {
-        if(user.getListaDeLivrosEmprestados().size() < 3) {
-            BuscaLivro.getLivro(codigoDoLivro).pegarExemplarEmprestado(user);
-        } else {
-            System.out.println("Usuário ja tem a quantidade máxima de livros emprestados");
-            return;
+        if(user.getListaDeLivrosEmprestados().size() >= 3){
+            System.out.println("Usuário " + user.getNome() + " ja tem a quantidade máxima de livros emprestados.");
+        }
+        //se a quantidade de reservas for maior ou igual a quantidade de exemplares
+        else{
+            BuscaLivro.getLivro(codigoDoLivro).pegarLivroEmprestado(user);
         }
     }
 
@@ -38,12 +44,10 @@ public class AlunoGraduacao implements IEstadoUsuario {
     //faz a reserva de um livro passando o código e o usuário que vai a fazer
     @Override
     public void reservarLivro(String codigoDoLivro, User user) { //Caio
-        //testa se o usuário tem menos de 3 livros reservados
-        if(user.getListaDeReservados().size() < 3) {
-            //caso possa, chama o método de reservar exemplar na classe do livro
-            BuscaLivro.getLivro(codigoDoLivro).reservarExemplar(user);
+        if(user.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
+            BuscaLivro.getLivro(codigoDoLivro).reservarLivro(user); //reservar livro
         } else {
-            System.out.println("Usuário ja tem a quantidade máxima de livros reservados");
+            System.out.println("Usuário " + user.getNome() + " ja tem a quantidade máxima de livros reservados.");
             return;
         }
     }

@@ -1,7 +1,9 @@
 package Livro.Estado;
 
-import Transacoes.Transacao;
+import Comando.BuscaLivro;
+import Transacoes.TransacaoEmprestimo;
 import Livro.Exemplar;
+import Transacoes.TransacaoReserva;
 import Usuario.User;
 
 public class SingletonDisponivel implements IEstadoLivro {
@@ -23,31 +25,18 @@ public class SingletonDisponivel implements IEstadoLivro {
     @Override
     public void emprestarLivro(Exemplar exemplar, User user) {
         user.adicionaNaListaDeEmprestados(exemplar);
+        if(user.verificaSeJaTemOLivroReservado(exemplar.getCodigoDoLivro())){ //caso o usuario tenha o livro reservado
+            user.removeDaListaDeReservados(BuscaLivro.getLivro(exemplar.getCodigoDoLivro())); //remove o livro a partir do exemplar da lista de reservados
+            TransacaoReserva.FinalizarReserva(BuscaLivro.getLivro(exemplar.getCodigoDoLivro()), user); //chama o método de remover da lista de transacoes (reserva)
+        }
         exemplar.mudaEstado(SingletonEmprestado.getInstance());
-
-        //coloca no vetor de emprestimos
-        Transacao.adicionarEmprestimoAtual(exemplar, user);
-
-        System.out.println("Livro Emprestado com sucesso");
+        TransacaoEmprestimo.adicionarEmprestimoAtual(exemplar, user);
+        System.out.println("O usuário " + user.getNome() + " fez empréstimo do livro " + exemplar.getTitulo() + ".");
     }
 
     @Override
     public void devolverLivro(Exemplar exemplar, User user) {
         System.out.println("Você não pode devolver um exemplar que está disponível.");
-    }
-
-    //faz a reserva de um exemplar, recebendo o exemplar e o usuário
-    @Override
-    public void reservarLivro(Exemplar exemplar, User user) {
-        //adiciona o exemplar na lista de reservados do usuário
-        user.adicionaNaListaDeReservados(exemplar);
-        //muda o estado do livro para reservado
-        exemplar.mudaEstado(SingletonReservado.getInstance());
-
-        //coloca no vetor de reservas
-        Transacao.adicionarReserva(exemplar, user);
-
-        System.out.println("Livro Adicionado na Lista de Reservados do usuário.");
     }
 
     //método para imprimir o estado na consulta

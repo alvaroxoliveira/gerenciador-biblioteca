@@ -2,6 +2,8 @@ package Usuario.Estado;
 
 import Comando.BuscaLivro;
 import Observer.Observer;
+import Transacoes.TransacaoEmprestimo;
+import Transacoes.TransacaoReserva;
 import Usuario.User;
 
 public class Professor implements IEstadoUsuario, Observer {
@@ -19,8 +21,8 @@ public class Professor implements IEstadoUsuario, Observer {
     }
 
     @Override
-    public void pegarLivroEmprestado(String codigoDoLivro, User thisUser) {
-        BuscaLivro.getLivro(codigoDoLivro).pegarExemplarEmprestado(thisUser);
+    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
+        BuscaLivro.getLivro(codigoDoLivro).pegarLivroEmprestado(user);
     }
 
     @Override
@@ -30,10 +32,15 @@ public class Professor implements IEstadoUsuario, Observer {
 
     @Override
     public void reservarLivro(String codigoDoLivro, User user) { //Caio
-        if(user.getListaDeReservados().size() < 3) {
-            BuscaLivro.getLivro(codigoDoLivro).reservarExemplar(user);
+        if(user.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
+            TransacaoReserva.adicionarReserva(BuscaLivro.getLivro(codigoDoLivro), user);
+            user.getListaDeReservados().add(BuscaLivro.getLivro(codigoDoLivro));
+            System.out.println("O usuário " + user.getNome() + " fez a reserva do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + ".");
+            if(TransacaoReserva.quantidadeReserva(BuscaLivro.getLivro(codigoDoLivro)) == 3){ //se passou de 2 reservas, notifica o professor
+                user.avisarReservasSimultaneas(); //notifica o professor
+            }
         } else {
-            System.out.println("Usuário ja tem a quantidade máxima de livros reservados");
+            System.out.println("Usuário " + user.getNome() + " ja tem a quantidade máxima de livros reservados.");
             return;
         }
     }

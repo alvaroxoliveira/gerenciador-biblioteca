@@ -1,9 +1,13 @@
 package Usuario;
 
+import Comando.BuscaLivro;
 import Livro.Exemplar;
-import Transacoes.Transacao;
+import Transacoes.TransacaoEmprestimo;
 import Observer.Observer;
+import Transacoes.TransacaoReserva;
 import Usuario.Estado.IEstadoUsuario;
+import Livro.Livro;
+
 import java.util.ArrayList;
 
 public class User implements IUsuario, Observer {
@@ -15,14 +19,14 @@ public class User implements IUsuario, Observer {
 
     // Lista de livros que o usuário está no momento
     private ArrayList<Exemplar> listaDeLivrosEmprestados;
-    private ArrayList<Exemplar> listaDeReservados;
+    private ArrayList<Livro> listaDeReservados;
 
     public User(String identificador, String nome) {
         this.identificador = identificador;
         this.nome = nome;
         this.quantidadeDeNotificacoes = 0;
         this.listaDeLivrosEmprestados = new ArrayList<Exemplar>();
-        this.listaDeReservados = new ArrayList<Exemplar>();
+        this.listaDeReservados = new ArrayList<Livro>();
         this.isDevedor = false;
     }
 
@@ -36,9 +40,9 @@ public class User implements IUsuario, Observer {
     }
 
     //verifica se há uma reserva do mesmo livro pelo usuárip
-    private boolean verificaSeJaTemOLivroReservado(String codigoDoLivro){ //caio
-        for(Exemplar exemplar: this.listaDeReservados) {
-            if(exemplar.getCodigoDoLivro().equals(codigoDoLivro)) {
+    public boolean verificaSeJaTemOLivroReservado(String codigoDoLivro){ //caio
+        for(Livro livro: this.listaDeReservados) {
+            if(livro.getId().equals(codigoDoLivro)) {
                 return true;
             }
         }
@@ -46,13 +50,21 @@ public class User implements IUsuario, Observer {
     }
 
     public void realizaEmprestimo(String codigoDoLivro) {
-        if(verificaSeJaTemOLivroEmprestado(codigoDoLivro)) {
-            System.out.println("Usuário ja tem um exemplar desse livro emprestado.");
+        //testa se existe algum exemplar do livro
+        if(BuscaLivro.getLivro(codigoDoLivro).getQuantidadeExemplares() == 0){
+            System.out.println("Não existe exemplar do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + ".");
             return;
-        } else if(this.isDevedor == true) {
-            System.out.println("O usuário é devedor na Biblioteca");
+        }
+        //chama o método para verificar se o usuário já fez emprestimo do mesmo livro
+        else if(verificaSeJaTemOLivroEmprestado(codigoDoLivro)) { //perguntar na aula
+            System.out.println("Usuário " + this.getNome() + " ja tem um exemplar do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + " emprestado.");
             return;
-        } else {
+        }
+        else if(this.isDevedor == true) { //verifica se o usuário é devedor
+            System.out.println("O usuário " + this.getNome() + " é devedor na Biblioteca");
+            return;
+        }
+        else { //chama o método do estado do usuario para a reserva do livro
             this.estadoUsuario.pegarLivroEmprestado(codigoDoLivro, this);
             return;
         }
@@ -63,7 +75,7 @@ public class User implements IUsuario, Observer {
         if(this.listaDeLivrosEmprestados.size() > 0) {
             this.estadoUsuario.devolverLivroEmprestado(codigoDoLivro, this);
         } else {
-            System.out.println("Usuário não têm livros para devolver.");
+            System.out.println("Usuário " + this.getNome() + " não têm livros para devolver.");
         }
     }
 
@@ -71,12 +83,12 @@ public class User implements IUsuario, Observer {
     public void realizaReserva(String codigoDoLivro) { //caio
         //chama o método para verificar se o usuário já reservou o mesmo livro
         if(verificaSeJaTemOLivroReservado(codigoDoLivro)) {
-            System.out.println("Usuário ja tem um exemplar desse livro reservado.");
+            System.out.println("Usuário " + this.getNome() + " ja tem um exemplar do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + " reservado.");
             return;
         } else if(this.isDevedor == true) { //verifica se o usuário é devedor
-            System.out.println("O usuário é devedor na Biblioteca");
+            System.out.println("O usuário " + this.getNome() + " é devedor na Biblioteca");
             return;
-        } else { //caso possa chama o método de reservar livro no estado do usuário (tipo de usu)
+        } else { //chama o método do estado do usuario para a reserva do livro
             this.estadoUsuario.reservarLivro(codigoDoLivro, this);
             return;
         }
@@ -90,29 +102,30 @@ public class User implements IUsuario, Observer {
         //imprimir os emprestimos ativos
         if(this.listaDeLivrosEmprestados.size() > 0){
             for(Exemplar exemplar: this.listaDeLivrosEmprestados){
-                for(Transacao transacao: Transacao.getEmprestimosAtuais()){
-                    if(exemplar.equals(transacao.getExemplar())){ //caso tenha algum exemplar emprestado
-                        System.out.println("Titulo: " + transacao.getExemplar().getTitulo());
-                        System.out.println("Data do empréstimo: " + transacao.getData());
+                for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
+                    if(exemplar.equals(transacaoEmprestimo.getExemplar())){ //caso tenha algum exemplar emprestado
+                        System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getTitulo());
+                        System.out.println("Data do empréstimo: " + transacaoEmprestimo.getData());
                         System.out.println("Estado: Em curso");
-                        System.out.println("Data da devolução: " + transacao.getData().plusDays(this.getEstadoUsuario().diasParaEntrega()));
+                        System.out.println("Data da devolução: " + transacaoEmprestimo.getData().plusDays(this.getEstadoUsuario().diasParaEntrega()));
                         interacao = true;
                     }
                 }
             }
         }
         //imprimir os emprestimos finalizados
-        if(Transacao.quantidadeEmprestimosFinalizados(this) > 0){ //testa se ja teve finalizado
-            Transacao.imprimirEmprestimosFinalizados(this);
+        if(TransacaoEmprestimo.quantidadeEmprestimosFinalizados(this) > 0){ //testa se ja teve finalizado
+            TransacaoEmprestimo.imprimirEmprestimosFinalizados(this);
             interacao = true;
         }
         //imprimir as reservas
         if(this.listaDeReservados.size() > 0){ //caso haja alguma reserva
-            for(Exemplar exemplar: this.listaDeReservados){
-                for(Transacao transacao: Transacao.getReservas()){
-                    if(exemplar.equals(transacao.getExemplar())){ //para encontrar o exemplar
-                        System.out.println("Titulo: " + transacao.getExemplar().getTitulo());
-                        System.out.println("Data da reserva: " + transacao.getData()); }
+            System.out.println("Teste" + this.listaDeReservados.size());
+            for(Livro livro: this.listaDeReservados){
+                for(TransacaoReserva transacaoReserva : TransacaoReserva.getReservas()){
+                    if(livro.equals(transacaoReserva.getLivro())){ //para encontrar o exemplar
+                        System.out.println("Titulo: " + transacaoReserva.getLivro().getTitulo());
+                        System.out.println("Data da reserva: " + transacaoReserva.getData()); }
                 }
             }
             interacao = true;
@@ -149,12 +162,12 @@ public class User implements IUsuario, Observer {
         this.listaDeLivrosEmprestados.remove(exemplar);
     }
 
-    public void adicionaNaListaDeReservados(Exemplar exemplar) {
-        this.listaDeReservados.add(exemplar);
+    public void adicionaNaListaDeReservados(Livro livro) {
+        this.listaDeReservados.add(livro);
     }
     
-    public void removeDaListaDeReservados(Exemplar exemplar) {
-        this.listaDeReservados.add(exemplar);
+    public void removeDaListaDeReservados(Livro livro) {
+        this.listaDeReservados.remove(livro);
     }
 
     @Override
@@ -211,11 +224,11 @@ public class User implements IUsuario, Observer {
     }
 
 
-    public ArrayList<Exemplar> getListaDeReservados() {
+    public ArrayList<Livro> getListaDeReservados() {
         return listaDeReservados;
     }
 
-    public void setListaDeReservados(ArrayList<Exemplar> listaDeReservados) {
+    public void setListaDeReservados(ArrayList<Livro> listaDeReservados) {
         this.listaDeReservados = listaDeReservados;
     }
 }

@@ -1,6 +1,7 @@
 package Livro.Estado;
 
-import Transacoes.Transacao;
+import Comando.BuscaLivro;
+import Transacoes.TransacaoEmprestimo;
 import Livro.Exemplar;
 import Usuario.User;
 
@@ -31,14 +32,9 @@ public class SingletonEmprestado implements IEstadoLivro {
         exemplar.mudaEstado(SingletonDisponivel.getInstance());
 
         //Chama o método de finalizar empréstimo
-        Transacao.FinalizarEmprestimo(exemplar);
+        TransacaoEmprestimo.FinalizarEmprestimo(exemplar);
 
-        System.out.println("Devolução feita com sucesso");
-    }
-
-    @Override
-    public void reservarLivro(Exemplar exemplar, User user) {
-        System.out.println("Não há como reservar um livro que já está emprestado.");
+        System.out.println("O usuário " + user.getNome() + " devolveu o livro " + exemplar.getTitulo() + ".");
     }
 
     //método para imprimir o estado na consulta

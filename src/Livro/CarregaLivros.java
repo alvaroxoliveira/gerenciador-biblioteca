@@ -37,7 +37,6 @@ public class CarregaLivros {
         //Adicionando exemplares no sistema
         l1.adicionaExemplar(new Exemplar(l1.getId(),"01", SingletonDisponivel.getInstance()));
         l1.adicionaExemplar(new Exemplar(l1.getId(),"02", SingletonDisponivel.getInstance()));
-        l1.adicionaExemplar(new Exemplar(l1.getId(),"03", SingletonDisponivel.getInstance())); //Teste
         l2.adicionaExemplar(new Exemplar(l2.getId(),"03", SingletonDisponivel.getInstance()));
         l3.adicionaExemplar(new Exemplar(l3.getId(),"04", SingletonDisponivel.getInstance()));
         l4.adicionaExemplar(new Exemplar(l4.getId(),"05", SingletonDisponivel.getInstance()));

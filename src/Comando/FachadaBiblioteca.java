@@ -144,7 +144,7 @@ public class FachadaBiblioteca {
         if(BuscaLivro.testeLivro(identificadorLivro)){
             //testa se o id é compativel com o de algum usuario no sistema
             if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-                System.out.println("Cadastrando professor como observador do livro.");
+                System.out.println("Cadastrando o professor " + BuscaUsuario.getUsuario(identificadorUsuario).getNome() + " como observador do livro.");
                 BuscaLivro.getLivro(identificadorLivro).adicionarObserver(BuscaUsuario.getUsuario(identificadorUsuario));
                 return;
             }

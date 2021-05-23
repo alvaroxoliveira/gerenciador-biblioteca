@@ -1,10 +1,12 @@
 package Livro;
 
+import Comando.BuscaLivro;
 import Livro.Estado.SingletonDisponivel;
 import Observer.Observer;
 import Observer.Subject;
+import Transacoes.TransacaoReserva;
 import Usuario.User;
-import Transacoes.Transacao;
+import Transacoes.TransacaoEmprestimo;
 
 import java.util.ArrayList;
 
@@ -35,38 +37,35 @@ public class Livro implements Subject {
     // Retorna o exemplar da lista de exemplares do livro que estiver disponível
     public Exemplar obterExemplarDisponivel() {
         for(Exemplar exemplar: this.exemplares) {
-            if(exemplar.getEstadoExemplar() == SingletonDisponivel.getInstance()) {
+            /*
+            for(TransacaoEmprestimo transacaoEmprestimo: TransacaoEmprestimo.getEmprestimosAtuais()){
+                if(transacaoEmprestimo.getExemplar().getCodigoDoLivro().equals(exemplar.getCodigoDoLivro()) && !transacaoEmprestimo.getExemplar().equals(exemplar)){
+                    return exemplar;
+                }
+            }
+0             */
+            if(exemplar.getEstadoExemplar().imprimirEstado().equals("Disponivel.")){ //testa se esta disponivel
                 return exemplar;
             }
         }
         return null;
     }
 
-    public void pegarExemplarEmprestado(User user) {
-        // Vai verificar se existe um exemplar do livro reservado
-        for(Exemplar exemplarDoLivro: this.exemplares) {
-            for (Exemplar reservado: user.getListaDeReservados()) {
-                if(exemplarDoLivro.getCodigoExemplar().equals(reservado.getCodigoExemplar())) {
-                    exemplarDoLivro.getEstadoExemplar().emprestarLivro(exemplarDoLivro, user);
-                    user.removeDaListaDeReservados(reservado);
-                    System.out.println("Exemplar reservado adicionado na lista de empréstimo do usuário.");
-                    return;
-                }
+    public void pegarLivroEmprestado(User user){
+        if(TransacaoReserva.quantidadeReserva(this) >= this.getQuantidadeExemplares()){
+            //verifica se o usuario tem o livro reservado
+            if(!user.verificaSeJaTemOLivroReservado(this.id)){ //não tem reserva
+                System.out.println("O livro " + this.getTitulo() + " possui mais reservas do que exemplares e o usuário " + user.getNome() + " não possui reserva.");
+            }
+            else{//o usuário tem reserva
+                //chama o método de emprestar livro no estado disponivel do exemplar
+                this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), user);
             }
         }
+        else{//a quantidade de exemplares é maior que a de reservas e o usuário tem ou não reserva
+            this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), user);
 
-        //Teste se a quantidade de exemplares reservados é a mesma da quantidade de exemplares
-        if(Transacao.quantidadeReserva(this) == this.exemplares.size()){
-            System.out.println("Todos os exemplares estão reservados.");
-            return;
         }
-
-        // Esse trecho acontece se o usuário não ja estiver com o livro reservado
-        for(Exemplar exemplar: this.exemplares) {
-            exemplar.getEstadoExemplar().emprestarLivro(exemplar, user);
-            return;
-        }
-        System.out.println("Não existe exemplar Disponível");
     }
 
     public void devolverLivroEmprestado(User user) {
@@ -80,38 +79,23 @@ public class Livro implements Subject {
         }
     }
 
-    //faz a reserva de um exemplar recebendo o usuário que a vai fazer
-    public void reservarExemplar(User user) { //Caio
-
-        /*
-        // Vai verificar se existe um exemplar do livro reservado pelo usuário
-        for(Exemplar exemplarDoLivro: this.exemplares) {
-            for (Exemplar reservados: user.getListaDeReservados()) {
-                //caso o usuário tenha um exemplar reservado ele não reserva outro
-                if(exemplarDoLivro.getCodigoExemplar().equals(reservados.getCodigoExemplar())) {
-                    System.out.println("Já existe um exemplar reservado.");
-                    return;
-                }
-            }
+    public void reservarLivro(User user) {
+        TransacaoReserva.adicionarReserva(this, user);
+        user.getListaDeReservados().add(this);
+        System.out.println("O usuário " + user.getNome() + " fez a reserva do livro " + this.getTitulo() + ".");
+        if (TransacaoReserva.quantidadeReserva(this) == 3) { //se passou de 2 reservas, notifica o professor
+            this.notificarObserver(); //notifica o professor
         }
-        */
-
-        for(Exemplar exemplar: this.exemplares) {
-            exemplar.getEstadoExemplar().reservarLivro(exemplar, user);
-            return;
-        }
-
-        System.out.println("Não existe exemplar Disponível");
     }
 
     public void consultarLivro() {
         System.out.println("Título: " + this.titulo);
 
         //passa o próprio livro e usa o vetor de reservad os para saber quantos exemplares estão reservados
-        System.out.println("Quantidade de reservas: " + Transacao.quantidadeReserva(this));
-        if(Transacao.quantidadeReserva(this) > 0){
+        System.out.println("Quantidade de reservas: " + TransacaoReserva.quantidadeReserva(this));
+        if(TransacaoReserva.quantidadeReserva(this) > 0){
             //chama o método para imprimir os usuários e os exemplares reservados por esses
-            Transacao.imprimirUsuariosReserva(this);
+            TransacaoReserva.imprimirUsuariosReserva(this);
         }
 
         //imprime cada exemplar e caso esteja emprestado imprime outras informações
@@ -121,13 +105,13 @@ public class Livro implements Subject {
             //usa o método polimorfico para impimir o estado do livro
             System.out.println("Estado: " + exemplar.getEstadoExemplar().imprimirEstado());
             //commpara o exemplar atual com os exemplares na lista de emprestimos ativos
-            for(Transacao transacao: Transacao.getEmprestimosAtuais()){
+            for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
                 //caso o exemplar esteja emprestado, imprime as informações
-                if(exemplar.getCodigoExemplar().equals(transacao.getExemplar().getCodigoExemplar())){
-                    System.out.println("Usuario: " + transacao.getUsuario().getNome());
-                    System.out.println("Data de emprestimo: " + transacao.getData());
+                if(exemplar.getCodigoExemplar().equals(transacaoEmprestimo.getExemplar().getCodigoExemplar())){
+                    System.out.println("Usuario: " + transacaoEmprestimo.getUsuario().getNome());
+                    System.out.println("Data de emprestimo: " + transacaoEmprestimo.getData());
                     //soma a data do emprestimo com a quantidade de dias expresso no metodo polimorfico correspondente a cada usuario
-                    System.out.println("Data de entrega: " + transacao.getData().plusDays(transacao.getUsuario().getEstadoUsuario().diasParaEntrega()));
+                    System.out.println("Data de entrega: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
                 }
             }
         }
@@ -137,6 +121,7 @@ public class Livro implements Subject {
     @Override
     public void adicionarObserver(Observer observer) {
         this.observadores.add(observer);
+        System.out.println("O professor adicionou o livro " + this.getTitulo() + "na sua lista de observados.");
     }
 
     // Notifica uma lista de observadores
@@ -145,6 +130,11 @@ public class Livro implements Subject {
         for(Observer observer: this.observadores) {
             observer.avisarReservasSimultaneas();
         }
+    }
+
+    //método para retonar a quantidade de exemplares
+    public int getQuantidadeExemplares(){
+        return this.exemplares.size();
     }
 
     public ArrayList<Exemplar> getExemplares() {
