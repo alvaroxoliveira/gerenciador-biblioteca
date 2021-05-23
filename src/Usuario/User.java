@@ -2,15 +2,16 @@ package Usuario;
 
 import Comando.BuscaLivro;
 import Livro.Exemplar;
-import Transacoes.TransacaoEmprestimo;
+import Livro.Livro;
+import Mensagens.ImprimirDadosOperacoes;
+import Mensagens.MensagensUser;
 import Observer.Observer;
+import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
 import Usuario.Estado.IEstadoUsuario;
-import Livro.Livro;
-
 import java.util.ArrayList;
 
-public class User implements IUsuario, Observer {
+public class User implements IUser, Observer {
     private String identificador;
     private String nome;
     private boolean isDevedor;
@@ -40,6 +41,7 @@ public class User implements IUsuario, Observer {
     }
 
     //verifica se há uma reserva do mesmo livro pelo usuárip
+    @Override
     public boolean verificaSeJaTemOLivroReservado(String codigoDoLivro){ //caio
         for(Livro livro: this.listaDeReservados) {
             if(livro.getId().equals(codigoDoLivro)) {
@@ -49,19 +51,24 @@ public class User implements IUsuario, Observer {
         return false;
     }
 
+    // Metodo alterado para receber mensagens de uma classe responsável para imprimir mensagens somente
+    // da classe usuário
+    @Override
     public void realizaEmprestimo(String codigoDoLivro) {
         //testa se existe algum exemplar do livro
         if(BuscaLivro.getLivro(codigoDoLivro).getQuantidadeExemplares() == 0){
-            System.out.println("Não existe exemplar do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + ".");
+            MensagensUser
+                    .mensagemDeNaoExistenciaDeExemplar
+                            (BuscaLivro.getLivro(codigoDoLivro).getTitulo());
             return;
         }
         //chama o método para verificar se o usuário já fez emprestimo do mesmo livro
         else if(verificaSeJaTemOLivroEmprestado(codigoDoLivro)) { //perguntar na aula
-            System.out.println("Usuário " + this.getNome() + " ja tem um exemplar do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + " emprestado.");
+            MensagensUser.mensagemOperacaoJaFeitaComLivro(codigoDoLivro, this.getNome(), "Emprestado");
             return;
         }
         else if(this.isDevedor == true) { //verifica se o usuário é devedor
-            System.out.println("O usuário " + this.getNome() + " é devedor na Biblioteca");
+            MensagensUser.mensagemDeInadimplencia(this.nome);
             return;
         }
         else { //chama o método do estado do usuario para a reserva do livro
@@ -70,23 +77,26 @@ public class User implements IUsuario, Observer {
         }
     }
 
+
     // Realiza Devoluçao
+    @Override
     public void realizaDevolucao(String codigoDoLivro) {
         if(this.listaDeLivrosEmprestados.size() > 0) {
             this.estadoUsuario.devolverLivroEmprestado(codigoDoLivro, this);
         } else {
-            System.out.println("Usuário " + this.getNome() + " não têm livros para devolver.");
+            MensagensUser.mensagemNaoHaLivroParaDevolver(this.nome);
         }
     }
 
-    //faz a reserva de um exemplar
+    // Faz a reserva de um exemplar
+    @Override
     public void realizaReserva(String codigoDoLivro) { //caio
         //chama o método para verificar se o usuário já reservou o mesmo livro
         if(verificaSeJaTemOLivroReservado(codigoDoLivro)) {
-            System.out.println("Usuário " + this.getNome() + " ja tem um exemplar do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + " reservado.");
+            MensagensUser.mensagemOperacaoJaFeitaComLivro(codigoDoLivro, this.getNome()," reservado.");
             return;
         } else if(this.isDevedor == true) { //verifica se o usuário é devedor
-            System.out.println("O usuário " + this.getNome() + " é devedor na Biblioteca");
+            MensagensUser.mensagemDeInadimplencia(this.getNome());
             return;
         } else { //chama o método do estado do usuario para a reserva do livro
             this.estadoUsuario.reservarLivro(codigoDoLivro, this);
@@ -94,24 +104,38 @@ public class User implements IUsuario, Observer {
         }
     }
 
-    //método para consultar o usuário
-    public void consultarUsuario(){
-        boolean interacao = false; //variavel de controle para caso não haja nenhuma transacao
-        System.out.println("Nome: " + this.getNome());
-
-        //imprimir os emprestimos ativos
-        if(this.listaDeLivrosEmprestados.size() > 0){
-            for(Exemplar exemplar: this.listaDeLivrosEmprestados){
-                for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
-                    if(exemplar.equals(transacaoEmprestimo.getExemplar())){ //caso tenha algum exemplar emprestado
-                        System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getTitulo());
-                        System.out.println("Data do empréstimo: " + transacaoEmprestimo.getData());
-                        System.out.println("Estado: Em curso");
-                        System.out.println("Data da devolução: " + transacaoEmprestimo.getData().plusDays(this.getEstadoUsuario().diasParaEntrega()));
-                        interacao = true;
-                    }
+    // Metodo extraido do método de consultar usuário e serve para imprimir dados de Emprestimos Ativos
+    private boolean isImprimirDadosDeEmprestimosAtivos(boolean interacao) {
+        for(Exemplar exemplar: this.listaDeLivrosEmprestados){
+            for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
+                if(exemplar.equals(transacaoEmprestimo.getExemplar())){ //caso tenha algum exemplar emprestado
+                    ImprimirDadosOperacoes.imprimirDadosDeEmprestimos(transacaoEmprestimo); // Dentro da Classe ImprimirDadosOperacoes no pacote Impressoes
+                    interacao = true;
                 }
             }
+        }
+        return interacao;
+    }
+
+    // Método extraído do método de consultar usuário e serve para imprimir dados das reservas dos usuários
+    private boolean isImprimirDadosDeReservas(boolean interacao) {
+        System.out.println("Teste" + this.listaDeReservados.size());
+        for(Livro livro: this.listaDeReservados){
+            for(TransacaoReserva transacaoReserva : TransacaoReserva.getReservas()) {
+                if (livro.equals(transacaoReserva.getLivro())) { //para encontrar o exemplar
+                    ImprimirDadosOperacoes.imprimirDadosDeReservas(transacaoReserva); // Método encontrado em ImprimirDadosOperacoes
+                    interacao = true;
+                }
+            }
+        }
+        return interacao;
+    }
+
+    // Método Extraído da consulta de Usuário e serve para imprimir os dados dos Emprestimos ativos e finalizados e também as reservas
+    private void ImprimirDadosDeEmprestimosAtivosEFinalizadosEReservas(boolean interacao) {
+        //imprimir os emprestimos ativos
+        if(this.listaDeLivrosEmprestados.size() > 0){
+            interacao = isImprimirDadosDeEmprestimosAtivos(interacao);
         }
         //imprimir os emprestimos finalizados
         if(TransacaoEmprestimo.quantidadeEmprestimosFinalizados(this) > 0){ //testa se ja teve finalizado
@@ -120,24 +144,26 @@ public class User implements IUsuario, Observer {
         }
         //imprimir as reservas
         if(this.listaDeReservados.size() > 0){ //caso haja alguma reserva
-            System.out.println("Teste" + this.listaDeReservados.size());
-            for(Livro livro: this.listaDeReservados){
-                for(TransacaoReserva transacaoReserva : TransacaoReserva.getReservas()){
-                    if(livro.equals(transacaoReserva.getLivro())){ //para encontrar o exemplar
-                        System.out.println("Titulo: " + transacaoReserva.getLivro().getTitulo());
-                        System.out.println("Data da reserva: " + transacaoReserva.getData()); }
-                }
-            }
-            interacao = true;
+            interacao = isImprimirDadosDeReservas(interacao);
         }
+        // Não existem emprestimos ativos e/ou finalizados ou reservas
         if(!interacao){
-            System.out.println("Não há empréstimos ativos, empréstimos finalizados ou reservas.");
+            MensagensUser.mensagemDeNaoExistenciaDeOperacoes();
         }
     }
 
+    //método para consultar o usuário
+    @Override
+    public void consultarUsuario(){
+        boolean interacao = false; //variavel de controle para caso não haja nenhuma transacao
+        MensagensUser.imprimirNomeUsuario(this.getNome());
+        ImprimirDadosDeEmprestimosAtivosEFinalizadosEReservas(interacao);
+    }
+
     //Método para consultar professor
+    @Override
     public void consultarProfessor(){
-        System.out.println("O professor " + this.nome + " foi notificado " + this.quantidadeDeNotificacoes + " vezes.");
+       MensagensUser.mensagemDeNotificacaoProfessor(this.getNome(), this.getQuantidadeDeNotificacoes());
     }
 
     // Avisa ao usuario quando mais de duas reservas simultaneas foram feitas
@@ -148,24 +174,29 @@ public class User implements IUsuario, Observer {
     }
 
     // Método de definição de tipo de usuário
+    @Override
     public void setTipoDeUsuario(IEstadoUsuario estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
     }
 
     // Adiciona um livro na lista de emprestimos
+    @Override
     public void adicionaNaListaDeEmprestados(Exemplar exemplar) {
         this.listaDeLivrosEmprestados.add(exemplar);
     }
 
     // Remove o objeto exemplar da lista de exemplares emprestados
+    @Override
     public void removeDaListaDeEmprestados(Exemplar exemplar) {
         this.listaDeLivrosEmprestados.remove(exemplar);
     }
 
+    @Override
     public void adicionaNaListaDeReservados(Livro livro) {
         this.listaDeReservados.add(livro);
     }
     
+    @Override
     public void removeDaListaDeReservados(Livro livro) {
         this.listaDeReservados.remove(livro);
     }
@@ -190,27 +221,33 @@ public class User implements IUsuario, Observer {
         this.nome = nome;
     }
 
+    @Override
     public boolean isDevedor() {
         return isDevedor;
     }
 
+    @Override
     public void setDevedor(boolean devedor) {
         isDevedor = devedor;
     }
 
+    @Override
     public IEstadoUsuario getEstadoUsuario() {
         return estadoUsuario;
     }
 
+    @Override
     public void setEstadoUsuario(IEstadoUsuario estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
     }
 
-    public int getQuantidadeDeNotificacoesDuplaReserva() {
+    @Override
+    public int getQuantidadeDeNotificacoes() {
         return quantidadeDeNotificacoes;
     }
 
-    public void setQuantidadeDeNotificacoesDuplaReserva(int quantidadeDeNotificacoes) {
+    @Override
+    public void setQuantidadeDeNotificacoes(int quantidadeDeNotificacoes) {
         this.quantidadeDeNotificacoes = quantidadeDeNotificacoes;
     }
 
@@ -219,15 +256,18 @@ public class User implements IUsuario, Observer {
         return listaDeLivrosEmprestados;
     }
 
+    @Override
     public void setListaDeLivrosEmprestados(ArrayList<Exemplar> listaDeLivrosEmprestados) {
         this.listaDeLivrosEmprestados = listaDeLivrosEmprestados;
     }
 
 
+    @Override
     public ArrayList<Livro> getListaDeReservados() {
         return listaDeReservados;
     }
 
+    @Override
     public void setListaDeReservados(ArrayList<Livro> listaDeReservados) {
         this.listaDeReservados = listaDeReservados;
     }

@@ -24,14 +24,14 @@ public class CarregaUsuarios {
         User u4 = new User("100", "Carlos Lucena");
         u4.setTipoDeUsuario(Professor.getInstance());
 
-        carregarUsuariosNoSistema(u1);
-        carregarUsuariosNoSistema(u2);
-        carregarUsuariosNoSistema(u3);
-        carregarUsuariosNoSistema(u4);
+        adicionarUsuariosNoSistema(u1);
+        adicionarUsuariosNoSistema(u2);
+        adicionarUsuariosNoSistema(u3);
+        adicionarUsuariosNoSistema(u4);
     }
 
     // Cadastrar um usuário
-    private static void carregarUsuariosNoSistema(User usuario) {
+    private static void adicionarUsuariosNoSistema(User usuario) {
         CarregaUsuarios.usuariosDoSistema.add(usuario);
     }
 

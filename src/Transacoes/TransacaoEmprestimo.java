@@ -1,11 +1,11 @@
 package Transacoes;
 
-import Livro.Livro;
-import Usuario.User;
 import Livro.Exemplar;
+import Mensagens.ImprimirDadosOperacoes;
+import Usuario.User;
 
-import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class TransacaoEmprestimo {
     private Exemplar exemplar;
@@ -46,10 +46,7 @@ public class TransacaoEmprestimo {
     public static void imprimirEmprestimosFinalizados(User usuario){
         for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.emprestimosFinalizados){
             if(transacaoEmprestimo.getUsuario().equals(usuario)){
-                System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getTitulo());
-                System.out.println("Data do empréstimo: " + transacaoEmprestimo.getData());
-                System.out.println("Estado: Finalizado");
-                System.out.println("Data do devolução: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
+                ImprimirDadosOperacoes.imprimirDadosDeEmprestimos(transacaoEmprestimo);
             }
         }
     }
