@@ -1,4 +1,4 @@
-package Mensagens;
+package MensagensConsole;
 
 import Comando.BuscaLivro;
 

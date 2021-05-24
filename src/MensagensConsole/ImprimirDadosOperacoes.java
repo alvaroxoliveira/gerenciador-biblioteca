@@ -1,8 +1,7 @@
-package Mensagens;
+package MensagensConsole;
 
 import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
-import Usuario.User;
 
 public class ImprimirDadosOperacoes {
     public static void imprimirDadosDeEmprestimosAtuais(TransacaoEmprestimo transacaoEmprestimo) {

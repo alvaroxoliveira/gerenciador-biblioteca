@@ -1,4 +1,4 @@
-package Mensagens;
+package MensagensConsole;
 
 public class MensagensProfessor {
     public static void mensagemDeReservasSimultaneas() {
