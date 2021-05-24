@@ -1,6 +1,5 @@
 package Usuario.Estado;
 
-import Livro.Livro;
 import Usuario.User;
 
 public interface IEstadoUsuario {

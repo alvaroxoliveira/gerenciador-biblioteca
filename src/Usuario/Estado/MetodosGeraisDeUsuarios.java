@@ -1,8 +1,7 @@
 package Usuario.Estado;
 
 import Comando.BuscaLivro;
-import Mensagens.MensagensUsuariosGerais;
-import Transacoes.TransacaoReserva;
+import MensagensConsole.MensagensUsuariosGerais;
 import Usuario.User;
 
 public class MetodosGeraisDeUsuarios {

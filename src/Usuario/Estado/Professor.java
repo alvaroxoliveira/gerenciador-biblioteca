@@ -1,7 +1,7 @@
 package Usuario.Estado;
 
 import Comando.BuscaLivro;
-import Mensagens.MensagensProfessor;
+import MensagensConsole.MensagensProfessor;
 import Observer.Observer;
 import Usuario.User;
 

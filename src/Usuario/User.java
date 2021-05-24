@@ -3,12 +3,13 @@ package Usuario;
 import Comando.BuscaLivro;
 import Livro.Exemplar;
 import Livro.Livro;
-import Mensagens.ImprimirDadosOperacoes;
-import Mensagens.MensagensUser;
+import MensagensConsole.ImprimirDadosOperacoes;
+import MensagensConsole.MensagensUser;
 import Observer.Observer;
 import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
 import Usuario.Estado.IEstadoUsuario;
+
 import java.util.ArrayList;
 
 public class User implements IUser, Observer {
@@ -131,7 +132,7 @@ public class User implements IUser, Observer {
 
     // Método extraído do método de consultar usuário e serve para imprimir dados das reservas dos usuários
     private boolean isImprimirDadosDeReservas(boolean interacao) {
-        System.out.println("Teste" + this.listaDeReservados.size());
+//        System.out.println("Teste" + this.listaDeReservados.size());
         for(Livro livro: this.listaDeReservados){
             for(TransacaoReserva transacaoReserva : TransacaoReserva.getReservas()) {
                 if (livro.equals(transacaoReserva.getLivro())) { //para encontrar o exemplar
