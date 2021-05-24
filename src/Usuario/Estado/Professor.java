@@ -1,9 +1,8 @@
 package Usuario.Estado;
 
 import Comando.BuscaLivro;
+import Mensagens.MensagensProfessor;
 import Observer.Observer;
-import Transacoes.TransacaoEmprestimo;
-import Transacoes.TransacaoReserva;
 import Usuario.User;
 
 public class Professor implements IEstadoUsuario, Observer {
@@ -32,17 +31,7 @@ public class Professor implements IEstadoUsuario, Observer {
 
     @Override
     public void reservarLivro(String codigoDoLivro, User user) { //Caio
-        if(user.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
-            TransacaoReserva.adicionarReserva(BuscaLivro.getLivro(codigoDoLivro), user);
-            user.getListaDeReservados().add(BuscaLivro.getLivro(codigoDoLivro));
-            System.out.println("O usuário " + user.getNome() + " fez a reserva do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + ".");
-            if(TransacaoReserva.quantidadeReserva(BuscaLivro.getLivro(codigoDoLivro)) == 3){ //se passou de 2 reservas, notifica o professor
-                user.avisarReservasSimultaneas(); //notifica o professor
-            }
-        } else {
-            System.out.println("Usuário " + user.getNome() + " ja tem a quantidade máxima de livros reservados.");
-            return;
-        }
+        MetodosGeraisDeUsuarios.reservaParaUsuario(codigoDoLivro, user);
     }
 
     //metodo polimorfico para saber a qtd de dia de cada tipo de usuario
@@ -52,7 +41,7 @@ public class Professor implements IEstadoUsuario, Observer {
     }
 
     private void notificarReservasSimultaneas() {
-        System.out.println("Está havendo 2(duas) reservas simultâneas do livro: " ); // Passar nome do livro para completar a string
+        MensagensProfessor.mensagemDeReservasSimultaneas();
     }
 
     @Override
