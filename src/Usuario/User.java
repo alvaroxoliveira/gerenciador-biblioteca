@@ -98,6 +98,8 @@ public class User implements IUser, Observer {
         } else if(this.isDevedor == true) { //verifica se o usuário é devedor
             MensagensUser.mensagemDeInadimplencia(this.getNome());
             return;
+        } else if(verificaSeJaTemOLivroEmprestado(codigoDoLivro)){ //testa se ja tem o exemplar reservado
+            MensagensUser.mensagemOperacaoJaFeitaComLivro(codigoDoLivro, this.getNome(), " emprestado.");
         } else { //chama o método do estado do usuario para a reserva do livro
             this.estadoUsuario.reservarLivro(codigoDoLivro, this);
             return;
@@ -109,9 +111,19 @@ public class User implements IUser, Observer {
         for(Exemplar exemplar: this.listaDeLivrosEmprestados){
             for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
                 if(exemplar.equals(transacaoEmprestimo.getExemplar())){ //caso tenha algum exemplar emprestado
-                    ImprimirDadosOperacoes.imprimirDadosDeEmprestimos(transacaoEmprestimo); // Dentro da Classe ImprimirDadosOperacoes no pacote Impressoes
+                    ImprimirDadosOperacoes.imprimirDadosDeEmprestimosAtuais(transacaoEmprestimo); // Dentro da Classe ImprimirDadosOperacoes no pacote Impressoes
                     interacao = true;
                 }
+            }
+        }
+        return interacao;
+    }
+
+    private boolean isImprimirDadosDeEmprestimosFinalizados(boolean interacao){
+        for (TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosFinalizados()) {
+            if (transacaoEmprestimo.getUsuario().equals(this)) {
+                ImprimirDadosOperacoes.imprimirDadosEmprestimosFinalizados(transacaoEmprestimo);
+                interacao = true;
             }
         }
         return interacao;
@@ -139,8 +151,7 @@ public class User implements IUser, Observer {
         }
         //imprimir os emprestimos finalizados
         if(TransacaoEmprestimo.quantidadeEmprestimosFinalizados(this) > 0){ //testa se ja teve finalizado
-            TransacaoEmprestimo.imprimirEmprestimosFinalizados(this);
-            interacao = true;
+            interacao = isImprimirDadosDeEmprestimosFinalizados(interacao);
         }
         //imprimir as reservas
         if(this.listaDeReservados.size() > 0){ //caso haja alguma reserva

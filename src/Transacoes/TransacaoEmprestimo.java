@@ -42,15 +42,6 @@ public class TransacaoEmprestimo {
         return qtd;
     }
 
-    //metodo para imprimir os emprestimos finalizados do usuario passado
-    public static void imprimirEmprestimosFinalizados(User usuario){
-        for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.emprestimosFinalizados){
-            if(transacaoEmprestimo.getUsuario().equals(usuario)){
-                ImprimirDadosOperacoes.imprimirDadosDeEmprestimos(transacaoEmprestimo);
-            }
-        }
-    }
-
     private static TransacaoEmprestimo encontrarTransacaoEmprestimoAtuais(Exemplar exemplar){
         for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.emprestimosAtuais) {
             if(transacaoEmprestimo.exemplar.equals(exemplar)){
