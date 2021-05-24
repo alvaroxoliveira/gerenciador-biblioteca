@@ -1,7 +1,6 @@
 package Transacoes;
 
 import Livro.Exemplar;
-import Mensagens.ImprimirDadosOperacoes;
 import Usuario.User;
 
 import java.time.LocalDate;

@@ -2,10 +2,9 @@ package Transacoes;
 
 import Livro.Livro;
 import Usuario.User;
-import Livro.Exemplar;
 
-import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class TransacaoReserva {
     private Livro livro;
