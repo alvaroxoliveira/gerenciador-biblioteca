@@ -9,7 +9,7 @@ import Usuario.User;
 
 import java.util.ArrayList;
 
-public class Livro implements Livro.ILivro {
+public class Livro implements ILivro, Subject {
     private String id;
     private String titulo;
     private String editora;
