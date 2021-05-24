@@ -1,8 +1,8 @@
 package Livro.Estado;
 
-import Comando.BuscaLivro;
-import Transacoes.TransacaoEmprestimo;
 import Livro.Exemplar;
+import MensagensConsole.MensagensSingletonEmprestado;
+import Transacoes.TransacaoEmprestimo;
 import Usuario.User;
 
 public class SingletonEmprestado implements IEstadoLivro {
@@ -23,7 +23,8 @@ public class SingletonEmprestado implements IEstadoLivro {
 
     @Override
     public void emprestarLivro(Exemplar exemplar, User user) {
-        System.out.println("Não há como pegar emprestado um livro que já está emprestado.");
+//        System.out.println("Não há como pegar emprestado um livro que já está emprestado.");
+        MensagensSingletonEmprestado.mensagemLivroJaFoiEmprestado();
     }
 
     @Override
@@ -34,7 +35,8 @@ public class SingletonEmprestado implements IEstadoLivro {
         //Chama o método de finalizar empréstimo
         TransacaoEmprestimo.FinalizarEmprestimo(exemplar);
 
-        System.out.println("O usuário " + user.getNome() + " devolveu o livro " + exemplar.getTitulo() + ".");
+//        System.out.println("O usuário " + user.getNome() + " devolveu o livro " + exemplar.getTitulo() + ".");
+        MensagensSingletonEmprestado.mensagemDevolucaoDoLivro(user.getNome(), exemplar.getTitulo());
     }
 
     //método para imprimir o estado na consulta

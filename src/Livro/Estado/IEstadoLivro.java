@@ -1,6 +1,5 @@
 package Livro.Estado;
 
-import Livro.Livro;
 import Livro.Exemplar;
 import Usuario.User;
 

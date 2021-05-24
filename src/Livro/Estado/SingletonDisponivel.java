@@ -1,8 +1,9 @@
 package Livro.Estado;
 
 import Comando.BuscaLivro;
-import Transacoes.TransacaoEmprestimo;
 import Livro.Exemplar;
+import MensagensConsole.MensagensSingletonDisponivel;
+import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
 import Usuario.User;
 
@@ -31,12 +32,14 @@ public class SingletonDisponivel implements IEstadoLivro {
         }
         exemplar.mudaEstado(SingletonEmprestado.getInstance());
         TransacaoEmprestimo.adicionarEmprestimoAtual(exemplar, user);
-        System.out.println("O usuário " + user.getNome() + " fez empréstimo do livro " + exemplar.getTitulo() + ".");
+//        System.out.println("O usuário " + user.getNome() + " fez empréstimo do livro " + exemplar.getTitulo() + ".");
+        MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(user.getNome(), exemplar.getTitulo());
     }
 
     @Override
     public void devolverLivro(Exemplar exemplar, User user) {
-        System.out.println("Você não pode devolver um exemplar que está disponível.");
+//        System.out.println("Você não pode devolver um exemplar que está disponível.");
+        MensagensSingletonDisponivel.mensagemNaoDevolverPoqueEstaDisponivel();
     }
 
     //método para imprimir o estado na consulta
