@@ -1,11 +1,5 @@
 package Comando;
 
-import Livro.CarregaLivros;
-import Livro.Exemplar;
-import Livro.Livro;
-import Usuario.CarregaUsuarios;
-import Usuario.User;
-
 import java.util.ArrayList;
 
 //Classe fachada que é um Singleton (motivo da instancia) e possui os métodos para realizar as ações
@@ -144,8 +138,9 @@ public class FachadaBiblioteca {
         if(BuscaLivro.testeLivro(identificadorLivro)){
             //testa se o id é compativel com o de algum usuario no sistema
             if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-                System.out.println("Cadastrando o professor " + BuscaUsuario.getUsuario(identificadorUsuario).getNome() + " como observador do livro.");
-                BuscaLivro.getLivro(identificadorLivro).adicionarObserver(BuscaUsuario.getUsuario(identificadorUsuario));
+//                System.out.println("Cadastrando o professor " + BuscaUsuario.getUsuario(identificadorUsuario).getNome() + " como observador do livro.");
+                // Para não fazer o cast, mandei como parametro o nome do professor para a função para fazer a impressão diretamente lá
+                BuscaLivro.getLivro(identificadorLivro).adicionarObserver(BuscaUsuario.getUsuario(identificadorUsuario), BuscaUsuario.getUsuario(identificadorUsuario).getNome());
                 return;
             }
             //System.out.println("Usuario não encontrado.");
