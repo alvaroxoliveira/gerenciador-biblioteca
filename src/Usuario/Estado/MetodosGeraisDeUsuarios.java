@@ -9,15 +9,11 @@ public class MetodosGeraisDeUsuarios {
 
     public static void reservaParaUsuario(String codigoDoLivro, User user) {
         if(user.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
-            TransacaoReserva.adicionarReserva(BuscaLivro.getLivro(codigoDoLivro), user);
-            user.getListaDeReservados().add(BuscaLivro.getLivro(codigoDoLivro));
+            BuscaLivro.getLivro(codigoDoLivro).reservarLivro(user); //reservar livro
             MensagensUsuariosGerais.mensagemDeReservaFeita(codigoDoLivro, user.getNome()); // Mensagem de reserva quando é feita
-            //if(TransacaoReserva.quantidadeReserva(BuscaLivro.getLivro(codigoDoLivro)) == 3) // tava com esse erro
-            if(TransacaoReserva.quantidadeReserva(BuscaLivro.getLivro(codigoDoLivro)) > 2){ //se passou de 2 reservas do mesmo livro, notifica o professor
-                user.avisarReservasSimultaneas(); //notifica o professor
-            }
         } else {
-            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(user.getNome()); // Mensagem de maxima de reservas feitas
+            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(user.getNome());
+            return;
         }
     }
 
