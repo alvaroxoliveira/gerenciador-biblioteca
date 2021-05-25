@@ -12,4 +12,8 @@ public class MensagensLivro {
     public static void mensagemAdicaoDeLivroNaListaDeObservador(String titulo, String nomeUser) {
         System.out.println("O professor " + nomeUser + " adicionou o livro " + titulo + " na sua lista de observados.");
     }
+
+    public static void mensagemNaoHaExemplaresDisponiveis() {
+        System.out.println("Não há exemplares Disponíveis");
+    }
 }
