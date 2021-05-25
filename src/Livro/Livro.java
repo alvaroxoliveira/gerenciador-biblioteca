@@ -54,19 +54,22 @@ public class Livro implements ILivro, Subject {
 
     @Override
     public void pegarLivroEmprestado(User user){
+        System.out.println(this.getQuantidadeExemplares());
         if(TransacaoReserva.quantidadeReserva(this) >= this.getQuantidadeExemplares()){
             //verifica se o usuario tem o livro reservado
             if(!user.verificaSeJaTemOLivroReservado(this.id)){ //não tem reserva
                 MensagensLivro.mensagemPossuiMaisReservasQueExemplares(this.getTitulo(), user.getNome());
-            }
-            else{//o usuário tem reserva
+            } else{//o usuário tem reserva
                 //chama o método de emprestar livro no estado disponivel do exemplar
                 this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), user);
             }
-        }
-        else{//a quantidade de exemplares é maior que a de reservas e o usuário tem ou não reserva
-            this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), user);
-
+        } else {//a quantidade de exemplares é maior que a de reservas e o usuário tem ou não reserva
+            // erro aqui
+            if(obterExemplarDisponivel() != null) {
+                this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), user);
+            } else {
+                MensagensLivro.mensagemNaoHaExemplaresDisponiveis();
+            }
         }
     }
 
