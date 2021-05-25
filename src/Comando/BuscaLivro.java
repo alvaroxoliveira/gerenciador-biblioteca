@@ -2,6 +2,7 @@ package Comando;
 
 import Livro.CarregaLivros;
 import Livro.Livro;
+import MensagensConsole.MensagensBuscaLivro;
 
 public class BuscaLivro {
     //Busca pelo id do livro na lista de livroe e compara com o id passado
@@ -25,6 +26,7 @@ public class BuscaLivro {
         /*else {
             System.out.println("Livro não existe.");
         }*/
+        // verificar se tem que tratar esse retorno de null
         return null;
     }
 
@@ -35,7 +37,7 @@ public class BuscaLivro {
                 return true;
             }
         }
-        System.out.println("Livro não encontrado.");
+        MensagensBuscaLivro.mensagemLivroNaoEncontrado();
         return false;
     }
 }

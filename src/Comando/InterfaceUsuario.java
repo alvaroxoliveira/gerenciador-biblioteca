@@ -1,5 +1,7 @@
 package Comando;
 
+import MensagensConsole.MensagensInterfaceUsuario;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +10,8 @@ import java.util.HashMap;
 
 //Classe que faz interface com o usuário e faz leitura dos comandos do console
 public class InterfaceUsuario {
+    // Comando de saída do programa
+    public final String comandoDeSaidaDoPrograma = "sai";
 
     //Relaciona a InterfaceUsuario com Comando (abstrato)
     private HashMap<String, Comando> comandos;
@@ -15,8 +19,7 @@ public class InterfaceUsuario {
     //Obtem o comando a partir da entrada do console
     private String obterComandoConsoie() throws IOException {
         BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println();
-        System.out.println("Digite o comando: ");
+        MensagensInterfaceUsuario.mensagemDigiteComando();
         return teclado.readLine();
     }
 
@@ -30,7 +33,7 @@ public class InterfaceUsuario {
         } else if(tipoDeComando.length == 2) {
             parametroParaExecutar.add(tipoDeComando[1]);
         } else {
-            System.out.println("Erro na quantidade de parametros");
+            MensagensInterfaceUsuario.mensagemErroQuantidadeDeParametros();
             return;
         }
 
@@ -52,7 +55,7 @@ public class InterfaceUsuario {
         String divisaoComando[] = obterEntradaDividida();
 
         //Enquanto o comando de sair não for executado, o console continua
-        while (!divisaoComando[0].equals("sai")) {
+        while (!divisaoComando[0].equals(this.comandoDeSaidaDoPrograma)) {
             executarComando(divisaoComando);
             divisaoComando = obterEntradaDividida();
         }

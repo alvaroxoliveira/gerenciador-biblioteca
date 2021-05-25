@@ -1,5 +1,7 @@
 package Comando;
 
+import MensagensConsole.MensagensFachadaBiblioteca;
+
 import java.util.ArrayList;
 
 //Classe fachada que é um Singleton (motivo da instancia) e possui os métodos para realizar as ações
@@ -23,8 +25,8 @@ public class FachadaBiblioteca {
 
     private boolean verificarQuantidadeDeParametros(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 2) {
-            System.out.println(parametroParaExecutar.size());
-            System.out.println("Erro na quantidade de parametros");
+//            System.out.println(parametroParaExecutar.size()); // Teste para quantidade de parametros
+            MensagensFachadaBiblioteca.mensagemErroNaquantidadeDeParametros();
             return false;
         }
         return true;
@@ -34,7 +36,7 @@ public class FachadaBiblioteca {
     private boolean verificarQuantidadeDeParametrosConsulta(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 1) {
             System.out.println(parametroParaExecutar.size());
-            System.out.println("Erro na quantidade de parametros");
+            MensagensFachadaBiblioteca.mensagemErroNaquantidadeDeParametros();
             return false;
         }
         return true;
@@ -53,7 +55,8 @@ public class FachadaBiblioteca {
         if(BuscaLivro.testeLivro(identificadorLivro)){
             //testa se o id é compativel com o de algum usuario no sistema
             if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-                System.out.println("Operação de Empréstimo.");
+//                System.out.println("Operação de Empréstimo.");
+                MensagensFachadaBiblioteca.mensagemOperacaoEmprestimo();
                 BuscaUsuario.getUsuario(identificadorUsuario).realizaEmprestimo(identificadorLivro);
                 return;
             }
@@ -75,7 +78,8 @@ public class FachadaBiblioteca {
         if(BuscaLivro.testeLivro(identificadorLivro)){
             //testa se o id é compativel com o de algum usuario no sistema
             if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-                System.out.println("Realizando devolução");
+//                System.out.println("Realizando devolução");
+                MensagensFachadaBiblioteca.mensagemOperacaoDevolucao();
                 BuscaUsuario.getUsuario(identificadorUsuario).realizaDevolucao(identificadorLivro);
                 return;
             }
@@ -99,7 +103,8 @@ public class FachadaBiblioteca {
         if(BuscaLivro.testeLivro(identificadorLivro)){
             //testa se o id é compativel com o de algum usuario no sistema
             if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-                System.out.println("Realizando Reserva.");
+//                System.out.println("Realizando Reserva.");
+                MensagensFachadaBiblioteca.mensagemOperacaoReserva();
                 //chama o método de realizar reserva no usuário passando o id do livro
                 BuscaUsuario.getUsuario(identificadorUsuario).realizaReserva(identificadorLivro);
                 return;
@@ -119,7 +124,8 @@ public class FachadaBiblioteca {
 
         //Testa se existe o livro no sistema, se tiver faz a consulta
         if(BuscaLivro.testeLivro(identificadorLivro)){
-            System.out.println("Consultando dados do livro: ");
+//            System.out.println("Consultando dados do livro: ");
+            MensagensFachadaBiblioteca.mensagemConsultaDadosLivro();
             BuscaLivro.getLivro(identificadorLivro).consultarLivro();
             return;
         }
@@ -158,7 +164,8 @@ public class FachadaBiblioteca {
 
         //Testa se existe o usuario no sistema, se tiver faz a consulta
         if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-            System.out.println("Consultando dados do usuário: ");
+//            System.out.println("Consultando dados do usuário: ");
+            MensagensFachadaBiblioteca.mensagemConsultaDadosUsuario();
             BuscaUsuario.getUsuario(identificadorUsuario).consultarUsuario();
             return;
         }
@@ -173,7 +180,8 @@ public class FachadaBiblioteca {
 
         //Testa se existe o usuario no sistema, se tiver faz a consulta
         if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-            System.out.println("Consultando o profesor: ");
+//            System.out.println("Consultando o profesor: ");
+            MensagensFachadaBiblioteca.mensagemConsultaDadosProfessor();
             BuscaUsuario.getUsuario(identificadorUsuario).consultarProfessor();
             return;
         }

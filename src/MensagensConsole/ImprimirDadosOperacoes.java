@@ -17,7 +17,7 @@ public class ImprimirDadosOperacoes {
         System.out.println("Data do empréstimo: " + transacaoEmprestimo.getData());
         System.out.println("Estado: Finalizado");
         System.out.println("Data de devolução: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
-        }
+    }
 
     public static void imprimirDadosDeReservas(TransacaoReserva transacaoReserva) {
         System.out.println("Titulo: " + transacaoReserva.getLivro().getTitulo());

@@ -1,5 +1,6 @@
 package Comando;
 
+import MensagensConsole.MensagensBuscaUsuario;
 import Usuario.CarregaUsuarios;
 import Usuario.User;
 
@@ -25,6 +26,7 @@ public class BuscaUsuario {
         /*else {
             System.out.println("Usuario não existe.");
         }*/
+        // verificar se tem que tratar esse retorno de null
         return null;
     }
 
@@ -35,7 +37,7 @@ public class BuscaUsuario {
                 return true;
             }
         }
-        System.out.println("Usuario não encontrado.");
+        MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
         return false;
     }
 }
