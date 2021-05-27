@@ -2,7 +2,13 @@ package InteracaoComUsuario;
 
 import Buscas.BuscaLivro;
 import Buscas.BuscaUsuario;
+import Livro.CarregaLivros;
+import Livro.Livro;
+import MensagensConsole.MensagensBuscaLivro;
+import MensagensConsole.MensagensBuscaUsuario;
 import MensagensConsole.MensagensFachadaBiblioteca;
+import Usuario.CarregaUsuarios;
+import Usuario.User;
 
 import java.util.ArrayList;
 
@@ -27,7 +33,6 @@ public class FachadaBiblioteca {
 
     private boolean verificarQuantidadeDeParametros(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 2) {
-//            System.out.println(parametroParaExecutar.size()); // Teste para quantidade de parametros
             MensagensFachadaBiblioteca.mensagemErroNaquantidadeDeParametros();
             return false;
         }
@@ -37,7 +42,6 @@ public class FachadaBiblioteca {
     //verifica se foi passado apenas 1 parametro (codigo da consulta)
     private boolean verificarQuantidadeDeParametrosConsulta(ArrayList<String> parametroParaExecutar) {
         if(parametroParaExecutar.size() != 1) {
-            System.out.println(parametroParaExecutar.size());
             MensagensFachadaBiblioteca.mensagemErroNaquantidadeDeParametros();
             return false;
         }
@@ -48,88 +52,85 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
 
+        int indexDoLivro = BuscaLivro.buscaIndexDoLivro(identificadorLivro);
+        int indexDoUsuario = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
 
-        //testa se o id é compativel com o de algum livro no sistema
-        if(BuscaLivro.testeLivro(identificadorLivro)){
-            //testa se o id é compativel com o de algum usuario no sistema
-            if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-//                System.out.println("Operação de Empréstimo.");
+        if(indexDoLivro != -1) {
+            Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
+            if(indexDoUsuario != -1) {
+                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
                 MensagensFachadaBiblioteca.mensagemOperacaoEmprestimo();
-                BuscaUsuario.getUsuario(identificadorUsuario).realizaEmprestimo(identificadorLivro);
-                return;
+                user.realizaEmprestimo(livro);
+            } else {
+                MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
-            //System.out.println("Usuario não encontrado.");
-            return;
+        } else {
+            MensagensBuscaLivro.mensagemLivroNaoEncontrado();
         }
-        //System.out.println("Livro não encontrado.");
     }
 
     public void realizarDevolucao(ArrayList<String> parametroParaExecutar) {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
 
-        //testa se o id é compativel com o de algum livro no sistema
-        if(BuscaLivro.testeLivro(identificadorLivro)){
-            //testa se o id é compativel com o de algum usuario no sistema
-            if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-//                System.out.println("Realizando devolução");
+        int indexDoLivro = BuscaLivro.buscaIndexDoLivro(identificadorLivro);
+        int indexDoUsuario = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
+
+        if(indexDoLivro != -1) {
+            Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
+            if(indexDoUsuario != -1) {
+                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
                 MensagensFachadaBiblioteca.mensagemOperacaoDevolucao();
-                BuscaUsuario.getUsuario(identificadorUsuario).realizaDevolucao(identificadorLivro);
-                return;
+                user.realizaDevolucao(livro);
+            } else {
+                MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
-            //System.out.println("Usuario não encontrado.");
-            return;
+        } else {
+            MensagensBuscaLivro.mensagemLivroNaoEncontrado();
         }
-        //System.out.println("Livro não encontrado.");
     }
 
     //realiza reserva de um exemplar
     public void realizarReserva(ArrayList<String> parametroParaExecutar) { //caio
-        //verifica se foi passado a quantidade certa de parametros
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
-
-        //testa se o id é compativel com o de algum livro no sistema
-        if(BuscaLivro.testeLivro(identificadorLivro)){
-            //testa se o id é compativel com o de algum usuario no sistema
-            if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-//                System.out.println("Realizando Reserva.");
+        int indexDoLivro = BuscaLivro.buscaIndexDoLivro(identificadorLivro);
+        int indexDoUsuario = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
+        if(indexDoLivro != -1) {
+            Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
+            if(indexDoUsuario != -1) {
+                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
                 MensagensFachadaBiblioteca.mensagemOperacaoReserva();
-                //chama o método de realizar reserva no usuário passando o id do livro
-                BuscaUsuario.getUsuario(identificadorUsuario).realizaReserva(identificadorLivro);
-                return;
+                user.realizaReserva(livro);
+            } else {
+                MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
-            //System.out.println("Usuario não encontrado.");
-            return;
+        } else {
+            MensagensBuscaLivro.mensagemLivroNaoEncontrado();
         }
-        //System.out.println("Livro não encontrado.");
     }
 
     public void realizarConsultaLivro(ArrayList<String> parametroParaExecutar) { //caio
         if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
             return;
         }
-
         String identificadorLivro = parametroParaExecutar.get(0);
-
-        //Testa se existe o livro no sistema, se tiver faz a consulta
-        if(BuscaLivro.testeLivro(identificadorLivro)){
-//            System.out.println("Consultando dados do livro: ");
+        int indexDoLivro = BuscaLivro.buscaIndexDoLivro(identificadorLivro);
+        if(indexDoLivro != -1) {
+            Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
             MensagensFachadaBiblioteca.mensagemConsultaDadosLivro();
-            BuscaLivro.getLivro(identificadorLivro).consultarLivro();
-            return;
+            livro.consultarLivro();
+        } else {
+            MensagensBuscaLivro.mensagemLivroNaoEncontrado();
         }
     }
 
@@ -138,38 +139,34 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametros(parametroParaExecutar)) {
             return;
         }
-
         String identificadorUsuario = parametroParaExecutar.get(0);
         String identificadorLivro = parametroParaExecutar.get(1);
-
-        //testa se o id é compativel com o de algum livro no sistema
-        if(BuscaLivro.testeLivro(identificadorLivro)){
-            //testa se o id é compativel com o de algum usuario no sistema
-            if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-//                System.out.println("Cadastrando o professor " + BuscaUsuario.getUsuario(identificadorUsuario).getNome() + " como observador do livro.");
-                // Para não fazer o cast, mandei como parametro o nome do professor para a função para fazer a impressão diretamente lá
-                BuscaLivro.getLivro(identificadorLivro).adicionarObserver(BuscaUsuario.getUsuario(identificadorUsuario), BuscaUsuario.getUsuario(identificadorUsuario).getNome());
-                return;
+        int indexDoLivro = BuscaLivro.buscaIndexDoLivro(identificadorLivro);
+        int indexDoUsuario = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
+        if(indexDoLivro != -1) {
+            Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
+            if(indexDoUsuario != -1) {
+                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+                livro.adicionarObserver(user, user.getNome());
+            } else {
+                MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
-            //System.out.println("Usuario não encontrado.");
-            return;
+            MensagensBuscaLivro.mensagemLivroNaoEncontrado();
         }
-        //System.out.println("Livro não encontrado.");
     }
 
     public void realizarConsultaUsuario(ArrayList<String> parametroParaExecutar){
         if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
             return;
         }
-
         String identificadorUsuario = parametroParaExecutar.get(0);
-
-        //Testa se existe o usuario no sistema, se tiver faz a consulta
-        if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-//            System.out.println("Consultando dados do usuário: ");
+        int indexDoUsuario = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
+        if(indexDoUsuario != -1) {
+            User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
             MensagensFachadaBiblioteca.mensagemConsultaDadosUsuario();
-            BuscaUsuario.getUsuario(identificadorUsuario).consultarUsuario();
-            return;
+            user.consultarUsuario();
+        } else {
+            MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
         }
     }
 
@@ -177,15 +174,15 @@ public class FachadaBiblioteca {
         if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
             return;
         }
-
         String identificadorUsuario = parametroParaExecutar.get(0);
+        int indexDoProfessor = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
 
-        //Testa se existe o usuario no sistema, se tiver faz a consulta
-        if(BuscaUsuario.testeUsuario(identificadorUsuario)){
-//            System.out.println("Consultando o profesor: ");
+        if(indexDoProfessor != -1) {
+            User professor = CarregaUsuarios.getUsuariosDoSistema().get(indexDoProfessor);
             MensagensFachadaBiblioteca.mensagemConsultaDadosProfessor();
-            BuscaUsuario.getUsuario(identificadorUsuario).consultarProfessor();
-            return;
+            professor.consultarProfessor();
+        } else {
+            MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
         }
     }
 }

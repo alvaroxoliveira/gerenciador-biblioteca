@@ -52,9 +52,7 @@ public class InterfaceUsuario {
     //Loop para o usuário ficar digitando os comandos
     public void fazerLoopEntrada() throws IOException {
         comandos = InicializadorComandos.inicializarComandos();
-
         String divisaoComando[] = obterEntradaDividida();
-
         //Enquanto o comando de sair não for executado, o console continua
         while (!divisaoComando[0].equals(this.comandoDeSaidaDoPrograma)) {
             executarComando(divisaoComando);
