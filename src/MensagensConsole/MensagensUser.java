@@ -1,6 +1,6 @@
 package MensagensConsole;
 
-import Comando.BuscaLivro;
+import Buscas.BuscaLivro;
 
 public class MensagensUser {
     public static void imprimirNomeUsuario(String nomeUser) {

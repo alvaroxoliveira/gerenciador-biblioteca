@@ -1,6 +1,6 @@
 package MensagensConsole;
 
-import Comando.BuscaLivro;
+import Buscas.BuscaLivro;
 
 public class MensagensUsuariosGerais {
     public static void mensagemDeReservaFeita(String codigoDoLivro, String nomeUser) {

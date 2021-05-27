@@ -1,6 +1,6 @@
 package Livro.Estado;
 
-import Comando.BuscaLivro;
+import Buscas.BuscaLivro;
 import Livro.Exemplar;
 import MensagensConsole.MensagensSingletonDisponivel;
 import Transacoes.TransacaoEmprestimo;

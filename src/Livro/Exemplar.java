@@ -1,6 +1,6 @@
 package Livro;
 
-import Comando.BuscaLivro;
+import Buscas.BuscaLivro;
 import Livro.Estado.IEstadoLivro;
 
 public class Exemplar {
