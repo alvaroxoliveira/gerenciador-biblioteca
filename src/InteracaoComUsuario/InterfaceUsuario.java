@@ -1,5 +1,6 @@
-package Comando;
+package InteracaoComUsuario;
 
+import Comando.Comando;
 import MensagensConsole.MensagensInterfaceUsuario;
 
 import java.io.BufferedReader;

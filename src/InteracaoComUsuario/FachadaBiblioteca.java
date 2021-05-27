@@ -1,5 +1,7 @@
-package Comando;
+package InteracaoComUsuario;
 
+import Buscas.BuscaLivro;
+import Buscas.BuscaUsuario;
 import MensagensConsole.MensagensFachadaBiblioteca;
 
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-package Comando;
+package InteracaoComUsuario;
+
+import Comando.*;
 
 import java.util.HashMap;
 
