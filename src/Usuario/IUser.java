@@ -8,15 +8,15 @@ import java.util.ArrayList;
 
 public interface IUser {
     //verifica se há uma reserva do mesmo livro pelo usuárip
-    boolean verificaSeJaTemOLivroReservado(String codigoDoLivro);
+    boolean verificaSeJaTemOLivroReservado(Livro livro);
 
-    void realizaEmprestimo(String codigoDoLivro);
+    void realizaEmprestimo(Livro livro);
 
     // Realiza Devoluçao
-    void realizaDevolucao(String codigoDoLivro);
+    void realizaDevolucao(Livro livro);
 
     // Faz a reserva de um exemplar
-    void realizaReserva(String codigoDoLivro);
+    void realizaReserva(Livro livro);
 
     //método para consultar o usuário
     void consultarUsuario();

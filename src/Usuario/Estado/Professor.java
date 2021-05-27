@@ -1,6 +1,6 @@
 package Usuario.Estado;
 
-import Buscas.BuscaLivro;
+import Livro.Livro;
 import MensagensConsole.MensagensProfessor;
 import Observer.Observer;
 import Usuario.User;
@@ -20,18 +20,18 @@ public class Professor implements IEstadoUsuario, Observer {
     }
 
     @Override
-    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
-        BuscaLivro.getLivro(codigoDoLivro).pegarLivroEmprestado(user);
+    public void pegarLivroEmprestado(Livro livro, User user) {
+        livro.pegarLivroEmprestado(user);
     }
 
     @Override
-    public void devolverLivroEmprestado(String codigoDoLivro, User user) {
-        BuscaLivro.getLivro(codigoDoLivro).devolverLivroEmprestado(user);
+    public void devolverLivroEmprestado(Livro livro, User user) {
+        livro.devolverLivroEmprestado(user);
     }
 
     @Override
-    public void reservarLivro(String codigoDoLivro, User user) { //Caio
-        MetodosGeraisDeUsuarios.reservaParaUsuario(codigoDoLivro, user);
+    public void reservarLivro(Livro livro, User user) { //Caio
+        MetodosGeraisDeUsuarios.reservaParaUsuario(livro, user);
     }
 
     //metodo polimorfico para saber a qtd de dia de cada tipo de usuario

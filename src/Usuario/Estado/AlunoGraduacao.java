@@ -1,5 +1,6 @@
 package Usuario.Estado;
-import Buscas.BuscaLivro;
+
+import Livro.Livro;
 import Usuario.User;
 
 public class AlunoGraduacao implements IEstadoUsuario {
@@ -19,34 +20,19 @@ public class AlunoGraduacao implements IEstadoUsuario {
     }
 
     @Override
-    public void pegarLivroEmprestado(String codigoDoLivro, User user) {
-//        if(user.getListaDeLivrosEmprestados().size() >= 3){
-//            System.out.println("Usuário " + user.getNome() + " ja tem a quantidade máxima de livros emprestados.");
-//        }
-//        //se a quantidade de reservas for maior ou igual a quantidade de exemplares
-//        else{
-//            BuscaLivro.getLivro(codigoDoLivro).pegarLivroEmprestado(user);
-//        }
-        MetodosGeraisDeUsuarios.emprestimoParaAlunos(codigoDoLivro, user, this.getQuantidadeDeLivrosMaximaEmprestimo()); // Metodo chamado está em Metodos em comum
+    public void pegarLivroEmprestado(Livro livro, User user) {
+        MetodosGeraisDeUsuarios.emprestimoParaAlunos(livro, user, this.getQuantidadeDeLivrosMaximaEmprestimo()); // Metodo chamado está em Metodos em comum
     }
 
     @Override
-    public void devolverLivroEmprestado(String codigoDoLivro, User user) {
-        BuscaLivro.getLivro(codigoDoLivro).devolverLivroEmprestado(user);
+    public void devolverLivroEmprestado(Livro livro, User user) {
+        livro.devolverLivroEmprestado(user);
     }
 
     //faz a reserva de um livro passando o código e o usuário que vai a fazer
     @Override
-    public void reservarLivro(String codigoDoLivro, User user) { //Caio
-        // (Álvaro) Fiz essa alteração mas tenho que ver com Caio
-//        if(user.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
-//            BuscaLivro.getLivro(codigoDoLivro).reservarLivro(user); //reservar livro
-//            MensagensUsuariosGerais.mensagemDeReservaFeita(codigoDoLivro, user.getNome()); // Mensagem de reserva quando é feita
-//        } else {
-//            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(user.getNome());
-//            return;
-//        }
-        MetodosGeraisDeUsuarios.reservaParaUsuario(codigoDoLivro, user);
+    public void reservarLivro(Livro livro, User user) { //Caio
+        MetodosGeraisDeUsuarios.reservaParaUsuario(livro, user);
     }
 
     //metodo polimorfico para saber a qtd de dia de cada tipo de usuario
