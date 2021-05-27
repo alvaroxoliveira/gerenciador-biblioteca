@@ -1,4 +1,4 @@
-package Comando;
+package Buscas;
 
 import Livro.CarregaLivros;
 import Livro.Livro;
@@ -20,14 +20,15 @@ public class BuscaLivro {
     //Retorna o objeto livro (caso exista) compativel com o id passado
     public static Livro getLivro(String identificacaoLivro) {
         int indexDoLivro = buscaIndexDoLivro(identificacaoLivro);
-        if(indexDoLivro != -1) {
-            return CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
-        }
-        /*else {
-            System.out.println("Livro não existe.");
-        }*/
-        // verificar se tem que tratar esse retorno de null
-        return null;
+        return CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
+//        if(indexDoLivro != -1) {
+//            return CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
+//        }
+//        /*else {
+//            System.out.println("Livro não existe.");
+//        }*/
+//        // verificar se tem que tratar esse retorno de null
+//        return null;
     }
 
     //Testa se o id do livro passado esta na lista de livros

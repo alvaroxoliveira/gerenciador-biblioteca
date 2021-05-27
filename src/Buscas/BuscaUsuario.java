@@ -1,4 +1,4 @@
-package Comando;
+package Buscas;
 
 import MensagensConsole.MensagensBuscaUsuario;
 import Usuario.CarregaUsuarios;
@@ -20,14 +20,15 @@ public class BuscaUsuario {
     //Retorna o objeto usuário (caso exista) compativel com o id passado
     public static User getUsuario(String identificacaoUsuario) {
         int indexDoUsuario = buscaIndexDoUsuario(identificacaoUsuario);
-        if(indexDoUsuario != -1) {
-            return CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
-        }
-        /*else {
-            System.out.println("Usuario não existe.");
-        }*/
-        // verificar se tem que tratar esse retorno de null
-        return null;
+        return CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+//        if(indexDoUsuario != -1) {
+//            return CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+//        }
+//        /*else {
+//            System.out.println("Usuario não existe.");
+//        }*/
+//        // verificar se tem que tratar esse retorno de null
+//        return null;
     }
 
     //Testa se o id do usuário passado está na lista de usuários
