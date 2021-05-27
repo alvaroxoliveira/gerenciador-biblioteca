@@ -1,35 +1,34 @@
 package Livro;
 
-import Buscas.BuscaLivro;
 import Livro.Estado.IEstadoLivro;
 
 public class Exemplar {
-    private String codigoDoLivro;
+    private Livro livro;
     private String codigoExemplar;
     private IEstadoLivro estadoExemplar;
 
-    public Exemplar(String codigoDoLivro, String codigoExemplar, IEstadoLivro estadoInicial) {
-        this.codigoDoLivro = codigoDoLivro;
+    public Exemplar(Livro livro, String codigoExemplar, IEstadoLivro estadoInicial) {
+        this.livro = livro;
         this.codigoExemplar = codigoExemplar;
         this.estadoExemplar = estadoInicial;
     }
 
     //método que usa a classe busca livro para retornar o titulo do livro desse exemplar
-    public String getTitulo(){
-        return BuscaLivro.getLivro(codigoDoLivro).getTitulo();
-    }
+//    public String getTitulo(){
+//        return BuscaLivro.getLivro(codigoDoLivro).getTitulo();
+//    }
 
     // Muda estado do exemplar
     public void mudaEstado(IEstadoLivro estadoExemplar) {
         this.estadoExemplar = estadoExemplar;
     }
 
-    public String getCodigoDoLivro() {
-        return codigoDoLivro;
+    public Livro getLivro() {
+        return livro;
     }
 
-    public void setCodigoDoLivro(String codigoDoLivro) {
-        this.codigoDoLivro = codigoDoLivro;
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 
     public String getCodigoExemplar() {

@@ -1,6 +1,5 @@
 package Livro.Estado;
 
-import Buscas.BuscaLivro;
 import Livro.Exemplar;
 import MensagensConsole.MensagensSingletonDisponivel;
 import Transacoes.TransacaoEmprestimo;
@@ -26,19 +25,17 @@ public class SingletonDisponivel implements IEstadoLivro {
     @Override
     public void emprestarLivro(Exemplar exemplar, User user) {
         user.adicionaNaListaDeEmprestados(exemplar);
-        if(user.verificaSeJaTemOLivroReservado(exemplar.getCodigoDoLivro())){ //caso o usuario tenha o livro reservado
-            user.removeDaListaDeReservados(BuscaLivro.getLivro(exemplar.getCodigoDoLivro())); //remove o livro a partir do exemplar da lista de reservados
-            TransacaoReserva.FinalizarReserva(BuscaLivro.getLivro(exemplar.getCodigoDoLivro()), user); //chama o método de remover da lista de transacoes (reserva)
+        if(user.verificaSeJaTemOLivroReservado(exemplar.getLivro())){ //caso o usuario tenha o livro reservado
+            user.removeDaListaDeReservados(exemplar.getLivro()); //remove o livro a partir do exemplar da lista de reservados
+            TransacaoReserva.FinalizarReserva(exemplar.getLivro(), user); //chama o método de remover da lista de transacoes (reserva)
         }
         exemplar.mudaEstado(SingletonEmprestado.getInstance());
         TransacaoEmprestimo.adicionarEmprestimoAtual(exemplar, user);
-//        System.out.println("O usuário " + user.getNome() + " fez empréstimo do livro " + exemplar.getTitulo() + ".");
-        MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(user.getNome(), exemplar.getTitulo());
+        MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(user.getNome(), exemplar.getLivro().getTitulo());
     }
 
     @Override
     public void devolverLivro(Exemplar exemplar, User user) {
-//        System.out.println("Você não pode devolver um exemplar que está disponível.");
         MensagensSingletonDisponivel.mensagemNaoDevolverPoqueEstaDisponivel();
     }
 

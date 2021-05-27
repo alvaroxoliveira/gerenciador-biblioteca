@@ -5,6 +5,8 @@ import MensagensConsole.MensagensSingletonEmprestado;
 import Transacoes.TransacaoEmprestimo;
 import Usuario.User;
 
+import java.time.LocalDate;
+
 public class SingletonEmprestado implements IEstadoLivro {
     private SingletonEmprestado() {}
 
@@ -23,20 +25,20 @@ public class SingletonEmprestado implements IEstadoLivro {
 
     @Override
     public void emprestarLivro(Exemplar exemplar, User user) {
-//        System.out.println("Não há como pegar emprestado um livro que já está emprestado.");
         MensagensSingletonEmprestado.mensagemLivroJaFoiEmprestado();
     }
 
     @Override
     public void devolverLivro(Exemplar exemplar, User user) {
+        // Fazer a lógica para verificar se o usuario passa a ser devedor
+        // Lógica para tornar o usuário devedor caso entrega for numa data posterior à prevista
+        if(LocalDate.now().isAfter(TransacaoEmprestimo.encontrarTransacaoEmprestimoAtuais(exemplar).getData().plusDays(user.getEstadoUsuario().diasParaEntrega()))) {
+            user.setDevedor(true);
+        }
         user.removeDaListaDeEmprestados(exemplar);
         exemplar.mudaEstado(SingletonDisponivel.getInstance());
-
-        //Chama o método de finalizar empréstimo
         TransacaoEmprestimo.FinalizarEmprestimo(exemplar);
-
-//        System.out.println("O usuário " + user.getNome() + " devolveu o livro " + exemplar.getTitulo() + ".");
-        MensagensSingletonEmprestado.mensagemDevolucaoDoLivro(user.getNome(), exemplar.getTitulo());
+        MensagensSingletonEmprestado.mensagemDevolucaoDoLivro(user.getNome(), exemplar.getLivro().getTitulo());
     }
 
     //método para imprimir o estado na consulta

@@ -38,13 +38,6 @@ public class Livro implements ILivro, Subject {
     @Override
     public Exemplar obterExemplarDisponivel() {
         for(Exemplar exemplar: this.exemplares) {
-            /*
-            for(TransacaoEmprestimo transacaoEmprestimo: TransacaoEmprestimo.getEmprestimosAtuais()){
-                if(transacaoEmprestimo.getExemplar().getCodigoDoLivro().equals(exemplar.getCodigoDoLivro()) && !transacaoEmprestimo.getExemplar().equals(exemplar)){
-                    return exemplar;
-                }
-            }
-0             */
             if(exemplar.getEstadoExemplar().imprimirEstado().equals("Disponivel.")){ //testa se esta disponivel
                 return exemplar;
             }
@@ -54,10 +47,9 @@ public class Livro implements ILivro, Subject {
 
     @Override
     public void pegarLivroEmprestado(User user){
-        System.out.println(this.getQuantidadeExemplares());
         if(TransacaoReserva.quantidadeReserva(this) >= this.getQuantidadeExemplares()){
             //verifica se o usuario tem o livro reservado
-            if(!user.verificaSeJaTemOLivroReservado(this.id)){ //não tem reserva
+            if(!user.verificaSeJaTemOLivroReservado(this)){ //não tem reserva
                 MensagensLivro.mensagemPossuiMaisReservasQueExemplares(this.getTitulo(), user.getNome());
             } else{//o usuário tem reserva
                 //chama o método de emprestar livro no estado disponivel do exemplar
@@ -97,36 +89,12 @@ public class Livro implements ILivro, Subject {
 
     @Override
     public void consultarLivro() {
-//        System.out.println("Título: " + this.titulo);
-//        //passa o próprio livro e usa o vetor de reservas para saber quantos exemplares estão reservados
-//        System.out.println("Quantidade de reservas: " + TransacaoReserva.quantidadeReserva(this));
-
         ImprimeDadosLivro.imprimeCabecalho(this);
-
         if(TransacaoReserva.quantidadeReserva(this) > 0){
             //chama o método para imprimir os usuários e os exemplares reservados por esses
             TransacaoReserva.imprimirUsuariosReserva(this);
         }
-
-        //imprime cada exemplar e caso esteja emprestado imprime outras informações
         ImprimeDadosLivro.imprimeInformacoesDosExemplaresEmprestados(this.exemplares);
-
-//        System.out.println("Exemplares: ");
-//        for(Exemplar exemplar: this.exemplares){
-//            System.out.println("Código: " + exemplar.getCodigoExemplar());
-//            //usa o método polimorfico para impimir o estado do livro
-//            System.out.println("Estado: " + exemplar.getEstadoExemplar().imprimirEstado());
-//            //commpara o exemplar atual com os exemplares na lista de emprestimos ativos
-//            for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
-//                //caso o exemplar esteja emprestado, imprime as informações
-//                if(exemplar.getCodigoExemplar().equals(transacaoEmprestimo.getExemplar().getCodigoExemplar())){
-//                    System.out.println("Usuario: " + transacaoEmprestimo.getUsuario().getNome());
-//                    System.out.println("Data de emprestimo: " + transacaoEmprestimo.getData());
-//                    //soma a data do emprestimo com a quantidade de dias expresso no metodo polimorfico correspondente a cada usuario
-//                    System.out.println("Data de entrega: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
-//                }
-//            }
-//        }
     }
 
     // Additional um observer a uma lista de observadores que no caso são os usuários com status de Professores
@@ -134,7 +102,6 @@ public class Livro implements ILivro, Subject {
     public void adicionarObserver(Observer observer, String nomeUser) {
         this.observadores.add(observer);
         MensagensLivro.mensagemAdicaoDeLivroNaListaDeObservador(this.getTitulo(), nomeUser);
-//        System.out.println("O professor adicionou o livro " + this.getTitulo() + "na sua lista de observados.");
     }
 
     // Notifica uma lista de observadores
