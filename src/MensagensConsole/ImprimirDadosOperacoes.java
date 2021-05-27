@@ -4,26 +4,20 @@ import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
 
 public class ImprimirDadosOperacoes {
-//    public static void imprimirDadosDeEmprestimosAtuais(TransacaoEmprestimo transacaoEmprestimo) {
-//        System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getTitulo());
-//        System.out.println("Data do empréstimo: " + transacaoEmprestimo.getData());
-//        System.out.println("Estado: Em Curso");
-//        System.out.println("Data de devolução: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
-//    }
-//
-//    //metodo para imprimir os emprestimos finalizados do usuario passado
-//    public static void imprimirDadosEmprestimosFinalizados(TransacaoEmprestimo transacaoEmprestimo) {
-//        System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getTitulo());
-//        System.out.println("Data do empréstimo: " + transacaoEmprestimo.getData());
-//        System.out.println("Estado: Finalizado");
-//        System.out.println("Data de devolução: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
-//    }
-
     // 1 função para os dois casos ao invés de usar as duas de cima
-    public static void imprimirDadosEmprestimos(TransacaoEmprestimo transacaoEmprestimo, String estado) {
-        System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getTitulo());
+
+    private static String retornaStringDeEstado(TransacaoEmprestimo transacaoEmprestimo) {
+        if(transacaoEmprestimo.isEstaFinalizado()) {
+            return "Finalizado";
+        }
+        return "Em curso";
+    }
+
+    public static void imprimirDadosEmprestimos(TransacaoEmprestimo transacaoEmprestimo) {
+        String estadoDaTransacao = retornaStringDeEstado(transacaoEmprestimo);
+        System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getLivro().getTitulo());
         System.out.println("Data do empréstimo: " + transacaoEmprestimo.getData());
-        System.out.println("Estado: " + estado);
+        System.out.println("Estado: " + estadoDaTransacao);
         System.out.println("Data de devolução: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
     }
 

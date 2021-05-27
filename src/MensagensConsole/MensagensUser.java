@@ -1,6 +1,6 @@
 package MensagensConsole;
 
-import Buscas.BuscaLivro;
+import Livro.Livro;
 
 public class MensagensUser {
     public static void imprimirNomeUsuario(String nomeUser) {
@@ -11,8 +11,8 @@ public class MensagensUser {
         System.out.println("Não existe exemplar do livro "+ titulo + ".");
     }
 
-    public static void mensagemOperacaoJaFeitaComLivro(String codigoDoLivro, String nomeUser, String estado) {
-        System.out.println("Usuário " + nomeUser + " ja tem um exemplar do livro " + BuscaLivro.getLivro(codigoDoLivro).getTitulo() + estado);
+    public static void mensagemOperacaoJaFeitaComLivro(Livro livro, String nomeUser, String estado) {
+        System.out.println("Usuário " + nomeUser + " ja tem um exemplar do livro " + livro.getTitulo() + " " + estado);
     }
 
     public static void mensagemDeInadimplencia(String nomeUser) {
