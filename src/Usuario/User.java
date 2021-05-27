@@ -1,6 +1,6 @@
 package Usuario;
 
-import Comando.BuscaLivro;
+import Buscas.BuscaLivro;
 import Livro.Exemplar;
 import Livro.Livro;
 import MensagensConsole.ImprimirDadosOperacoes;
@@ -109,10 +109,12 @@ public class User implements IUser, Observer {
 
     // Metodo extraido do método de consultar usuário e serve para imprimir dados de Emprestimos Ativos
     private boolean isImprimirDadosDeEmprestimosAtivos(boolean interacao) {
+        String estadoEmCurso = "Em curso";
         for(Exemplar exemplar: this.listaDeLivrosEmprestados){
             for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
                 if(exemplar.equals(transacaoEmprestimo.getExemplar())){ //caso tenha algum exemplar emprestado
-                    ImprimirDadosOperacoes.imprimirDadosDeEmprestimosAtuais(transacaoEmprestimo); // Dentro da Classe ImprimirDadosOperacoes no pacote Impressoes
+//                    ImprimirDadosOperacoes.imprimirDadosDeEmprestimosAtuais(transacaoEmprestimo);
+                    ImprimirDadosOperacoes.imprimirDadosEmprestimos(transacaoEmprestimo, estadoEmCurso); // Dentro da Classe ImprimirDadosOperacoes no pacote Impressoes
                     interacao = true;
                 }
             }
@@ -121,9 +123,11 @@ public class User implements IUser, Observer {
     }
 
     private boolean isImprimirDadosDeEmprestimosFinalizados(boolean interacao){
+        String estadoFinalizado = "Finalizado";
         for (TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosFinalizados()) {
             if (transacaoEmprestimo.getUsuario().equals(this)) {
-                ImprimirDadosOperacoes.imprimirDadosEmprestimosFinalizados(transacaoEmprestimo);
+//                ImprimirDadosOperacoes.imprimirDadosEmprestimosFinalizados(transacaoEmprestimo);
+                ImprimirDadosOperacoes.imprimirDadosEmprestimos(transacaoEmprestimo, estadoFinalizado);
                 interacao = true;
             }
         }

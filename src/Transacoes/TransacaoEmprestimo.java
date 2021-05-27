@@ -10,7 +10,7 @@ public class TransacaoEmprestimo {
     private Exemplar exemplar;
     private User usuario;
     private LocalDate data;
-
+    // Colocar um estado em vez de passar na função de imprimir??
     private static ArrayList<TransacaoEmprestimo> emprestimosAtuais = new ArrayList<>();
     private static ArrayList<TransacaoEmprestimo> emprestimosFinalizados = new ArrayList<>();
 

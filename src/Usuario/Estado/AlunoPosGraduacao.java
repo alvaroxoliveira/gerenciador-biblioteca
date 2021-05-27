@@ -1,6 +1,6 @@
 package Usuario.Estado;
 
-import Comando.BuscaLivro;
+import Buscas.BuscaLivro;
 import Usuario.User;
 
 public class AlunoPosGraduacao implements IEstadoUsuario {
