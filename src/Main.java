@@ -8,10 +8,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         InterfaceUsuario gui = new InterfaceUsuario();
-
         CarregaUsuarios.inicializaUsuarios();
         CarregaLivros.carregarLivrosSistema();
-
         gui.fazerLoopEntrada();
     }
 }

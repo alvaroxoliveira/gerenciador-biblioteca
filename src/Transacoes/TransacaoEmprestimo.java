@@ -10,6 +10,7 @@ public class TransacaoEmprestimo {
     private Exemplar exemplar;
     private User usuario;
     private LocalDate data;
+    private boolean estaFinalizado;
     // Colocar um estado em vez de passar na função de imprimir??
     private static ArrayList<TransacaoEmprestimo> emprestimosAtuais = new ArrayList<>();
     private static ArrayList<TransacaoEmprestimo> emprestimosFinalizados = new ArrayList<>();
@@ -17,6 +18,7 @@ public class TransacaoEmprestimo {
     public TransacaoEmprestimo(Exemplar exemplar, User usuario){
         this.exemplar = exemplar;
         this.usuario = usuario;
+        this.estaFinalizado = false;
         this.data = LocalDate.now();
     }
 
@@ -27,6 +29,7 @@ public class TransacaoEmprestimo {
 
     //metodo para finalizar emprestimo (retira da lista de ativos e adiciona nos finalizados)
     public static void FinalizarEmprestimo(Exemplar exemplar) {
+        encontrarTransacaoEmprestimoAtuais(exemplar).setEstaFinalizado(true); ////////
         TransacaoEmprestimo.emprestimosFinalizados.add(encontrarTransacaoEmprestimoAtuais(exemplar));
         TransacaoEmprestimo.emprestimosAtuais.remove(encontrarTransacaoEmprestimoAtuais(exemplar));
     }
@@ -41,7 +44,7 @@ public class TransacaoEmprestimo {
         return qtd;
     }
 
-    private static TransacaoEmprestimo encontrarTransacaoEmprestimoAtuais(Exemplar exemplar){
+    public static TransacaoEmprestimo encontrarTransacaoEmprestimoAtuais(Exemplar exemplar){
         for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.emprestimosAtuais) {
             if(transacaoEmprestimo.exemplar.equals(exemplar)){
                 return transacaoEmprestimo;
@@ -76,5 +79,13 @@ public class TransacaoEmprestimo {
 
     public LocalDate getData() {
         return data;
+    }
+
+    public boolean isEstaFinalizado() {
+        return estaFinalizado;
+    }
+
+    public void setEstaFinalizado(boolean estaFinalizado) {
+        this.estaFinalizado = estaFinalizado;
     }
 }
