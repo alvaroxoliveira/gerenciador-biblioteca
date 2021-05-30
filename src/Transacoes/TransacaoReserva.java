@@ -5,6 +5,7 @@ package Transacoes;
 * */
 
 import Livro.Livro;
+import MensagensConsole.MensagensTransacaoReserva;
 import Usuario.Usuario;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class TransacaoReserva {
     public static void imprimirUsuariosReserva(Livro livro){
         for(TransacaoReserva transacaoReserva : TransacaoReserva.reservas) {
             if(transacaoReserva.getLivro().getId().equals(livro.getId())){
-                System.out.println("Reserva do livro " + transacaoReserva.getLivro().getId() + " feita por " + transacaoReserva.getUsuario().getNome() + ".");
+                MensagensTransacaoReserva.mensagemTransacaoReservaDoLivro(transacaoReserva);
             }
         }
     }
