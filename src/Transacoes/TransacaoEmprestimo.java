@@ -1,8 +1,11 @@
 package Transacoes;
 
+/*
+* Classe que cria e guarda uma transação de empréstimo de um exemplar de livro para um usuário.
+* */
+
 import Livro.Exemplar;
 import Usuario.Usuario;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -11,7 +14,7 @@ public class TransacaoEmprestimo {
     private Usuario usuario;
     private LocalDate data;
     private boolean estaFinalizado;
-    // Colocar um estado em vez de passar na função de imprimir??
+
     private static ArrayList<TransacaoEmprestimo> emprestimosAtuais = new ArrayList<>();
     private static ArrayList<TransacaoEmprestimo> emprestimosFinalizados = new ArrayList<>();
 
@@ -22,18 +25,26 @@ public class TransacaoEmprestimo {
         this.data = LocalDate.now();
     }
 
-    //cria uma nova transação e adiciona aos emprestimos ativos
+    /*
+    * Método público de criação e adição em lista de uma Transação de Empréstimo.
+    * */
     public static void adicionarEmprestimoAtual(Exemplar exemplar, Usuario usuario) {
         TransacaoEmprestimo.emprestimosAtuais.add(new TransacaoEmprestimo(exemplar, usuario));
     }
 
-    //metodo para finalizar emprestimo (retira da lista de ativos e adiciona nos finalizados)
+    /*
+    * Método Público de finalização de uma Transação de Empréstimo.
+    * Adiciona na lista de finalizados e remove na dos atuais.
+    * */
     public static void FinalizarEmprestimo(Exemplar exemplar) {
-        encontrarTransacaoEmprestimoAtuais(exemplar).setEstaFinalizado(true); ////////
+        encontrarTransacaoEmprestimoAtuais(exemplar).setEstaFinalizado(true);
         TransacaoEmprestimo.emprestimosFinalizados.add(encontrarTransacaoEmprestimoAtuais(exemplar));
         TransacaoEmprestimo.emprestimosAtuais.remove(encontrarTransacaoEmprestimoAtuais(exemplar));
     }
 
+    /*
+    * Método público que retorna a quantidade de empréstimos finalizados.
+    * */
     public static int quantidadeEmprestimosFinalizados(Usuario usuario){
         int qtd = 0;
         for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.emprestimosFinalizados){
@@ -44,6 +55,10 @@ public class TransacaoEmprestimo {
         return qtd;
     }
 
+    /*
+    * Método público de busca de uma Transação de um Empréstimo Atual.
+    * Verificações anteriores garantem que nunca será null.
+    * */
     public static TransacaoEmprestimo encontrarTransacaoEmprestimoAtuais(Exemplar exemplar){
         for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.emprestimosAtuais) {
             if(transacaoEmprestimo.exemplar.equals(exemplar)){
@@ -52,6 +67,10 @@ public class TransacaoEmprestimo {
         }
         return null;
     }
+
+    /*
+    * Getters/Setters.
+    * */
 
     public Exemplar getExemplar() {
         return exemplar;

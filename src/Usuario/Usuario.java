@@ -57,7 +57,7 @@ public class Usuario implements IUsuario {
     * Método privado que retorna verdadeiro se o usuário tem o livro reservado
     * e falso caso contrário.
     * */
-    private boolean verificaSeJaTemOLivroReservado(Livro livro){ //caio
+    public boolean verificaSeJaTemOLivroReservado(Livro livro) {
         for(Livro livroReservado: this.listaDeReservados) {
             if(livroReservado.getId().equals(livro.getId())) {
                 return true;

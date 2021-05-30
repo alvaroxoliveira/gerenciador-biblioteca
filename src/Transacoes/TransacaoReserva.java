@@ -1,8 +1,11 @@
 package Transacoes;
 
+/*
+* Classe que cria e guarda uma transação de reserva de um exemplar de livro para um usuário.
+* */
+
 import Livro.Livro;
 import Usuario.Usuario;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,43 +16,23 @@ public class TransacaoReserva {
 
     private static ArrayList<TransacaoReserva> reservas = new ArrayList<>();
 
-    public TransacaoReserva(Livro livro, Usuario usuario){
+    public TransacaoReserva(Livro livro, Usuario usuario) {
         this.livro = livro;
         this.usuario = usuario;
         this.data = LocalDate.now();
     }
 
-    //cria uma nova transação e adiciona as reservas
+    /*
+    * Método publico que cria uma nova transação de reserva e adiciona à lista de reservas.
+    * */
     public static void adicionarReserva(Livro livro, Usuario usuario) {
         TransacaoReserva.reservas.add(new TransacaoReserva(livro, usuario));
     }
 
-    //metodo para finalizar uma reserva
-    public static void FinalizarReserva(Livro livro, Usuario usuario){
-        TransacaoReserva.reservas.remove(encontrarTransacaoReservas(livro, usuario));
-    }
-
-    //calcula quantos livros tem reservaos utilizando o codigo do livro nos exemplares
-    public static int quantidadeReserva(Livro livro){
-        int qtd = 0;
-        for(TransacaoReserva transacaoReserva : TransacaoReserva.reservas){
-            if(transacaoReserva.getLivro().getId().equals(livro.getId())){
-                qtd++;
-            }
-        }
-        return qtd;
-    }
-
-    //método para imprimir os usuários que fizeram reserva do livro passado
-    public static void imprimirUsuariosReserva(Livro livro){
-        for(TransacaoReserva transacaoReserva : TransacaoReserva.reservas){
-            if(transacaoReserva.getLivro().getId().equals(livro.getId())){
-                System.out.println("Reserva do livro " + transacaoReserva.getLivro().getId() + " feita por " + transacaoReserva.getUsuario().getNome() + ".");
-            }
-        }
-    }
-
-    private static TransacaoReserva encontrarTransacaoReservas(Livro livro, Usuario usuario){
+    /*
+    * Método privado que tem função de encontrar uma transação de reserva existente.
+    * */
+    private static TransacaoReserva encontrarTransacaoReservas(Livro livro, Usuario usuario) {
         for(TransacaoReserva transacaoReserva : TransacaoReserva.reservas) {
             //procura uma transacao onde o usuario e o livro batem
             if(transacaoReserva.getLivro().equals(livro) && transacaoReserva.getUsuario().equals(usuario)){
@@ -58,6 +41,42 @@ public class TransacaoReserva {
         }
         return null;
     }
+
+    /*
+    * Método público que finaliza uma transação de reserva removendo da lista de reservas.
+    * */
+    public static void FinalizarReserva(Livro livro, Usuario usuario) {
+        TransacaoReserva.reservas.remove(encontrarTransacaoReservas(livro, usuario));
+    }
+
+    /*
+    * Método publico que calcula e retorna a quantidade de livros reservados.
+    * Verificar isso depois
+    * */
+    public static int quantidadeReserva(Livro livro){
+        int qtd = 0;
+        for(TransacaoReserva transacaoReserva : TransacaoReserva.reservas) {
+            if(transacaoReserva.getLivro().getId().equals(livro.getId())) {
+                qtd++;
+            }
+        }
+        return qtd;
+    }
+
+    /*
+    * Método que imprime a reserva de um livro por um usuário.
+    * */
+    public static void imprimirUsuariosReserva(Livro livro){
+        for(TransacaoReserva transacaoReserva : TransacaoReserva.reservas) {
+            if(transacaoReserva.getLivro().getId().equals(livro.getId())){
+                System.out.println("Reserva do livro " + transacaoReserva.getLivro().getId() + " feita por " + transacaoReserva.getUsuario().getNome() + ".");
+            }
+        }
+    }
+
+    /*
+    * Getters/Setters
+    * */
 
     public Livro getLivro() {
         return livro;
