@@ -4,7 +4,6 @@ package Usuario;
 * Classe de definição de Usuário
 * */
 
-import Buscas.BuscaLivro;
 import Livro.Exemplar;
 import Livro.Livro;
 import MensagensConsole.ImprimirDadosOperacoes;
@@ -72,24 +71,17 @@ public class Usuario implements IUsuario {
     * */
     @Override
     public void realizaEmprestimo(Livro livro) {
-        //testa se existe algum exemplar do livro
         if(livro.getQuantidadeExemplares() == 0){
-            MensagensUser
-                    .mensagemDeNaoExistenciaDeExemplar(BuscaLivro.getLivro(livro.getId()).getTitulo());
-            return;
+            MensagensUser.mensagemDeNaoExistenciaDeExemplar(livro.getTitulo());
         }
-        //chama o método para verificar se o usuário já fez emprestimo do mesmo livro
-        else if(verificaSeJaTemOLivroEmprestado(livro)) { //perguntar na aula
+        else if(verificaSeJaTemOLivroEmprestado(livro)) {
             MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), "Emprestado");
-            return;
         }
-        else if(this.isDevedor) { //verifica se o usuário é devedor
+        else if(this.isDevedor) {
             MensagensUser.mensagemDeInadimplencia(this.nome);
-            return;
         }
-        else { //chama o método do estado do usuario para a reserva do livro
+        else {
             this.estadoUsuario.pegarLivroEmprestado(livro, this);
-            return;
         }
     }
 
@@ -113,14 +105,13 @@ public class Usuario implements IUsuario {
     * */
     @Override
     public void realizaReserva(Livro livro) { //caio
-        //chama o método para verificar se o usuário já reservou o mesmo livro
         if(verificaSeJaTemOLivroReservado(livro)) {
             MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome()," reservado.");
-        } else if(this.isDevedor) { //verifica se o usuário é devedor
+        } else if(this.isDevedor) {
             MensagensUser.mensagemDeInadimplencia(this.getNome());
-        } else if(verificaSeJaTemOLivroEmprestado(livro)){ //testa se ja tem o exemplar reservado
+        } else if(verificaSeJaTemOLivroEmprestado(livro)){
             MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), " emprestado.");
-        } else { //chama o método do estado do usuario para a reserva do livro
+        } else {
             this.estadoUsuario.reservarLivro(livro, this);
         }
     }
@@ -133,7 +124,7 @@ public class Usuario implements IUsuario {
         for(Exemplar exemplar: this.listaDeLivrosEmprestados){
             for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosAtuais()){
                 if(exemplar.equals(transacaoEmprestimo.getExemplar())){ //caso tenha algum exemplar emprestado
-                    ImprimirDadosOperacoes.imprimirDadosEmprestimos(transacaoEmprestimo); // Dentro da Classe ImprimirDadosOperacoes no pacote Impressoes
+                    ImprimirDadosOperacoes.imprimirDadosEmprestimos(transacaoEmprestimo);
                     interacao = true;
                 }
             }
@@ -162,8 +153,8 @@ public class Usuario implements IUsuario {
     private boolean isImprimirDadosDeReservas(boolean interacao) {
         for(Livro livro: this.listaDeReservados){
             for(TransacaoReserva transacaoReserva : TransacaoReserva.getReservas()) {
-                if (livro.equals(transacaoReserva.getLivro())) { //para encontrar o exemplar
-                    ImprimirDadosOperacoes.imprimirDadosDeReservas(transacaoReserva); // Método encontrado em ImprimirDadosOperacoes
+                if (livro.equals(transacaoReserva.getLivro())) {
+                    ImprimirDadosOperacoes.imprimirDadosDeReservas(transacaoReserva);
                     interacao = true;
                 }
             }
@@ -176,7 +167,7 @@ public class Usuario implements IUsuario {
     * dos dados referentes aos Empréstimos Ativos, Empréstimo em Curso e as Reservas
     * */
     private void ImprimirDadosDeEmprestimosAtivosEFinalizadosEReservas(boolean interacao) {
-        if(this.listaDeLivrosEmprestados.size() > 0){ //imprimir os emprestimos ativos
+        if(this.listaDeLivrosEmprestados.size() > 0){
             interacao = isImprimirDadosDeEmprestimosAtivos(interacao);
         }
         if(TransacaoEmprestimo.quantidadeEmprestimosFinalizados(this) > 0){

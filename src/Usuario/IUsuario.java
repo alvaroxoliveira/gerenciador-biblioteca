@@ -4,10 +4,11 @@ package Usuario;
 * Interface da classe Usuario
 * */
 
+import Livro.Exemplar;
 import Livro.Livro;
 import Observer.Observer;
 import Usuario.Estado.IEstadoUsuario;
-import Livro.Exemplar;
+
 import java.util.ArrayList;
 
 public interface IUsuario extends Observer {
