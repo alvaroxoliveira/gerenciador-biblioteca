@@ -5,25 +5,29 @@ import Livro.Exemplar;
 import Livro.Livro;
 import MensagensConsole.ImprimirDadosOperacoes;
 import MensagensConsole.MensagensUser;
-import Observer.Observer;
 import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
 import Usuario.Estado.IEstadoUsuario;
 
 import java.util.ArrayList;
 
-public class User implements IUser, Observer {
+public class Usuario implements IUsuario {
     private String identificador;
     private String nome;
     private boolean isDevedor;
     private IEstadoUsuario estadoUsuario;
     private int quantidadeDeNotificacoes;
 
-    // Lista de livros que o usuário está no momento
+    /*
+    * Listas que contém os livros emprestados e os livros reservados (respectivamente) pelo usuário em curso.
+    * */
     private ArrayList<Exemplar> listaDeLivrosEmprestados;
     private ArrayList<Livro> listaDeReservados;
 
-    public User(String identificador, String nome) {
+    /*
+    * Construtor da classe. Inicia todos os usuários, como não devedores.
+    * */
+    public Usuario(String identificador, String nome) {
         this.identificador = identificador;
         this.nome = nome;
         this.quantidadeDeNotificacoes = 0;
@@ -32,6 +36,10 @@ public class User implements IUser, Observer {
         this.isDevedor = false;
     }
 
+    /*
+    * Método privado que retorna verdadeiro se o Usuário tem o livro emprestado
+    * e falso caso o contrário.
+    * */
     private boolean verificaSeJaTemOLivroEmprestado(Livro livro) {
         for(Exemplar exemplar: this.listaDeLivrosEmprestados) {
             if(exemplar.getLivro().getId().equals(livro.getId())) {
@@ -41,9 +49,11 @@ public class User implements IUser, Observer {
         return false;
     }
 
-    //verifica se há uma reserva do mesmo livro pelo usuárip
-    @Override
-    public boolean verificaSeJaTemOLivroReservado(Livro livro){ //caio
+    /*
+    * Método privado que retorna verdadeiro se o usuário tem o livro reservado
+    * e falso caso contrário.
+    * */
+    private boolean verificaSeJaTemOLivroReservado(Livro livro){ //caio
         for(Livro livroReservado: this.listaDeReservados) {
             if(livroReservado.getId().equals(livro.getId())) {
                 return true;
@@ -52,12 +62,14 @@ public class User implements IUser, Observer {
         return false;
     }
 
-    // Metodo alterado para receber mensagens de uma classe responsável para imprimir mensagens somente
-    // da classe usuário
+    /*
+    * Método publico de realização de empréstimo pelo usuário.
+    * Caso não houver impedimento o usuário aciona o método pegarEmprestado de cada tipo de usuário (Estado).
+    * */
     @Override
     public void realizaEmprestimo(Livro livro) {
         //testa se existe algum exemplar do livro
-        if(BuscaLivro.getLivro(livro.getId()).getQuantidadeExemplares() == 0){
+        if(livro.getQuantidadeExemplares() == 0){
             MensagensUser
                     .mensagemDeNaoExistenciaDeExemplar(BuscaLivro.getLivro(livro.getId()).getTitulo());
             return;
@@ -67,7 +79,7 @@ public class User implements IUser, Observer {
             MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), "Emprestado");
             return;
         }
-        else if(this.isDevedor == true) { //verifica se o usuário é devedor
+        else if(this.isDevedor) { //verifica se o usuário é devedor
             MensagensUser.mensagemDeInadimplencia(this.nome);
             return;
         }
@@ -78,7 +90,10 @@ public class User implements IUser, Observer {
     }
 
 
-    // Realiza Devoluçao
+    /*
+    * Método público de realização de devolução de um livro pelo usuário
+    * Caso usuáio tenha o livro emprestado, o método devolverLivroEmprestado de cada tipo de usuário (estado).
+    * */
     @Override
     public void realizaDevolucao(Livro livro) {
         if(this.listaDeLivrosEmprestados.size() > 0) {
@@ -88,25 +103,27 @@ public class User implements IUser, Observer {
         }
     }
 
-    // Faz a reserva de um exemplar
+    /*
+    * Método público de realização de reserva por um usuário
+    * Caso hajam condições, chama o método de reserva para cada tipo de usuário (estado).
+    * */
     @Override
     public void realizaReserva(Livro livro) { //caio
         //chama o método para verificar se o usuário já reservou o mesmo livro
         if(verificaSeJaTemOLivroReservado(livro)) {
             MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome()," reservado.");
-            return;
-        } else if(this.isDevedor == true) { //verifica se o usuário é devedor
+        } else if(this.isDevedor) { //verifica se o usuário é devedor
             MensagensUser.mensagemDeInadimplencia(this.getNome());
-            return;
         } else if(verificaSeJaTemOLivroEmprestado(livro)){ //testa se ja tem o exemplar reservado
             MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), " emprestado.");
         } else { //chama o método do estado do usuario para a reserva do livro
             this.estadoUsuario.reservarLivro(livro, this);
-            return;
         }
     }
 
-    // Metodo extraido do método de consultar usuário e serve para imprimir dados de Emprestimos Ativos
+    /*
+    * Método privado que auxilia na consultarUsuario e serve para imprimir dados de Emprestimos Ativos (Em cusro).
+    * */
     private boolean isImprimirDadosDeEmprestimosAtivos(boolean interacao) {
         String estadoEmCurso = "Em curso";
         for(Exemplar exemplar: this.listaDeLivrosEmprestados){
@@ -120,6 +137,10 @@ public class User implements IUser, Observer {
         return interacao;
     }
 
+    /*
+    * Método privado que auxilia a consultarUsuario que permite imprimir os dados dos empréstimos finalizados
+    * pelo usuário.
+    * */
     private boolean isImprimirDadosDeEmprestimosFinalizados(boolean interacao){
         String estadoFinalizado = "Finalizado";
         for (TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.getEmprestimosFinalizados()) {
@@ -131,7 +152,9 @@ public class User implements IUser, Observer {
         return interacao;
     }
 
-    // Método extraído do método de consultar usuário e serve para imprimir dados das reservas dos usuários
+    /*
+    * Método privado que auxilia consultarUsuario que permite imprimir dados das reservas do Usuário.
+    * */
     private boolean isImprimirDadosDeReservas(boolean interacao) {
         for(Livro livro: this.listaDeReservados){
             for(TransacaoReserva transacaoReserva : TransacaoReserva.getReservas()) {
@@ -144,73 +167,102 @@ public class User implements IUser, Observer {
         return interacao;
     }
 
-    // Método Extraído da consulta de Usuário e serve para imprimir os dados dos Emprestimos ativos e finalizados e também as reservas
+    /*
+    * Método privado que auxilia consultarUsuario e serve para verificar as condições para a impressão
+    * dos dados referentes aos Empréstimos Ativos, Empréstimo em Curso e as Reservas
+    * */
     private void ImprimirDadosDeEmprestimosAtivosEFinalizadosEReservas(boolean interacao) {
-        //imprimir os emprestimos ativos
-        if(this.listaDeLivrosEmprestados.size() > 0){
+        if(this.listaDeLivrosEmprestados.size() > 0){ //imprimir os emprestimos ativos
             interacao = isImprimirDadosDeEmprestimosAtivos(interacao);
         }
-        //imprimir os emprestimos finalizados
-        if(TransacaoEmprestimo.quantidadeEmprestimosFinalizados(this) > 0){ //testa se ja teve finalizado
+        if(TransacaoEmprestimo.quantidadeEmprestimosFinalizados(this) > 0){
             interacao = isImprimirDadosDeEmprestimosFinalizados(interacao);
         }
-        //imprimir as reservas
-        if(this.listaDeReservados.size() > 0){ //caso haja alguma reserva
+        if(this.listaDeReservados.size() > 0){
             interacao = isImprimirDadosDeReservas(interacao);
         }
-        // Não existem emprestimos ativos e/ou finalizados ou reservas
         if(!interacao){
             MensagensUser.mensagemDeNaoExistenciaDeOperacoes();
         }
     }
 
-    //método para consultar o usuário
+    /*
+    * Método publico em que está definida a consulta dos dados do usuário.
+    * O boolean de interação controla se houve alguma transação feita pelo usuário no sistema:
+    * true = sim, false = não.
+    * */
     @Override
     public void consultarUsuario(){
-        boolean interacao = false; //variavel de controle para caso não haja nenhuma transacao
+        boolean interacao = false;
         MensagensUser.imprimirNomeUsuario(this.getNome());
         ImprimirDadosDeEmprestimosAtivosEFinalizadosEReservas(interacao);
     }
 
-    //Método para consultar professor
+    /*
+    * Método público de consulta específica para um usuário professor da quantidade de notificações que recebeu
+    * das notificações de reservas simultâneas ( > 2) do livro.
+    * */
     @Override
     public void consultarProfessor(){
        MensagensUser.mensagemDeNotificacaoProfessor(this.getNome(), this.getQuantidadeDeNotificacoes());
     }
 
-    // Avisa ao usuario quando mais de duas reservas simultaneas foram feitas
+    /*
+    * Método público chamado quando mais de duas reservas simultâneas são feitas.
+    * Padrão Observer
+    * */
     @Override
     public void avisarReservasSimultaneas() {
         this.quantidadeDeNotificacoes++;
     }
 
-    // Método de definição de tipo de usuário
+    /*
+    * Método público que define o tipo de usuário
+    * */
     @Override
     public void setTipoDeUsuario(IEstadoUsuario estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
     }
 
-    // Adiciona um livro na lista de emprestimos
+    /*
+    * Método público que tem como função de adicionar um exemplar do livro na lista de emprestados do usuário quando
+    * ocorre um empréstimo.
+    * */
     @Override
     public void adicionaNaListaDeEmprestados(Exemplar exemplar) {
         this.listaDeLivrosEmprestados.add(exemplar);
     }
 
-    // Remove o objeto exemplar da lista de exemplares emprestados
+    /*
+    * Método público que tem como função remover um exemplar da lista de empréstimos quando o empréstimo é finalizado.
+    * */
     @Override
     public void removeDaListaDeEmprestados(Exemplar exemplar) {
         this.listaDeLivrosEmprestados.remove(exemplar);
     }
 
+    /*
+    * Método público que tem como função adicionar um exemplar na lista de reservados quando ocorre uma reserva do livro.
+    * */
     @Override
     public void adicionaNaListaDeReservados(Livro livro) {
         this.listaDeReservados.add(livro);
     }
-    
+
+    /*
+    * Método público que tem como função remover um livro da lista de reservados quando um livro reservado pelo usuário
+    * é emprestado para o mesmo.
+    * */
     @Override
     public void removeDaListaDeReservados(Livro livro) {
         this.listaDeReservados.remove(livro);
     }
+
+
+    /*
+    * Demais getters/setters da classe
+    * */
+
 
     @Override
     public String getIdentificador() {

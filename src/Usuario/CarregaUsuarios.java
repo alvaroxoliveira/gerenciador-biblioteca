@@ -9,42 +9,54 @@ import Usuario.Estado.Professor;
 import java.util.ArrayList;
 
 public class CarregaUsuarios {
-    private static ArrayList<User> usuariosDoSistema = new ArrayList<User>();
+    private static ArrayList<Usuario> usuariosDoSistema = new ArrayList<Usuario>();
 
+    /*
+    * Método inicializa Usuários do sistema
+    * Usuários estes definidos pelo professor na especificação do trabalho
+    * O boolean de devedor é setado dentro do construtor como false para iniciar o sistema sem usuários devedores
+    * */
     public static void inicializaUsuarios() {
-        User u1 = new User("123", "João da Silva");
+        Usuario u1 = new Usuario("123", "João da Silva");
         u1.setTipoDeUsuario(AlunoGraduacao.getInstance());
 
-        User u2 = new User("456", "Luiz Fernando Rodrigues");
+        Usuario u2 = new Usuario("456", "Luiz Fernando Rodrigues");
         u2.setTipoDeUsuario(AlunoPosGraduacao.getInstance());
 
-        User u3 = new User("789", "Pedro Paulo");
+        Usuario u3 = new Usuario("789", "Pedro Paulo");
         u3.setTipoDeUsuario(AlunoGraduacao.getInstance());
 
-        User u4 = new User("100", "Carlos Lucena");
+        Usuario u4 = new Usuario("100", "Carlos Lucena");
         u4.setTipoDeUsuario(Professor.getInstance());
 
-        adicionarUsuariosNoSistema(u1);
-        adicionarUsuariosNoSistema(u2);
-        adicionarUsuariosNoSistema(u3);
-        adicionarUsuariosNoSistema(u4);
+        adicionarUsuariosNoSistema(u1, u2, u3,u4);
     }
 
-    // Cadastrar um usuário
-    private static void adicionarUsuariosNoSistema(User usuario) {
-        CarregaUsuarios.usuariosDoSistema.add(usuario);
+    /*
+    * Adiciona os usuários criados num array contendo todos os usuários do sistema
+    * */
+    private static void adicionarUsuariosNoSistema(Usuario u1, Usuario u2, Usuario u3, Usuario u4) {
+        CarregaUsuarios.usuariosDoSistema.add(u1);
+        CarregaUsuarios.usuariosDoSistema.add(u2);
+        CarregaUsuarios.usuariosDoSistema.add(u3);
+        CarregaUsuarios.usuariosDoSistema.add(u4);
     }
 
-    // Descadastrar um usuário
+    /*
+    * Remove um usuário do sistema
+    * */
     private static void removerUsuariosDoSistema(int i) {
         CarregaUsuarios.usuariosDoSistema.remove(i);
     }
 
-    public static ArrayList<User> getUsuariosDoSistema() {
+    /*
+    * Método para obter os usuários do sistema
+    * */
+    public static ArrayList<Usuario> getUsuariosDoSistema() {
         return usuariosDoSistema;
     }
 
-    public static void setUsuariosDoSistema(ArrayList<User> usuariosDoSistema) {
+    public static void setUsuariosDoSistema(ArrayList<Usuario> usuariosDoSistema) {
         CarregaUsuarios.usuariosDoSistema = usuariosDoSistema;
     }
 }

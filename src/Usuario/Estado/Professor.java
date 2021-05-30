@@ -3,7 +3,7 @@ package Usuario.Estado;
 import Livro.Livro;
 import MensagensConsole.MensagensProfessor;
 import Observer.Observer;
-import Usuario.User;
+import Usuario.Usuario;
 
 public class Professor implements IEstadoUsuario, Observer {
     private Professor() {}
@@ -20,18 +20,18 @@ public class Professor implements IEstadoUsuario, Observer {
     }
 
     @Override
-    public void pegarLivroEmprestado(Livro livro, User user) {
-        livro.pegarLivroEmprestado(user);
+    public void pegarLivroEmprestado(Livro livro, Usuario usuario) {
+        livro.pegarLivroEmprestado(usuario);
     }
 
     @Override
-    public void devolverLivroEmprestado(Livro livro, User user) {
-        livro.devolverLivroEmprestado(user);
+    public void devolverLivroEmprestado(Livro livro, Usuario usuario) {
+        livro.devolverLivroEmprestado(usuario);
     }
 
     @Override
-    public void reservarLivro(Livro livro, User user) { //Caio
-        MetodosGeraisDeUsuarios.reservaParaUsuario(livro, user);
+    public void reservarLivro(Livro livro, Usuario usuario) { //Caio
+        MetodosGeraisDeUsuarios.reservaParaUsuario(livro, usuario);
     }
 
     //metodo polimorfico para saber a qtd de dia de cada tipo de usuario

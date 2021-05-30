@@ -1,7 +1,7 @@
 package Usuario.Estado;
 
 import Livro.Livro;
-import Usuario.User;
+import Usuario.Usuario;
 
 public class AlunoGraduacao implements IEstadoUsuario {
     private AlunoGraduacao() {}
@@ -20,19 +20,19 @@ public class AlunoGraduacao implements IEstadoUsuario {
     }
 
     @Override
-    public void pegarLivroEmprestado(Livro livro, User user) {
-        MetodosGeraisDeUsuarios.emprestimoParaAlunos(livro, user, this.getQuantidadeDeLivrosMaximaEmprestimo()); // Metodo chamado está em Metodos em comum
+    public void pegarLivroEmprestado(Livro livro, Usuario usuario) {
+        MetodosGeraisDeUsuarios.emprestimoParaAlunos(livro, usuario, this.getQuantidadeDeLivrosMaximaEmprestimo()); // Metodo chamado está em Metodos em comum
     }
 
     @Override
-    public void devolverLivroEmprestado(Livro livro, User user) {
-        livro.devolverLivroEmprestado(user);
+    public void devolverLivroEmprestado(Livro livro, Usuario usuario) {
+        livro.devolverLivroEmprestado(usuario);
     }
 
     //faz a reserva de um livro passando o código e o usuário que vai a fazer
     @Override
-    public void reservarLivro(Livro livro, User user) { //Caio
-        MetodosGeraisDeUsuarios.reservaParaUsuario(livro, user);
+    public void reservarLivro(Livro livro, Usuario usuario) { //Caio
+        MetodosGeraisDeUsuarios.reservaParaUsuario(livro, usuario);
     }
 
     //metodo polimorfico para saber a qtd de dia de cada tipo de usuario

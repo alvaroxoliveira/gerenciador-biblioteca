@@ -2,26 +2,26 @@ package Usuario.Estado;
 
 import Livro.Livro;
 import MensagensConsole.MensagensUsuariosGerais;
-import Usuario.User;
+import Usuario.Usuario;
 
 public class MetodosGeraisDeUsuarios {
 
-    public static void reservaParaUsuario(Livro livro, User user) {
-        if(user.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
-            livro.reservarLivro(user); //reservar livro
+    public static void reservaParaUsuario(Livro livro, Usuario usuario) {
+        if(usuario.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
+            livro.reservarLivro(usuario); //reservar livro
         } else {
-            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(user.getNome());
+            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(usuario.getNome());
             return;
         }
     }
 
-    public static void emprestimoParaAlunos(Livro livro, User user, int quantidadeMaxima) {
-        if(user.getListaDeLivrosEmprestados().size() >= quantidadeMaxima){
-            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(user.getNome());
+    public static void emprestimoParaAlunos(Livro livro, Usuario usuario, int quantidadeMaxima) {
+        if(usuario.getListaDeLivrosEmprestados().size() >= quantidadeMaxima){
+            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(usuario.getNome());
         }
         //se a quantidade de reservas for maior ou igual a quantidade de exemplares
         else{
-            livro.pegarLivroEmprestado(user);
+            livro.pegarLivroEmprestado(usuario);
         }
     }
 }
