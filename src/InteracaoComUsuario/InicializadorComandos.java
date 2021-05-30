@@ -1,12 +1,19 @@
 package InteracaoComUsuario;
 
+/*
+* Classe auxiliar para incializar os comandos específicos chamados a partir da interação com o usuário
+* via console.
+* */
+
 import Comando.*;
 
 import java.util.HashMap;
 
 public class InicializadorComandos {
 
-    //Método para inicializar os comandos existentes no sistema
+    /*
+    * Método que inicializa os comandos existentes no sistema
+    * */
     public static HashMap<String, Comando> inicializarComandos() {
         HashMap<String, Comando> comandos = new HashMap<String, Comando>();
         comandos.put("emp", new Emprestimo());
