@@ -165,6 +165,7 @@ public class FachadaBiblioteca {
             } else {
                 MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
+        } else {
             MensagensBuscaLivro.mensagemLivroNaoEncontrado();
         }
     }
