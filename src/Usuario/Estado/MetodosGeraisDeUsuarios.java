@@ -19,7 +19,7 @@ public class MetodosGeraisDeUsuarios {
         if(usuario.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
             livro.reservarLivro(usuario); //reservar livro
         } else {
-            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(usuario.getNome());
+            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(usuario.getNome(), livro.getTitulo());
             return;
         }
     }
@@ -30,7 +30,7 @@ public class MetodosGeraisDeUsuarios {
     * */
     public static void emprestimoParaAlunos(Livro livro, Usuario usuario, int quantidadeMaxima) {
         if(usuario.getListaDeLivrosEmprestados().size() == quantidadeMaxima){
-            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(usuario.getNome());
+            MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(usuario.getNome(), livro.getTitulo());
         }
         else{
             livro.pegarLivroEmprestado(usuario);
