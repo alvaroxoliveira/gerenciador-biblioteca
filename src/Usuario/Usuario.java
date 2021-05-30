@@ -92,10 +92,12 @@ public class Usuario implements IUsuario {
     * */
     @Override
     public void realizaDevolucao(Livro livro) {
-        if(this.listaDeLivrosEmprestados.size() > 0) {
-            this.estadoUsuario.devolverLivroEmprestado(livro, this);
-        } else {
+        if(this.listaDeLivrosEmprestados.size() == 0) {
             MensagensUser.mensagemNaoHaLivroParaDevolver(this.nome);
+        }else if(this.verificaSeJaTemOLivroEmprestado(livro)){
+            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), "Emprestado");
+        } else {
+            this.estadoUsuario.devolverLivroEmprestado(livro, this);
         }
     }
 

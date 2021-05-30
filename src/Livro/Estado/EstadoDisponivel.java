@@ -57,6 +57,6 @@ public class EstadoDisponivel implements IEstadoLivro {
     * */
     @Override
     public String imprimirEstado() {
-        return "EstadoDisponivel.";
+        return "Disponivel.";
     }
 }

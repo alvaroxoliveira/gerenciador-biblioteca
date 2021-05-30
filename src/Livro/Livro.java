@@ -45,7 +45,7 @@ public class Livro implements Subject {
     * */
     private Exemplar obterExemplarDisponivel() {
         for(Exemplar exemplar: this.exemplares) {
-            if(exemplar.getEstadoExemplar().imprimirEstado().equals("EstadoDisponivel.")){
+            if(exemplar.getEstadoExemplar().imprimirEstado().equals("Disponivel.")){
                 return exemplar;
             }
         }
@@ -118,9 +118,8 @@ public class Livro implements Subject {
     * Método público de adição de um Observador do livro.
     * O Observador é um Usuário do Tipo Professor.
     * */
-    public void adicionarObserver(Observer observer, String nomeUser) {
+    public void adicionarObserver(Observer observer) {
         this.observadores.add(observer);
-        MensagensLivro.mensagemAdicaoDeLivroNaListaDeObservador(this.getTitulo(), nomeUser);
     }
 
     /*
@@ -138,6 +137,18 @@ public class Livro implements Subject {
     * */
     public int getQuantidadeExemplares(){
         return this.exemplares.size();
+    }
+
+    /*
+     * Método público para verificar se um usuário já é observador do livro.
+     * */
+    public boolean verificaObserver(Observer usuario){
+        for(Observer observer: this.observadores){
+            if(observer.equals(usuario)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /*

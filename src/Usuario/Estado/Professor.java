@@ -5,6 +5,9 @@ package Usuario.Estado;
 * */
 
 import Livro.Livro;
+import MensagensConsole.MensagensNaoObservers;
+import MensagensConsole.MensagensObservers;
+import Observer.Observer;
 import Usuario.Usuario;
 
 public class Professor implements IEstadoUsuario {
@@ -51,6 +54,20 @@ public class Professor implements IEstadoUsuario {
     @Override
     public int diasParaEntrega() {
         return 7;
+    }
+
+    /*
+     * Método público que tenta adicionar um livro na lista de observer
+     * */
+    @Override
+    public void adicionarObserver(Livro livro, Observer observer, String nomeUser) {
+        if(livro.verificaObserver(observer)){
+            livro.adicionarObserver(observer);
+            MensagensObservers.mensagemAdicaoDeLivroNaListaDeObservador(livro.getTitulo(), nomeUser);
+        }
+        else{
+            MensagensObservers.mensagemJaObserva(livro.getTitulo(), nomeUser);
+        }
     }
 
 }

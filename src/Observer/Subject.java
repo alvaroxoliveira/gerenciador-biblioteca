@@ -5,6 +5,6 @@ package Observer;
 * */
 
 public interface Subject {
-    void adicionarObserver(Observer observer, String nomeUser);
+    void adicionarObserver(Observer observer);
     void notificarObserver();
 }
