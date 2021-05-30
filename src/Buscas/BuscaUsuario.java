@@ -4,7 +4,9 @@ import Usuario.CarregaUsuarios;
 import Usuario.Usuario;
 
 public class BuscaUsuario {
-    //Busca pelo id do usuário na lista de usuários e compara com o id passado
+    /*
+     * Método que busca um usuário na lista de usuários do sistema.
+     * */
     public static int buscaIndexDoUsuario(String identificacaoUsuario) {
         int index = 0;
         for(Usuario usuario : CarregaUsuarios.getUsuariosDoSistema()) {
@@ -14,10 +16,5 @@ public class BuscaUsuario {
             index++;
         }
         return -1;
-    }
-
-    public static Usuario getUsuario(String identificacaoUsuario) {
-        int indexDoUsuario = buscaIndexDoUsuario(identificacaoUsuario);
-        return CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
     }
 }

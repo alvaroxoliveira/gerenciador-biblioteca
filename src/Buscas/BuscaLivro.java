@@ -4,7 +4,9 @@ import Livro.CarregaLivros;
 import Livro.Livro;
 
 public class BuscaLivro {
-    //Busca pelo id do livro na lista de livroe e compara com o id passado
+    /*
+    * Método que busca um livro na lista de livros do sistema.
+    * */
     public static int buscaIndexDoLivro(String identificacaoLivro) {
         int index = 0;
         for(Livro livro: CarregaLivros.getLivrosDoSistema()) {
@@ -15,11 +17,4 @@ public class BuscaLivro {
         }
         return -1;
     }
-
-    public static Livro getLivro(String identificacaoLivro) {
-        int indexDoLivro = buscaIndexDoLivro(identificacaoLivro);
-        return CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
-    }
-
-
 }
