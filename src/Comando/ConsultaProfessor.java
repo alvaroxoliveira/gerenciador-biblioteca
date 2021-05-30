@@ -1,10 +1,13 @@
 package Comando;
 
+/*
+* Comando de consulta de quantidade de notificações que o professor recebeu no contexto do programa.
+* */
+
 import InteracaoComUsuario.FachadaBiblioteca;
 
 import java.util.ArrayList;
 
-//comando concreto de consulta qtd de notificacoes
 public class ConsultaProfessor implements Comando{
     @Override
     public void executar(ArrayList<String> parametroParaExecutar) {

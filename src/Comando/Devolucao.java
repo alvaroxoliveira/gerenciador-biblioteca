@@ -1,10 +1,12 @@
 package Comando;
 
-import InteracaoComUsuario.FachadaBiblioteca;
+/*
+* Comando de devolução de um livro pelo usuário.
+* */
 
+import InteracaoComUsuario.FachadaBiblioteca;
 import java.util.ArrayList;
 
-//comando concreto de devolução
 public class Devolucao implements Comando {
     @Override
     public void executar(ArrayList<String> parametroParaExecutar) {
