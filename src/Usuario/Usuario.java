@@ -1,5 +1,9 @@
 package Usuario;
 
+/*
+* Classe de definição de Usuário
+* */
+
 import Buscas.BuscaLivro;
 import Livro.Exemplar;
 import Livro.Livro;

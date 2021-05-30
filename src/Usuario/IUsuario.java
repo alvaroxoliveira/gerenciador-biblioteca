@@ -1,5 +1,9 @@
 package Usuario;
 
+/*
+* Interface da classe Usuario
+* */
+
 import Livro.Livro;
 import Observer.Observer;
 import Usuario.Estado.IEstadoUsuario;

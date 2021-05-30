@@ -1,6 +1,8 @@
 package Usuario;
 
-//Classe que guarda todos os usuários do sistema
+/*
+* Classe que cria e salva usuários no sistema
+* */
 
 import Usuario.Estado.AlunoGraduacao;
 import Usuario.Estado.AlunoPosGraduacao;
