@@ -47,9 +47,8 @@ public class Professor implements IEstadoUsuario, Observer {
         MetodosGeraisDeUsuarios.reservaParaUsuario(livro, usuario);
     }
 
-    //metodo polimorfico para saber a qtd de dia de cada tipo de usuario
     /*
-    * Método público e polimórfico que retorna a quantidade de dias de entrega referente a cada tipo de usuário
+    * Método público que retorna a quantidade de dias de entrega referente a cada tipo de usuário
     * */
     @Override
     public int diasParaEntrega() {

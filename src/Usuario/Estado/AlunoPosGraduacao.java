@@ -1,15 +1,20 @@
 package Usuario.Estado;
 
+/*
+* Singleton de definição do Usuário do Tipo Aluno de Pós Graduação, tendo como base o Padrão de Projeto State
+* aprendido em aula.
+* */
+
 import Livro.Livro;
 import Usuario.Usuario;
 
 public class AlunoPosGraduacao implements IEstadoUsuario {
     private AlunoPosGraduacao() {}
 
-    public static AlunoPosGraduacao instance; //cada aluno só vai ter uma instancia de cada estado
+    public static AlunoPosGraduacao instance;
     private final int quantidadeDeLivrosMaximaEmprestimo = 4;
 
-    public static AlunoPosGraduacao getInstance() { //se não existir instancia, cria uma
+    public static AlunoPosGraduacao getInstance() {
         if(instance == null) {
             synchronized(AlunoPosGraduacao.class) {
                 if(instance == null) {
@@ -20,27 +25,42 @@ public class AlunoPosGraduacao implements IEstadoUsuario {
         return instance;
     }
 
+    /*
+     * Método público que tem a função de chamar o método de pegar um livro emprestado no objeto livro.
+     * */
     @Override
     public void pegarLivroEmprestado(Livro livro, Usuario usuario) {
         MetodosGeraisDeUsuarios.emprestimoParaAlunos(livro, usuario, this.getQuantidadeDeLivrosMaximaEmprestimo());
     }
 
+    /*
+    * Método público que tem a função de chamar o método do livro de devolver o livro emprestado.
+    * */
     @Override
     public void devolverLivroEmprestado(Livro livro, Usuario usuario) {
         livro.devolverLivroEmprestado(usuario);
     }
 
+    /*
+    * Método público que tem a função de chamar método de reservar um livro na Classe MétodosGeraisDeUsuarios.
+    * */
     @Override
     public void reservarLivro(Livro livro, Usuario usuario) { //Caio
         MetodosGeraisDeUsuarios.reservaParaUsuario(livro, usuario);
     }
-    
-    //metodo polimorfico para saber a qtd de dia de cada tipo de usuario
+
+    /*
+     * Método público que retorna a quantidade de dias de entrega referente a cada tipo de usuário
+     * */
     @Override
     public int diasParaEntrega() {
         return 4;
     }
 
+    /*
+    * Método público que retorna a quantidade máximade livros que podem ser emprestados dos usuários
+    * (Para Alunos de Graduação e Pós-Graduação).
+    * */
     public int getQuantidadeDeLivrosMaximaEmprestimo() {
         return quantidadeDeLivrosMaximaEmprestimo;
     }
