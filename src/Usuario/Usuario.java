@@ -7,6 +7,7 @@ package Usuario;
 import Livro.Exemplar;
 import Livro.Livro;
 import MensagensConsole.ImprimirDadosOperacoes;
+import MensagensConsole.MensagensObservers;
 import MensagensConsole.MensagensUser;
 import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
@@ -193,15 +194,6 @@ public class Usuario implements IUsuario {
         boolean interacao = false;
         MensagensUser.imprimirNomeUsuario(this.getNome());
         ImprimirDadosDeEmprestimosAtivosEFinalizadosEReservas(interacao);
-    }
-
-    /*
-    * Método público de consulta específica para um usuário professor da quantidade de notificações que recebeu
-    * das notificações de reservas simultâneas ( > 2) do livro.
-    * */
-    @Override
-    public void consultarProfessor(){
-       MensagensUser.mensagemDeNotificacaoProfessor(this.getNome(), this.getQuantidadeDeNotificacoes());
     }
 
     /*

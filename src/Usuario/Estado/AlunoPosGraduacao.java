@@ -68,6 +68,15 @@ public class AlunoPosGraduacao implements IEstadoUsuario {
     }
 
     /*
+     * Método público de consulta específica para um usuário observer da quantidade de notificações que recebeu
+     * das notificações de reservas simultâneas ( > 2) do livro.
+     * */
+    @Override
+    public void consultarObserver(Usuario usuario) {
+        MensagensNaoObservers.mensagemErroConsultaObserver(usuario.getNome());
+    }
+
+    /*
     * Método público que retorna a quantidade máximade livros que podem ser emprestados dos usuários
     * (Para Alunos de Graduação e Pós-Graduação).
     * */

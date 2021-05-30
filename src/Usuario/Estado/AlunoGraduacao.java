@@ -7,6 +7,7 @@ package Usuario.Estado;
 
 import Livro.Livro;
 import MensagensConsole.MensagensNaoObservers;
+import MensagensConsole.MensagensObservers;
 import Observer.Observer;
 import Usuario.Usuario;
 
@@ -64,6 +65,15 @@ public class AlunoGraduacao implements IEstadoUsuario {
     @Override
     public void adicionarObserver(Livro livro, Observer observer, String nomeUser) {
         MensagensNaoObservers.mensagemErroAdicaoListaDeObservadores(livro.getTitulo(), nomeUser);
+    }
+
+    /*
+     * Método público de consulta específica para um usuário observer da quantidade de notificações que recebeu
+     * das notificações de reservas simultâneas ( > 2) do livro.
+     * */
+    @Override
+    public void consultarObserver(Usuario usuario) {
+        MensagensNaoObservers.mensagemErroConsultaObserver(usuario.getNome());
     }
 
     /*

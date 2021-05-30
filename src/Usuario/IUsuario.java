@@ -38,12 +38,6 @@ public interface IUsuario extends Observer {
     void consultarUsuario();
 
     /*
-     * Método público de consulta específica para um usuário professor da quantidade de notificações que recebeu
-     * das notificações de reservas simultâneas ( > 2) do livro.
-     * */
-    void consultarProfessor();
-
-    /*
      * Método público chamado quando mais de duas reservas simultâneas são feitas.
      * Padrão Observer
      * */

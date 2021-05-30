@@ -11,6 +11,6 @@ import java.util.ArrayList;
 public class ConsultaProfessor implements Comando{
     @Override
     public void executar(ArrayList<String> parametroParaExecutar) {
-        FachadaBiblioteca.getInstance().realizarConsultaProfessor(parametroParaExecutar);
+        FachadaBiblioteca.getInstance().realizarConsultaObserver(parametroParaExecutar);
     }
 }

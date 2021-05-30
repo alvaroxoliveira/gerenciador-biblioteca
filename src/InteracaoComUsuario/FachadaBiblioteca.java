@@ -215,7 +215,7 @@ public class FachadaBiblioteca {
     * da biblioteca.
     * Imprime a quantidade de notificações.
     * */
-    public void realizarConsultaProfessor(ArrayList<String> parametroParaExecutar){
+    public void realizarConsultaObserver(ArrayList<String> parametroParaExecutar){
         if(!verificarQuantidadeDeParametrosConsulta(parametroParaExecutar)) {
             return;
         }
@@ -223,9 +223,9 @@ public class FachadaBiblioteca {
         int indexDoProfessor = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
 
         if(indexDoProfessor != -1) {
-            Usuario professor = CarregaUsuarios.getUsuariosDoSistema().get(indexDoProfessor);
+            Usuario usuario = CarregaUsuarios.getUsuariosDoSistema().get(indexDoProfessor);
             MensagensFachadaBiblioteca.mensagemConsultaDadosProfessor();
-            professor.consultarProfessor();
+            usuario.getEstadoUsuario().consultarObserver(usuario);
         } else {
             MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
         }

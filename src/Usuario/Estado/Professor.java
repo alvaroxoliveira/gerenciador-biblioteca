@@ -70,4 +70,13 @@ public class Professor implements IEstadoUsuario {
         }
     }
 
+    /*
+     * Método público de consulta específica para um usuário observer da quantidade de notificações que recebeu
+     * das notificações de reservas simultâneas ( > 2) do livro.
+     * */
+    @Override
+    public void consultarObserver(Usuario usuario) {
+        MensagensObservers.mensagemDeNotificacao(usuario.getNome(), usuario.getQuantidadeDeNotificacoes());
+    }
+
 }

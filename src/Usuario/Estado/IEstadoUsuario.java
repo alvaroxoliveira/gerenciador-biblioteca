@@ -10,4 +10,5 @@ public interface IEstadoUsuario {
     public void reservarLivro(Livro livro, Usuario usuario);
     public int diasParaEntrega();
     public void adicionarObserver(Livro livro, Observer observer, String nomeUser);
+    public void consultarObserver(Usuario usuario);
 }
