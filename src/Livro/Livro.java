@@ -1,5 +1,9 @@
 package Livro;
 
+/*
+* Classe de Definição do Livro.
+* */
+
 import MensagensConsole.ImprimeDadosLivro;
 import MensagensConsole.MensagensLivro;
 import Observer.Observer;
@@ -9,7 +13,7 @@ import Usuario.Usuario;
 
 import java.util.ArrayList;
 
-public class Livro implements ILivro, Subject {
+public class Livro implements Subject {
     private String id;
     private String titulo;
     private String editora;
@@ -29,34 +33,38 @@ public class Livro implements ILivro, Subject {
         this.anoDePublicacao = anoDePublicacao;
     }
 
-    @Override
+    /*
+    * Método que adiciona um exemplar na lista de exemplares.
+    * */
     public void adicionaExemplar(Exemplar exemplar) {
         this.exemplares.add(exemplar);
     }
 
-    // Retorna o exemplar da lista de exemplares do livro que estiver disponível
-    @Override
-    public Exemplar obterExemplarDisponivel() {
+    /*
+    * Método privado que retorna o exemplar que estiver disponível.
+    * */
+    private Exemplar obterExemplarDisponivel() {
         for(Exemplar exemplar: this.exemplares) {
-            if(exemplar.getEstadoExemplar().imprimirEstado().equals("EstadoDisponivel.")){ //testa se esta disponivel
+            if(exemplar.getEstadoExemplar().imprimirEstado().equals("EstadoDisponivel.")){
                 return exemplar;
             }
         }
         return null;
     }
 
-    @Override
+    /*
+    * Método público que tem como função obter um exemplar disponível e permtir o empréstimo.
+    * Caso possível adiciona o empréstimo na lista de Transações no sistema.
+    * Caso não haja disponibilidade retorna um erro.
+    * */
     public void pegarLivroEmprestado(Usuario usuario){
         if(TransacaoReserva.quantidadeReserva(this) >= this.getQuantidadeExemplares()){
-            //verifica se o usuario tem o livro reservado
             if(!usuario.verificaSeJaTemOLivroReservado(this)){ //não tem reserva
                 MensagensLivro.mensagemPossuiMaisReservasQueExemplares(this.getTitulo(), usuario.getNome());
-            } else{//o usuário tem reserva
-                //chama o método de emprestar livro no estado disponivel do exemplar
+            } else{
                 this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), usuario);
             }
-        } else {//a quantidade de exemplares é maior que a de reservas e o usuário tem ou não reserva
-            // erro aqui
+        } else {
             if(obterExemplarDisponivel() != null) {
                 this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), usuario);
             } else {
@@ -65,7 +73,10 @@ public class Livro implements ILivro, Subject {
         }
     }
 
-    @Override
+    /*
+    * Método públic que permite a devolução de um Exemplar do livro que está emprestado.
+    * Chama o estado para verificar se é possível a devolução do livro e as especificações.
+    * */
     public void devolverLivroEmprestado(Usuario usuario) {
         for(Exemplar exemplarDoLivro: this.exemplares) {
             for (Exemplar exemplarEmprestado: usuario.getListaDeLivrosEmprestados()) {
@@ -77,17 +88,23 @@ public class Livro implements ILivro, Subject {
         }
     }
 
-    @Override
+    /*
+    * Método público de reserva de um Exemplar do livro.
+    * Caso haja mais de 2 reservas em curso notifica o Observer.
+    * */
     public void reservarLivro(Usuario usuario) {
         TransacaoReserva.adicionarReserva(this, usuario);
         usuario.getListaDeReservados().add(this);
         MensagensLivro.mensagemReservaDoLivroFeitaPeloUsuario(this.getTitulo(), usuario.getNome());
         if (TransacaoReserva.quantidadeReserva(this) >= 3) { //se passou de 2 reservas, notifica o professor
-            this.notificarObserver(); //notifica o professor
+            this.notificarObserver();
         }
     }
 
-    @Override
+    /*
+    * Método público de consulta do livro.
+    * Busca nas Transações de Reserva e de Empréstimo e imprime os dados.
+    * */
     public void consultarLivro() {
         ImprimeDadosLivro.imprimeCabecalho(this);
         if(TransacaoReserva.quantidadeReserva(this) > 0){
@@ -97,98 +114,93 @@ public class Livro implements ILivro, Subject {
         ImprimeDadosLivro.imprimeInformacoesDosExemplaresEmprestados(this.exemplares);
     }
 
-    // Additional um observer a uma lista de observadores que no caso são os usuários com status de Professores
-    @Override
+    /*
+    * Método público de adição de um Observador do livro.
+    * O Observador é um Usuário do Tipo Professor.
+    * */
     public void adicionarObserver(Observer observer, String nomeUser) {
         this.observadores.add(observer);
         MensagensLivro.mensagemAdicaoDeLivroNaListaDeObservador(this.getTitulo(), nomeUser);
     }
 
-    // Notifica uma lista de observadores
-    @Override
+    /*
+    * Método público de notificação dos observadores.
+    * Notifica as reservas simultâneas (mais de 2) do livro para os observadores do livro.
+    * */
     public void notificarObserver() {
         for(Observer observer: this.observadores) {
             observer.avisarReservasSimultaneas();
         }
     }
 
-    //método para retonar a quantidade de exemplares
-    @Override
+    /*
+    * Método público que retorna a quantidade de exemplares do livro.
+    * */
     public int getQuantidadeExemplares(){
         return this.exemplares.size();
     }
 
-    @Override
+    /*
+    * Getters/Setters.
+    * */
+
     public ArrayList<Exemplar> getExemplares() {
         return exemplares;
     }
 
-    @Override
     public void setExemplares(ArrayList<Exemplar> exemplares) {
         this.exemplares = exemplares;
     }
 
-    @Override
     public ArrayList<Observer> getObservadores() {
         return observadores;
     }
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @Override
     public String getTitulo() {
         return titulo;
     }
 
-    @Override
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
-    @Override
     public String getEditora() {
         return editora;
     }
 
-    @Override
     public void setEditora(String editora) {
         this.editora = editora;
     }
 
-    @Override
     public String getAutores() {
         return autores;
     }
 
-    @Override
+
     public void setAutores(String autores) {
         this.autores = autores;
     }
 
-    @Override
     public String getEdicao() {
         return edicao;
     }
 
-    @Override
     public void setEdicao(String edicao) {
         this.edicao = edicao;
     }
 
-    @Override
     public int getAnoDePublicacao() {
         return anoDePublicacao;
     }
 
-    @Override
     public void setAnoDePublicacao(int anoDePublicacao) {
         this.anoDePublicacao = anoDePublicacao;
     }

@@ -1,11 +1,17 @@
 package Livro;
 
+/*
+* Classe que Carrega os Livros e Exemplares do sistema.
+* */
+
 import Livro.Estado.EstadoDisponivel;
 
 import java.util.ArrayList;
 
 public class CarregaLivros {
-    // Lista de todos os livros que existem do sistema
+    /*
+    * Lista de todos os livros presentes no sistema.
+    * */
     private static ArrayList<Livro> livrosDoSistema = new ArrayList<Livro>();
 
     public static void carregarLivrosSistema() {
@@ -38,7 +44,9 @@ public class CarregaLivros {
         addLivrosNoSistema(l1, l2, l3, l4, l5, l6, l7, l8);
     }
 
-    //Adicionando exemplares no sistema
+    /*
+    * Método que adiciona Exemplares dos livros no sistema
+    * */
     private static void criaExemplares(Livro l1, Livro l2, Livro l3, Livro l4, Livro l5, Livro l7) {
         l1.adicionaExemplar(new Exemplar(l1,"01", EstadoDisponivel.getInstance()));
         l1.adicionaExemplar(new Exemplar(l1,"02", EstadoDisponivel.getInstance()));
@@ -51,7 +59,9 @@ public class CarregaLivros {
         l7.adicionaExemplar(new Exemplar(l7,"09", EstadoDisponivel.getInstance()));
     }
 
-    // Adiciona os livros carregados no sistema
+    /*
+    * Método que adiciona os livros inicializados no sistema.
+    * */
     private static void addLivrosNoSistema(Livro l1, Livro l2, Livro l3, Livro l4, Livro l5, Livro l6, Livro l7, Livro l8) {
         CarregaLivros.livrosDoSistema.add(l1);
         CarregaLivros.livrosDoSistema.add(l2);
@@ -63,7 +73,9 @@ public class CarregaLivros {
         CarregaLivros.livrosDoSistema.add(l8);
     }
 
-    // Da baixa em algum livro do sistema
+    /*
+    * Metodo que remove um livro no sistema.
+    * */
     private void removeLivroNoSistema(int i) {
         CarregaLivros.livrosDoSistema.remove(i);
     }

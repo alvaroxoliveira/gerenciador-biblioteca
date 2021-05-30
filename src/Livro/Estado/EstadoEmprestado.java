@@ -1,5 +1,10 @@
 package Livro.Estado;
 
+/*
+ * Classe que especifíca o Estado do Livro como Emprestado de acordo com o Padrão de Projeto State aprendido em aula.
+ * Esta classe é um Singleton, ou seja, pode ter apenas umas instância.
+ * */
+
 import Livro.Exemplar;
 import MensagensConsole.MensagensSingletonEmprestado;
 import Transacoes.TransacaoEmprestimo;
@@ -23,16 +28,24 @@ public class EstadoEmprestado implements IEstadoLivro {
         return instance;
     }
 
+    /*
+    * Método público de empréstimo de livro.
+    * Como o Estado do Exemplar é Emprestado, não há como pegar emprestado novamente antes de devolve-lo para a biblioteca.
+    * Assim, retorna um erro para esse caso.
+    * */
     @Override
     public void emprestarLivro(Exemplar exemplar, Usuario usuario) {
         MensagensSingletonEmprestado.mensagemLivroJaFoiEmprestado();
     }
 
+    /*
+    * Método público de devolução do Livro.
+    * Guarda a data da devolução do Livro e guarda uma TransaçãoEmpréstimo finalizada.
+    * */
     @Override
     public void devolverLivro(Exemplar exemplar, Usuario usuario) {
-        // Fazer a lógica para verificar se o usuario passa a ser devedor
-        // Lógica para tornar o usuário devedor caso entrega for numa data posterior à prevista
-        if(LocalDate.now().isAfter(TransacaoEmprestimo.encontrarTransacaoEmprestimoAtuais(exemplar).getData().plusDays(usuario.getEstadoUsuario().diasParaEntrega()))) {
+        if(LocalDate.now().isAfter(TransacaoEmprestimo.encontrarTransacaoEmprestimoAtuais(exemplar)
+                .getData().plusDays(usuario.getEstadoUsuario().diasParaEntrega()))) {
             usuario.setDevedor(true);
         }
         usuario.removeDaListaDeEmprestados(exemplar);
@@ -41,7 +54,9 @@ public class EstadoEmprestado implements IEstadoLivro {
         MensagensSingletonEmprestado.mensagemDevolucaoDoLivro(usuario.getNome(), exemplar.getLivro().getTitulo());
     }
 
-    //método para imprimir o estado na consulta
+    /*
+    * Método público para imprimir o estado
+    * */
     @Override
     public String imprimirEstado() {
         return "Emprestado";

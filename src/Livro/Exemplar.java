@@ -1,5 +1,9 @@
 package Livro;
 
+/*
+* Classe de Definição de um Exemplar de um Livro.
+* */
+
 import Livro.Estado.IEstadoLivro;
 
 public class Exemplar {
@@ -13,15 +17,16 @@ public class Exemplar {
         this.estadoExemplar = estadoInicial;
     }
 
-    //método que usa a classe busca livro para retornar o titulo do livro desse exemplar
-//    public String getTitulo(){
-//        return BuscaLivro.getLivro(codigoDoLivro).getTitulo();
-//    }
-
-    // Muda estado do exemplar
+    /*
+    * Método público que permite o Exemplar mudar de estado (Disponível/Emprestado).
+    * */
     public void mudaEstado(IEstadoLivro estadoExemplar) {
         this.estadoExemplar = estadoExemplar;
     }
+
+    /*
+    * Getters/Setters.
+    * */
 
     public Livro getLivro() {
         return livro;
