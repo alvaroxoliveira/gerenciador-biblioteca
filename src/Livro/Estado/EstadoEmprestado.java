@@ -7,16 +7,16 @@ import Usuario.User;
 
 import java.time.LocalDate;
 
-public class SingletonEmprestado implements IEstadoLivro {
-    private SingletonEmprestado() {}
+public class EstadoEmprestado implements IEstadoLivro {
+    private EstadoEmprestado() {}
 
-    public static SingletonEmprestado instance;
+    public static EstadoEmprestado instance;
 
-    public static SingletonEmprestado getInstance() {
+    public static EstadoEmprestado getInstance() {
         if(instance == null) {
-            synchronized(SingletonEmprestado.class) {
+            synchronized(EstadoEmprestado.class) {
                 if(instance == null) {
-                    instance = new SingletonEmprestado();
+                    instance = new EstadoEmprestado();
                 }
             }
         }
@@ -36,7 +36,7 @@ public class SingletonEmprestado implements IEstadoLivro {
             user.setDevedor(true);
         }
         user.removeDaListaDeEmprestados(exemplar);
-        exemplar.mudaEstado(SingletonDisponivel.getInstance());
+        exemplar.mudaEstado(EstadoDisponivel.getInstance());
         TransacaoEmprestimo.FinalizarEmprestimo(exemplar);
         MensagensSingletonEmprestado.mensagemDevolucaoDoLivro(user.getNome(), exemplar.getLivro().getTitulo());
     }

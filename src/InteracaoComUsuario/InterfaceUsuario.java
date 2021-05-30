@@ -17,6 +17,20 @@ public class InterfaceUsuario {
     //Relaciona a InterfaceUsuario com Comando (abstrato)
     private HashMap<String, Comando> comandos;
 
+    public static InterfaceUsuario instance;
+    private InterfaceUsuario() {}
+
+    public static InterfaceUsuario getInstance() { //se não existir instancia, cria uma
+        if(instance == null) {
+            synchronized(InterfaceUsuario.class) {
+                if(instance == null) {
+                    instance = new InterfaceUsuario();
+                }
+            }
+        }
+        return instance;
+    }
+
     //Obtem o comando a partir da entrada do console
     private String obterComandoConsoie() throws IOException {
         BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));

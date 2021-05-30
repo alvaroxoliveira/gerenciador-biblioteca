@@ -38,7 +38,7 @@ public class Livro implements ILivro, Subject {
     @Override
     public Exemplar obterExemplarDisponivel() {
         for(Exemplar exemplar: this.exemplares) {
-            if(exemplar.getEstadoExemplar().imprimirEstado().equals("Disponivel.")){ //testa se esta disponivel
+            if(exemplar.getEstadoExemplar().imprimirEstado().equals("EstadoDisponivel.")){ //testa se esta disponivel
                 return exemplar;
             }
         }

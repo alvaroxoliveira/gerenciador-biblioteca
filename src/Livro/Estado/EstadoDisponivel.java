@@ -6,16 +6,16 @@ import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
 import Usuario.User;
 
-public class SingletonDisponivel implements IEstadoLivro {
-    private SingletonDisponivel() {}
+public class EstadoDisponivel implements IEstadoLivro {
+    private EstadoDisponivel() {}
 
-    public static SingletonDisponivel instance; //cada livro só vai ter uma instancia de cada estado
+    public static EstadoDisponivel instance; //cada livro só vai ter uma instancia de cada estado
 
-    public static SingletonDisponivel getInstance() { //se não existir instancia, cria uma
+    public static EstadoDisponivel getInstance() { //se não existir instancia, cria uma
         if(instance == null) {
-            synchronized(SingletonDisponivel.class) {
+            synchronized(EstadoDisponivel.class) {
                 if(instance == null) {
-                    instance = new SingletonDisponivel();
+                    instance = new EstadoDisponivel();
                 }
             }
         }
@@ -29,7 +29,7 @@ public class SingletonDisponivel implements IEstadoLivro {
             user.removeDaListaDeReservados(exemplar.getLivro()); //remove o livro a partir do exemplar da lista de reservados
             TransacaoReserva.FinalizarReserva(exemplar.getLivro(), user); //chama o método de remover da lista de transacoes (reserva)
         }
-        exemplar.mudaEstado(SingletonEmprestado.getInstance());
+        exemplar.mudaEstado(EstadoEmprestado.getInstance());
         TransacaoEmprestimo.adicionarEmprestimoAtual(exemplar, user);
         MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(user.getNome(), exemplar.getLivro().getTitulo());
     }
@@ -42,6 +42,6 @@ public class SingletonDisponivel implements IEstadoLivro {
     //método para imprimir o estado na consulta
     @Override
     public String imprimirEstado() {
-        return "Disponivel.";
+        return "EstadoDisponivel.";
     }
 }

@@ -1,6 +1,6 @@
 package Livro;
 
-import Livro.Estado.SingletonDisponivel;
+import Livro.Estado.EstadoDisponivel;
 
 import java.util.ArrayList;
 
@@ -35,15 +35,15 @@ public class CarregaLivros {
                 "Addison-Wesley Professional", "Martin Fowler", "3ª", 2003);
 
         //Adicionando exemplares no sistema
-        l1.adicionaExemplar(new Exemplar(l1,"01", SingletonDisponivel.getInstance()));
-        l1.adicionaExemplar(new Exemplar(l1,"02", SingletonDisponivel.getInstance()));
-        l2.adicionaExemplar(new Exemplar(l2,"03", SingletonDisponivel.getInstance()));
-        l3.adicionaExemplar(new Exemplar(l3,"04", SingletonDisponivel.getInstance()));
-        l4.adicionaExemplar(new Exemplar(l4,"05", SingletonDisponivel.getInstance()));
-        l5.adicionaExemplar(new Exemplar(l5,"06", SingletonDisponivel.getInstance()));
-        l5.adicionaExemplar(new Exemplar(l5,"07", SingletonDisponivel.getInstance()));
-        l7.adicionaExemplar(new Exemplar(l7,"08", SingletonDisponivel.getInstance()));
-        l7.adicionaExemplar(new Exemplar(l7,"09", SingletonDisponivel.getInstance()));
+        l1.adicionaExemplar(new Exemplar(l1,"01", EstadoDisponivel.getInstance()));
+        l1.adicionaExemplar(new Exemplar(l1,"02", EstadoDisponivel.getInstance()));
+        l2.adicionaExemplar(new Exemplar(l2,"03", EstadoDisponivel.getInstance()));
+        l3.adicionaExemplar(new Exemplar(l3,"04", EstadoDisponivel.getInstance()));
+        l4.adicionaExemplar(new Exemplar(l4,"05", EstadoDisponivel.getInstance()));
+        l5.adicionaExemplar(new Exemplar(l5,"06", EstadoDisponivel.getInstance()));
+        l5.adicionaExemplar(new Exemplar(l5,"07", EstadoDisponivel.getInstance()));
+        l7.adicionaExemplar(new Exemplar(l7,"08", EstadoDisponivel.getInstance()));
+        l7.adicionaExemplar(new Exemplar(l7,"09", EstadoDisponivel.getInstance()));
 
         // Adiciona os livros carregados no sistema
         adicionaLivroNoSistema(l1);
