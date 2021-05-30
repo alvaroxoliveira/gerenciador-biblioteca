@@ -22,7 +22,7 @@ public class InicializadorComandos {
         comandos.put("obs", new Observacao());
         comandos.put("liv", new ConsultaLivro());
         comandos.put("usu", new ConsultaUsuario());
-        comandos.put("ntf", new ConsultaProfessor());
+        comandos.put("ntf", new ConsultaObserver());
         return comandos;
     }
 }

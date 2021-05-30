@@ -8,7 +8,7 @@ import InteracaoComUsuario.FachadaBiblioteca;
 
 import java.util.ArrayList;
 
-public class ConsultaProfessor implements Comando{
+public class ConsultaObserver implements Comando{
     @Override
     public void executar(ArrayList<String> parametroParaExecutar) {
         FachadaBiblioteca.getInstance().realizarConsultaObserver(parametroParaExecutar);
