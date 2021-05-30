@@ -8,7 +8,7 @@ import MensagensConsole.MensagensBuscaLivro;
 import MensagensConsole.MensagensBuscaUsuario;
 import MensagensConsole.MensagensFachadaBiblioteca;
 import Usuario.CarregaUsuarios;
-import Usuario.User;
+import Usuario.Usuario;
 
 import java.util.ArrayList;
 
@@ -61,9 +61,9 @@ public class FachadaBiblioteca {
         if(indexDoLivro != -1) {
             Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
             if(indexDoUsuario != -1) {
-                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+                Usuario usuario = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
                 MensagensFachadaBiblioteca.mensagemOperacaoEmprestimo();
-                user.realizaEmprestimo(livro);
+                usuario.realizaEmprestimo(livro);
             } else {
                 MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
@@ -85,9 +85,9 @@ public class FachadaBiblioteca {
         if(indexDoLivro != -1) {
             Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
             if(indexDoUsuario != -1) {
-                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+                Usuario usuario = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
                 MensagensFachadaBiblioteca.mensagemOperacaoDevolucao();
-                user.realizaDevolucao(livro);
+                usuario.realizaDevolucao(livro);
             } else {
                 MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
@@ -108,9 +108,9 @@ public class FachadaBiblioteca {
         if(indexDoLivro != -1) {
             Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
             if(indexDoUsuario != -1) {
-                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+                Usuario usuario = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
                 MensagensFachadaBiblioteca.mensagemOperacaoReserva();
-                user.realizaReserva(livro);
+                usuario.realizaReserva(livro);
             } else {
                 MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
@@ -146,8 +146,8 @@ public class FachadaBiblioteca {
         if(indexDoLivro != -1) {
             Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
             if(indexDoUsuario != -1) {
-                User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
-                livro.adicionarObserver(user, user.getNome());
+                Usuario usuario = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+                livro.adicionarObserver(usuario, usuario.getNome());
             } else {
                 MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }
@@ -162,9 +162,9 @@ public class FachadaBiblioteca {
         String identificadorUsuario = parametroParaExecutar.get(0);
         int indexDoUsuario = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
         if(indexDoUsuario != -1) {
-            User user = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
+            Usuario usuario = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
             MensagensFachadaBiblioteca.mensagemConsultaDadosUsuario();
-            user.consultarUsuario();
+            usuario.consultarUsuario();
         } else {
             MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
         }
@@ -178,7 +178,7 @@ public class FachadaBiblioteca {
         int indexDoProfessor = BuscaUsuario.buscaIndexDoUsuario(identificadorUsuario);
 
         if(indexDoProfessor != -1) {
-            User professor = CarregaUsuarios.getUsuariosDoSistema().get(indexDoProfessor);
+            Usuario professor = CarregaUsuarios.getUsuariosDoSistema().get(indexDoProfessor);
             MensagensFachadaBiblioteca.mensagemConsultaDadosProfessor();
             professor.consultarProfessor();
         } else {

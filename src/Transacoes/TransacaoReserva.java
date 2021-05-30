@@ -1,31 +1,31 @@
 package Transacoes;
 
 import Livro.Livro;
-import Usuario.User;
+import Usuario.Usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TransacaoReserva {
     private Livro livro;
-    private User usuario;
+    private Usuario usuario;
     private LocalDate data;
 
     private static ArrayList<TransacaoReserva> reservas = new ArrayList<>();
 
-    public TransacaoReserva(Livro livro, User usuario){
+    public TransacaoReserva(Livro livro, Usuario usuario){
         this.livro = livro;
         this.usuario = usuario;
         this.data = LocalDate.now();
     }
 
     //cria uma nova transação e adiciona as reservas
-    public static void adicionarReserva(Livro livro, User usuario) {
+    public static void adicionarReserva(Livro livro, Usuario usuario) {
         TransacaoReserva.reservas.add(new TransacaoReserva(livro, usuario));
     }
 
     //metodo para finalizar uma reserva
-    public static void FinalizarReserva(Livro livro, User usuario){
+    public static void FinalizarReserva(Livro livro, Usuario usuario){
         TransacaoReserva.reservas.remove(encontrarTransacaoReservas(livro, usuario));
     }
 
@@ -49,7 +49,7 @@ public class TransacaoReserva {
         }
     }
 
-    private static TransacaoReserva encontrarTransacaoReservas(Livro livro, User usuario){
+    private static TransacaoReserva encontrarTransacaoReservas(Livro livro, Usuario usuario){
         for(TransacaoReserva transacaoReserva : TransacaoReserva.reservas) {
             //procura uma transacao onde o usuario e o livro batem
             if(transacaoReserva.getLivro().equals(livro) && transacaoReserva.getUsuario().equals(usuario)){
@@ -67,11 +67,11 @@ public class TransacaoReserva {
         this.livro = livro;
     }
 
-    public User getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(User usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

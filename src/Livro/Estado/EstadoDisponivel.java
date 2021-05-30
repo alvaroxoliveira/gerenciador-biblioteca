@@ -4,7 +4,7 @@ import Livro.Exemplar;
 import MensagensConsole.MensagensSingletonDisponivel;
 import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
-import Usuario.User;
+import Usuario.Usuario;
 
 public class EstadoDisponivel implements IEstadoLivro {
     private EstadoDisponivel() {}
@@ -23,19 +23,19 @@ public class EstadoDisponivel implements IEstadoLivro {
     }
 
     @Override
-    public void emprestarLivro(Exemplar exemplar, User user) {
-        user.adicionaNaListaDeEmprestados(exemplar);
-        if(user.verificaSeJaTemOLivroReservado(exemplar.getLivro())){ //caso o usuario tenha o livro reservado
-            user.removeDaListaDeReservados(exemplar.getLivro()); //remove o livro a partir do exemplar da lista de reservados
-            TransacaoReserva.FinalizarReserva(exemplar.getLivro(), user); //chama o método de remover da lista de transacoes (reserva)
+    public void emprestarLivro(Exemplar exemplar, Usuario usuario) {
+        usuario.adicionaNaListaDeEmprestados(exemplar);
+        if(usuario.verificaSeJaTemOLivroReservado(exemplar.getLivro())){ //caso o usuario tenha o livro reservado
+            usuario.removeDaListaDeReservados(exemplar.getLivro()); //remove o livro a partir do exemplar da lista de reservados
+            TransacaoReserva.FinalizarReserva(exemplar.getLivro(), usuario); //chama o método de remover da lista de transacoes (reserva)
         }
         exemplar.mudaEstado(EstadoEmprestado.getInstance());
-        TransacaoEmprestimo.adicionarEmprestimoAtual(exemplar, user);
-        MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(user.getNome(), exemplar.getLivro().getTitulo());
+        TransacaoEmprestimo.adicionarEmprestimoAtual(exemplar, usuario);
+        MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(usuario.getNome(), exemplar.getLivro().getTitulo());
     }
 
     @Override
-    public void devolverLivro(Exemplar exemplar, User user) {
+    public void devolverLivro(Exemplar exemplar, Usuario usuario) {
         MensagensSingletonDisponivel.mensagemNaoDevolverPoqueEstaDisponivel();
     }
 

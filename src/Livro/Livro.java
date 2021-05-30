@@ -5,7 +5,7 @@ import MensagensConsole.MensagensLivro;
 import Observer.Observer;
 import Observer.Subject;
 import Transacoes.TransacaoReserva;
-import Usuario.User;
+import Usuario.Usuario;
 
 import java.util.ArrayList;
 
@@ -46,19 +46,19 @@ public class Livro implements ILivro, Subject {
     }
 
     @Override
-    public void pegarLivroEmprestado(User user){
+    public void pegarLivroEmprestado(Usuario usuario){
         if(TransacaoReserva.quantidadeReserva(this) >= this.getQuantidadeExemplares()){
             //verifica se o usuario tem o livro reservado
-            if(!user.verificaSeJaTemOLivroReservado(this)){ //não tem reserva
-                MensagensLivro.mensagemPossuiMaisReservasQueExemplares(this.getTitulo(), user.getNome());
+            if(!usuario.verificaSeJaTemOLivroReservado(this)){ //não tem reserva
+                MensagensLivro.mensagemPossuiMaisReservasQueExemplares(this.getTitulo(), usuario.getNome());
             } else{//o usuário tem reserva
                 //chama o método de emprestar livro no estado disponivel do exemplar
-                this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), user);
+                this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), usuario);
             }
         } else {//a quantidade de exemplares é maior que a de reservas e o usuário tem ou não reserva
             // erro aqui
             if(obterExemplarDisponivel() != null) {
-                this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), user);
+                this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), usuario);
             } else {
                 MensagensLivro.mensagemNaoHaExemplaresDisponiveis();
             }
@@ -66,11 +66,11 @@ public class Livro implements ILivro, Subject {
     }
 
     @Override
-    public void devolverLivroEmprestado(User user) {
+    public void devolverLivroEmprestado(Usuario usuario) {
         for(Exemplar exemplarDoLivro: this.exemplares) {
-            for (Exemplar exemplarEmprestado: user.getListaDeLivrosEmprestados()) {
+            for (Exemplar exemplarEmprestado: usuario.getListaDeLivrosEmprestados()) {
                 if(exemplarDoLivro.getCodigoExemplar().equals(exemplarEmprestado.getCodigoExemplar())) {
-                    exemplarDoLivro.getEstadoExemplar().devolverLivro(exemplarDoLivro, user);
+                    exemplarDoLivro.getEstadoExemplar().devolverLivro(exemplarDoLivro, usuario);
                     return;
                 }
             }
@@ -78,11 +78,11 @@ public class Livro implements ILivro, Subject {
     }
 
     @Override
-    public void reservarLivro(User user) {
-        TransacaoReserva.adicionarReserva(this, user);
-        user.getListaDeReservados().add(this);
-        MensagensLivro.mensagemReservaDoLivroFeitaPeloUsuario(this.getTitulo(), user.getNome());
-        if (TransacaoReserva.quantidadeReserva(this) == 3) { //se passou de 2 reservas, notifica o professor
+    public void reservarLivro(Usuario usuario) {
+        TransacaoReserva.adicionarReserva(this, usuario);
+        usuario.getListaDeReservados().add(this);
+        MensagensLivro.mensagemReservaDoLivroFeitaPeloUsuario(this.getTitulo(), usuario.getNome());
+        if (TransacaoReserva.quantidadeReserva(this) >= 3) { //se passou de 2 reservas, notifica o professor
             this.notificarObserver(); //notifica o professor
         }
     }

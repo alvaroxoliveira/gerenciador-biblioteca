@@ -2,7 +2,7 @@ package Livro;
 
 import Observer.Observer;
 import Observer.Subject;
-import Usuario.User;
+import Usuario.Usuario;
 
 import java.util.ArrayList;
 
@@ -12,11 +12,11 @@ public interface ILivro extends Subject {
     // Retorna o exemplar da lista de exemplares do livro que estiver disponível
     Exemplar obterExemplarDisponivel();
 
-    void pegarLivroEmprestado(User user);
+    void pegarLivroEmprestado(Usuario usuario);
 
-    void devolverLivroEmprestado(User user);
+    void devolverLivroEmprestado(Usuario usuario);
 
-    void reservarLivro(User user);
+    void reservarLivro(Usuario usuario);
 
     void consultarLivro();
 

@@ -1,21 +1,21 @@
 package Transacoes;
 
 import Livro.Exemplar;
-import Usuario.User;
+import Usuario.Usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TransacaoEmprestimo {
     private Exemplar exemplar;
-    private User usuario;
+    private Usuario usuario;
     private LocalDate data;
     private boolean estaFinalizado;
     // Colocar um estado em vez de passar na função de imprimir??
     private static ArrayList<TransacaoEmprestimo> emprestimosAtuais = new ArrayList<>();
     private static ArrayList<TransacaoEmprestimo> emprestimosFinalizados = new ArrayList<>();
 
-    public TransacaoEmprestimo(Exemplar exemplar, User usuario){
+    public TransacaoEmprestimo(Exemplar exemplar, Usuario usuario){
         this.exemplar = exemplar;
         this.usuario = usuario;
         this.estaFinalizado = false;
@@ -23,7 +23,7 @@ public class TransacaoEmprestimo {
     }
 
     //cria uma nova transação e adiciona aos emprestimos ativos
-    public static void adicionarEmprestimoAtual(Exemplar exemplar, User usuario) {
+    public static void adicionarEmprestimoAtual(Exemplar exemplar, Usuario usuario) {
         TransacaoEmprestimo.emprestimosAtuais.add(new TransacaoEmprestimo(exemplar, usuario));
     }
 
@@ -34,7 +34,7 @@ public class TransacaoEmprestimo {
         TransacaoEmprestimo.emprestimosAtuais.remove(encontrarTransacaoEmprestimoAtuais(exemplar));
     }
 
-    public static int quantidadeEmprestimosFinalizados(User usuario){
+    public static int quantidadeEmprestimosFinalizados(Usuario usuario){
         int qtd = 0;
         for(TransacaoEmprestimo transacaoEmprestimo : TransacaoEmprestimo.emprestimosFinalizados){
             if(transacaoEmprestimo.getUsuario().equals(usuario)){
@@ -61,11 +61,11 @@ public class TransacaoEmprestimo {
         this.exemplar = exemplar;
     }
 
-    public User getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(User usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

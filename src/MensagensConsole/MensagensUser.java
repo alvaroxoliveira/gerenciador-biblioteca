@@ -27,6 +27,10 @@ public class MensagensUser {
         System.out.println("Não há empréstimos ativos, empréstimos finalizados ou reservas.");
     }
 
+    public static void mensagemDeNotificacaoReservasSimultaneas(String nomeUser, int quantidadeDeReservas) {
+        System.out.println("O livro");
+    }
+
     public static void mensagemDeNotificacaoProfessor(String nomeUser, int quantidadeDeNotificacoes) {
         System.out.println("O professor " + nomeUser + " foi notificado " + quantidadeDeNotificacoes + " vezes.");
     }
