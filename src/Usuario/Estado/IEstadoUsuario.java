@@ -1,8 +1,8 @@
 package Usuario.Estado;
 
 import Livro.Livro;
-import Usuario.Usuario;
 import Observer.Observer;
+import Usuario.Usuario;
 
 public interface IEstadoUsuario {
     public void pegarLivroEmprestado(Livro livro, Usuario usuario);

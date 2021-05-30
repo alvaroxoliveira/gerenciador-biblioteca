@@ -7,7 +7,6 @@ package Usuario;
 import Livro.Exemplar;
 import Livro.Livro;
 import MensagensConsole.ImprimirDadosOperacoes;
-import MensagensConsole.MensagensObservers;
 import MensagensConsole.MensagensUser;
 import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;

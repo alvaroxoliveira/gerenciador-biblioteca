@@ -5,7 +5,6 @@ package Usuario.Estado;
 * */
 
 import Livro.Livro;
-import MensagensConsole.MensagensNaoObservers;
 import MensagensConsole.MensagensObservers;
 import Observer.Observer;
 import Usuario.Usuario;
