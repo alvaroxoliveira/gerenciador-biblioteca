@@ -5,11 +5,9 @@ package Usuario.Estado;
 * */
 
 import Livro.Livro;
-import MensagensConsole.MensagensProfessor;
-import Observer.Observer;
 import Usuario.Usuario;
 
-public class Professor implements IEstadoUsuario, Observer {
+public class Professor implements IEstadoUsuario {
     private Professor() {}
     public static Professor instance;
     public static Professor getInstance() {
@@ -55,20 +53,4 @@ public class Professor implements IEstadoUsuario, Observer {
         return 7;
     }
 
-    /*
-    * Método privado que serve para notificar reservas simultaneas do usuário do tipo professor.
-    * Tem como base o Padrão de Projeto Observer aprendido em aula.
-    * */
-    private void notificarReservasSimultaneas() {
-        MensagensProfessor.mensagemDeReservasSimultaneas();
-    }
-
-    /*
-    * Método publico que tem como objetivo avisar o professor sobre as reservas simultâneas, chamando o método de
-    * notificação. Tem como base o Padrão de Projeto Observer aprendido em aula.
-    * */
-    @Override
-    public void avisarReservasSimultaneas() {
-        this.notificarReservasSimultaneas();
-    }
 }
