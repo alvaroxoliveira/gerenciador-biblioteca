@@ -73,14 +73,11 @@ public class Usuario implements IUsuario {
     public void realizaEmprestimo(Livro livro) {
         if(livro.getQuantidadeExemplares() == 0){
             MensagensUser.mensagemDeNaoExistenciaDeExemplar(livro.getTitulo());
-        }
-        else if(verificaSeJaTemOLivroEmprestado(livro)) {
+        } else if(verificaSeJaTemOLivroEmprestado(livro)) {
             MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), "Emprestado");
-        }
-        else if(this.isDevedor) {
+        } else if(this.isDevedor) {
             MensagensUser.mensagemDeInadimplencia(this.nome);
-        }
-        else {
+        } else {
             this.estadoUsuario.pegarLivroEmprestado(livro, this);
         }
     }
@@ -94,8 +91,8 @@ public class Usuario implements IUsuario {
     public void realizaDevolucao(Livro livro) {
         if(this.listaDeLivrosEmprestados.size() == 0) {
             MensagensUser.mensagemNaoHaLivroParaDevolver(this.nome);
-        }else if(this.verificaSeJaTemOLivroEmprestado(livro)){
-            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), "Emprestado");
+        } else if(!this.verificaSeJaTemOLivroEmprestado(livro)) {
+            MensagensUser.mensagemLivroNaoEstaNaListaDeEmprestados(this.getNome(), livro.getTitulo());
         } else {
             this.estadoUsuario.devolverLivroEmprestado(livro, this);
         }

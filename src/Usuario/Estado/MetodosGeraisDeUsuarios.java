@@ -16,11 +16,10 @@ public class MetodosGeraisDeUsuarios {
     * do livro para assim chamar o método de reservar o livro dentro do objeto livro.
     * */
     public static void reservaParaUsuario(Livro livro, Usuario usuario) {
-        if(usuario.getListaDeReservados().size() < 3) { //caso o usuario tenha menos que 3 livros reservados
-            livro.reservarLivro(usuario); //reservar livro
+        if(usuario.getListaDeReservados().size() < 3) {
+            livro.reservarLivro(usuario);
         } else {
             MensagensUsuariosGerais.mensagemDeQuantidadeMaximaDeReservasFeitas(usuario.getNome(), livro.getTitulo());
-            return;
         }
     }
 

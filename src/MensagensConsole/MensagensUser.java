@@ -23,6 +23,10 @@ public class MensagensUser {
         System.out.println("Usuário " + nomeUser + " não têm livros para devolver.");
     }
 
+    public static void mensagemLivroNaoEstaNaListaDeEmprestados(String nomeUser, String titulo) {
+        System.out.println("O livro " + titulo + " não está na lista de emprestados do usuário " + nomeUser + ".");
+    }
+
     public static void mensagemDeNaoExistenciaDeOperacoes() {
         System.out.println("Não há empréstimos ativos, empréstimos finalizados ou reservas.");
     }
