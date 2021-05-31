@@ -70,7 +70,11 @@ public class InterfaceUsuario {
         }
 
         Comando comando = comandos.get(tipoDeComando[0]);
-        comando.executar(parametroParaExecutar);
+        if(comando != null) {
+            comando.executar(parametroParaExecutar);
+        } else {
+            MensagensInterfaceUsuario.mensagemComandoNaoEncontrado();
+        }
     }
 
     /*
