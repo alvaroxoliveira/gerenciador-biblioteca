@@ -13,7 +13,7 @@ public class MensagensInterfaceUsuario {
     * Mensagem de aviso de erro ao digitar comando que não existe na lista de comandos que o programa aceita.
     * */
     public static void mensagemComandoNaoEncontrado() {
-        System.out.println("Erro de comando não encontrado, por favor, digite novamente!");
+        System.out.println("Erro! Comando não encontrado, por favor, digite novamente!");
     }
 
     /*
