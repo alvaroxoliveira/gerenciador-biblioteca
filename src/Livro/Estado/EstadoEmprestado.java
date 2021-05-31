@@ -51,7 +51,7 @@ public class EstadoEmprestado implements IEstadoLivro {
         usuario.removeDaListaDeEmprestados(exemplar);
         exemplar.mudaEstado(EstadoDisponivel.getInstance());
         TransacaoEmprestimo.FinalizarEmprestimo(exemplar);
-        MensagensSingletonEmprestado.mensagemDevolucaoDoLivro(usuario.getNome(), exemplar.getLivro().getTitulo());
+        MensagensSingletonEmprestado.mensagemDevolucaoDoLivro(exemplar.getLivro(), usuario);
     }
 
     /*

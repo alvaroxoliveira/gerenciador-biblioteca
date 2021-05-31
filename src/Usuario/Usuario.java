@@ -72,11 +72,11 @@ public class Usuario implements IUsuario {
     @Override
     public void realizaEmprestimo(Livro livro) {
         if(livro.getQuantidadeExemplares() == 0){
-            MensagensUser.mensagemDeNaoExistenciaDeExemplar(livro.getTitulo());
+            MensagensUser.mensagemDeNaoExistenciaDeExemplar(livro);
         } else if(verificaSeJaTemOLivroEmprestado(livro)) {
-            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), "Emprestado");
+            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this, "Emprestado");
         } else if(this.isDevedor) {
-            MensagensUser.mensagemDeInadimplencia(this.nome);
+            MensagensUser.mensagemDeInadimplencia(this);
         } else {
             this.estadoUsuario.pegarLivroEmprestado(livro, this);
         }
@@ -90,9 +90,9 @@ public class Usuario implements IUsuario {
     @Override
     public void realizaDevolucao(Livro livro) {
         if(this.listaDeLivrosEmprestados.size() == 0) {
-            MensagensUser.mensagemNaoHaLivroParaDevolver(this.nome);
+            MensagensUser.mensagemNaoHaLivroParaDevolver(this);
         } else if(!this.verificaSeJaTemOLivroEmprestado(livro)) {
-            MensagensUser.mensagemLivroNaoEstaNaListaDeEmprestados(this.getNome(), livro.getTitulo());
+            MensagensUser.mensagemLivroNaoEstaNaListaDeEmprestados(livro, this);
         } else {
             this.estadoUsuario.devolverLivroEmprestado(livro, this);
         }
@@ -103,13 +103,13 @@ public class Usuario implements IUsuario {
     * Caso hajam condições, chama o método de reserva para cada tipo de usuário (estado).
     * */
     @Override
-    public void realizaReserva(Livro livro) { //caio
+    public void realizaReserva(Livro livro) {
         if(verificaSeJaTemOLivroReservado(livro)) {
-            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome()," reservado.");
+            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this," reservado.");
         } else if(this.isDevedor) {
-            MensagensUser.mensagemDeInadimplencia(this.getNome());
+            MensagensUser.mensagemDeInadimplencia(this);
         } else if(verificaSeJaTemOLivroEmprestado(livro)){
-            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this.getNome(), " emprestado.");
+            MensagensUser.mensagemOperacaoJaFeitaComLivro(livro, this, " emprestado.");
         } else {
             this.estadoUsuario.reservarLivro(livro, this);
         }
@@ -188,7 +188,7 @@ public class Usuario implements IUsuario {
     @Override
     public void consultarUsuario(){
         boolean interacao = false;
-        MensagensUser.imprimirNomeUsuario(this.getNome());
+        MensagensUser.imprimirNomeUsuario(this);
         ImprimirDadosDeEmprestimosAtivosEFinalizadosEReservas(interacao);
     }
 

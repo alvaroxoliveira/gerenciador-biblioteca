@@ -59,13 +59,13 @@ public class Professor implements IEstadoUsuario {
      * Método público que tenta adicionar um livro na lista de observer
      * */
     @Override
-    public void adicionarObserver(Livro livro, Observer observer, String nomeUser) {
+    public void adicionarObserver(Livro livro, Observer observer, Usuario usuario) {
         if(livro.verificaObserver(observer)){
             livro.adicionarObserver(observer);
-            MensagensObservers.mensagemAdicaoDeLivroNaListaDeObservador(livro.getTitulo(), nomeUser);
+            MensagensObservers.mensagemAdicaoDeLivroNaListaDeObservador(livro, usuario);
         }
         else{
-            MensagensObservers.mensagemJaObserva(livro.getTitulo(), nomeUser);
+            MensagensObservers.mensagemJaObserva(livro, usuario);
         }
     }
 
@@ -75,7 +75,7 @@ public class Professor implements IEstadoUsuario {
      * */
     @Override
     public void consultarObserver(Usuario usuario) {
-        MensagensObservers.mensagemDeNotificacao(usuario.getNome(), usuario.getQuantidadeDeNotificacoes());
+        MensagensObservers.mensagemDeNotificacao(usuario);
     }
 
 }

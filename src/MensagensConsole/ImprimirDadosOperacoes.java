@@ -4,8 +4,11 @@ import Transacoes.TransacaoEmprestimo;
 import Transacoes.TransacaoReserva;
 
 public class ImprimirDadosOperacoes {
-    // 1 função para os dois casos ao invés de usar as duas de cima
 
+    /*
+    * Método privado que define o estado de acordo com o estado da transação chamado ao imprimir dados de
+    * empréstimos.
+    * */
     private static String retornaStringDeEstado(TransacaoEmprestimo transacaoEmprestimo) {
         if(transacaoEmprestimo.isEstaFinalizado()) {
             return "Finalizado";
@@ -13,6 +16,9 @@ public class ImprimirDadosOperacoes {
         return "Em curso";
     }
 
+    /*
+    * Método público que imprime os dados de empréstimos ao fazer consultas.
+    * */
     public static void imprimirDadosEmprestimos(TransacaoEmprestimo transacaoEmprestimo) {
         String estadoDaTransacao = retornaStringDeEstado(transacaoEmprestimo);
         System.out.println("Titulo: " + transacaoEmprestimo.getExemplar().getLivro().getTitulo());
@@ -21,6 +27,9 @@ public class ImprimirDadosOperacoes {
         System.out.println("Data de devolução: " + transacaoEmprestimo.getData().plusDays(transacaoEmprestimo.getUsuario().getEstadoUsuario().diasParaEntrega()));
     }
 
+    /*
+    * Método público que imprime dados de reservas ao fazer consultas.
+    * */
     public static void imprimirDadosDeReservas(TransacaoReserva transacaoReserva) {
         System.out.println("Titulo: " + transacaoReserva.getLivro().getTitulo());
         System.out.println("Data da reserva: " + transacaoReserva.getData());

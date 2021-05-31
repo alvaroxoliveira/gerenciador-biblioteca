@@ -60,7 +60,7 @@ public class Livro implements Subject {
     public void pegarLivroEmprestado(Usuario usuario){
         if(TransacaoReserva.quantidadeReserva(this) >= this.getQuantidadeExemplares()){
             if(!usuario.verificaSeJaTemOLivroReservado(this)){ //não tem reserva
-                MensagensLivro.mensagemPossuiMaisReservasQueExemplares(this.getTitulo(), usuario.getNome());
+                MensagensLivro.mensagemPossuiMaisReservasQueExemplares(this, usuario);
             } else{
                 this.obterExemplarDisponivel().getEstadoExemplar().emprestarLivro(this.obterExemplarDisponivel(), usuario);
             }
@@ -95,7 +95,7 @@ public class Livro implements Subject {
     public void reservarLivro(Usuario usuario) {
         TransacaoReserva.adicionarReserva(this, usuario);
         usuario.getListaDeReservados().add(this);
-        MensagensLivro.mensagemReservaDoLivroFeitaPeloUsuario(this.getTitulo(), usuario.getNome());
+        MensagensLivro.mensagemReservaDoLivroFeitaPeloUsuario(this, usuario);
         if (TransacaoReserva.quantidadeReserva(this) >= 3) { //se passou de 2 reservas, notifica o professor
             this.notificarObserver();
         }

@@ -161,7 +161,7 @@ public class FachadaBiblioteca {
             Livro livro = CarregaLivros.getLivrosDoSistema().get(indexDoLivro);
             if(indexDoUsuario != -1) {
                 Usuario usuario = CarregaUsuarios.getUsuariosDoSistema().get(indexDoUsuario);
-                usuario.getEstadoUsuario().adicionarObserver(livro, usuario, usuario.getNome());
+                usuario.getEstadoUsuario().adicionarObserver(livro, usuario, usuario);
             } else {
                 MensagensBuscaUsuario.mensagemUsuarioNaoEncontrado();
             }

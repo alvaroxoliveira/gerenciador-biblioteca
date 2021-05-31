@@ -40,7 +40,7 @@ public class EstadoDisponivel implements IEstadoLivro {
         }
         exemplar.mudaEstado(EstadoEmprestado.getInstance());
         TransacaoEmprestimo.adicionarEmprestimoAtual(exemplar, usuario);
-        MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(usuario.getNome(), exemplar.getLivro().getTitulo());
+        MensagensSingletonDisponivel.mensagemEmprestimoDoLivroFeito(exemplar.getLivro(), usuario);
     }
 
     /*

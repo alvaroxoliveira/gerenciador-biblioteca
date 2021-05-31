@@ -62,8 +62,8 @@ public class AlunoGraduacao implements IEstadoUsuario {
      * Método público que tenta adicionar um livro na lista de observer
      * */
     @Override
-    public void adicionarObserver(Livro livro, Observer observer, String nomeUser) {
-        MensagensNaoObservers.mensagemErroAdicaoListaDeObservadores(livro.getTitulo(), nomeUser);
+    public void adicionarObserver(Livro livro, Observer observer, Usuario usuario) {
+        MensagensNaoObservers.mensagemErroAdicaoListaDeObservadores(livro, usuario);
     }
 
     /*
@@ -72,7 +72,7 @@ public class AlunoGraduacao implements IEstadoUsuario {
      * */
     @Override
     public void consultarObserver(Usuario usuario) {
-        MensagensNaoObservers.mensagemErroConsultaObserver(usuario.getNome());
+        MensagensNaoObservers.mensagemErroConsultaObserver(usuario);
     }
 
     /*
